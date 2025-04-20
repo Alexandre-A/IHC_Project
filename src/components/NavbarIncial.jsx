@@ -1,7 +1,8 @@
 import React from "react";
+import { useAuth } from "../AuthContext";
 import { FaUser, FaCog, FaHome } from "react-icons/fa";
 
-function NavbarInicial({ homepage, complete, onNavigateHome }) {
+function NavbarInicial({ homepage, complete}) {
   const texts = {
     forum: "Forum",
     messages: "Messages",
@@ -28,9 +29,6 @@ function NavbarInicial({ homepage, complete, onNavigateHome }) {
   const currentPath = window.location.pathname;
 
   const handleHomeClick = () => {
-    if (onNavigateHome) {
-      onNavigateHome(); // Let parent update homepage state
-    }
     window.location.href = links.home;
   };
 
@@ -82,7 +80,7 @@ function NavbarInicial({ homepage, complete, onNavigateHome }) {
             >
               {texts.adds}
             </a>
-            {complete && (
+            {complete =='landlord' && (
               <a
                 href={links.myadds}
                 className={`hover:text-gray-300 ${currentPath === links.myadds ? "text-yellow-500" : ""}`}

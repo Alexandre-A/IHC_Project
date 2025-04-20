@@ -1,21 +1,43 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { Routes, Route, useLocation } from "react-router-dom";
 import './index.css'
 import './App.css'
-import Newadd from'./pages/newadd'
-import NavbarInicial from './components/NavbarIncial'
+import { useAuth } from "./AuthContext";
+import Forum from "./pages/Forum";
+import Messages from "./pages/Messages";
+import Ads from "./pages/Ads";
+import MyAds from "./pages/MyAds";
+import Profile from "./pages/Profile";
+import Settings from "./pages/Settings";
+import Login from "./pages/LoginPage";
+import Registo from "./pages/RegisterPage";
 import Homepage from './pages/Homepage'
-import { AuthProvider } from './AuthContext';
+import NavbarInicial from './components/NavbarIncial';
 
 
 function App() {
-  const [count, setCount] = useState(0)
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+  const { userType } = useAuth();
+
   return(
-    <>
-    <Homepage></Homepage>
-    </>
-  )
+    <div className="min-h-screen flex flex-col">
+    <NavbarInicial homepage={isHome} complete={userType}/>
+    <main className="flex-grow p-4">
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+        <Route path="/forum" element={<Forum />} />
+        <Route path="/messages" element={<Messages />} />
+        <Route path="/adds" element={<Ads />} />
+        <Route path="/myadds" element={<MyAds />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/registo" element={<Registo />} />
+      </Routes>
+      </main>
+    </div>
+        )
 }
 
 export default App

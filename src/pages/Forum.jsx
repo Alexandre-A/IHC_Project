@@ -4,13 +4,14 @@ import '../index.css'
 import '../App.css'
 import NavbarInicial from '../components/NavbarIncial'
 
-function Homepage() {
+function Forum() {
   const { userType } = useAuth();
   const isLandlord = userType === "landlord";
   return (
     <div>
+      
     </div>
   )
 }
 
-export default Homepage
+export default Forum
