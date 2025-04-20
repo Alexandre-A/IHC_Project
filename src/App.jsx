@@ -28,8 +28,8 @@ function App() {
         <Route path="/" element={<Homepage />} />
         <Route path="/forum" element={<Forum />} />
         <Route path="/messages" element={<Messages />} />
-        <Route path="/adds" element={<Ads />} />
-        <Route path="/myadds" element={<MyAds />} />
+        <Route path="/ads" element={<Ads />} />
+        <Route path="/myads" element={<MyAds />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/login" element={<Login />} />

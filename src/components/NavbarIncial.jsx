@@ -6,8 +6,8 @@ function NavbarInicial({ homepage, complete}) {
   const texts = {
     forum: "Forum",
     messages: "Messages",
-    adds: "Ads",
-    myadds: "My Ads",
+    ads: "Ads",
+    myads: "My Ads",
     profile: "Profile",
     settings: "Settings",
     login: "Login",
@@ -18,8 +18,8 @@ function NavbarInicial({ homepage, complete}) {
     home: "/",
     forum: "/forum",
     messages: "/messages",
-    adds: "/adds",
-    myadds: "/myadds",
+    ads: "/ads",
+    myads: "/myads",
     profile: "/profile",
     settings: "/settings",
     login: "/login",
@@ -75,17 +75,17 @@ function NavbarInicial({ homepage, complete}) {
               {texts.messages}
             </a>
             <a
-              href={links.adds}
-              className={`hover:text-gray-300 ${currentPath === links.adds ? "text-yellow-500" : ""}`}
+              href={links.ads}
+              className={`hover:text-gray-300 ${currentPath === links.ads ? "text-yellow-500" : ""}`}
             >
-              {texts.adds}
+              {texts.ads}
             </a>
             {complete =='landlord' && (
               <a
-                href={links.myadds}
-                className={`hover:text-gray-300 ${currentPath === links.myadds ? "text-yellow-500" : ""}`}
+                href={links.myads}
+                className={`hover:text-gray-300 ${currentPath === links.myads ? "text-yellow-500" : ""}`}
               >
-                {texts.myadds}
+                {texts.myads}
               </a>
             )}
           </>
