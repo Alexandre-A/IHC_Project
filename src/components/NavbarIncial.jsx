@@ -33,7 +33,7 @@ function NavbarInicial({ homepage, complete}) {
   };
 
   return (
-    <nav className="bg-gray-800 text-white p-4 flex justify-between items-center">
+    <nav className="bg-gray-800 text-white p-4 flex justify-between items-center" style={{backgroundColor: '#543A14'}}>
       {/* Left: Home icon */}
       <div className="flex items-center space-x-4">
         <button
