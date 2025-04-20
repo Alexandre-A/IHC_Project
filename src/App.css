@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+:root:has(.no-doc-scroll) {
+  overflow:hidden;
+}
+
 
 .App {
   text-align: center;

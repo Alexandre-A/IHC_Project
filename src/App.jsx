@@ -23,7 +23,7 @@ function App() {
   return(
     <div className="min-h-screen flex flex-col">
     <NavbarInicial homepage={isHome} complete={userType}/>
-    <main className="flex-grow p-4">
+    <main className="flex-grow">
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/forum" element={<Forum />} />
