@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import '../index.css'
 import '../App.css'
@@ -9,47 +9,58 @@ import { Forum } from '../assets/Forum';
   
 function Homepage() {
   const Bright_orange= "rgb(28, 10, 0)";
-const Dark_cyan="rgb(63, 35, 5)";
-const Very_dark_cyan= "rgb(96, 54, 1)";
+  const Dark_cyan="rgb(63, 35, 5)";
+  const Very_dark_cyan= "rgb(96, 54, 1)";
 
-const data = [
-  {
-    bgcolour: Bright_orange,
-    icon: <SedanSVG className="mb-8"/>,
-    heading: "Área de Senhorio",
-    paragraph: "Área destinada à publicação e edição de anúncios",
-    inverted: false,
-    onclick: (userType, setModal) => {
-      if (userType !== "landlord") setModal("first");
-      else navigate("/myads");
+  const data = [
+    {
+      bgcolour: Bright_orange,
+      icon: <SedanSVG className="mb-8"/>,
+      heading: "Área de Senhorio",
+      paragraph: "Área destinada à publicação e edição de anúncios",
+      inverted: false,
+      onclick: (userType, setModal) => {
+        if (userType !== "landlord") setModal("first");
+        else navigate("/myads");
+        },
       },
-    },
-  {
-    bgcolour: Dark_cyan,
-    icon: <SedanSVG className="mb-8"/>,
-    heading: "Explorar",
-    paragraph: "Àrea destinada à procura de alojamento e consulta de detalhes dos mesmos",
-    inverted: true,
-    onclick: () => {navigate("/ads")},
-    },
-  {
-    bgcolour: Very_dark_cyan,
-    icon: <Forum className="mb-8"/>,
-    heading: "Fórum",
-    paragraph: "Àrea destinada à partilha pública de informação entre users",
-    inverted: false,
-    onclick: (userType, setModal) => {
-      if (userType === null) setModal("third");
-      else navigate("/forum");
-    },
-    }
-
-
-]
+    {
+      bgcolour: Dark_cyan,
+      icon: <SedanSVG className="mb-8"/>,
+      heading: "Explorar",
+      paragraph: "Àrea destinada à procura de alojamento e consulta de detalhes dos mesmos",
+      inverted: true,
+      onclick: () => {navigate("/ads")},
+      },
+    {
+      bgcolour: Very_dark_cyan,
+      icon: <Forum className="mb-8"/>,
+      heading: "Fórum",
+      paragraph: "Àrea destinada à partilha pública de informação entre users",
+      inverted: false,
+      onclick: (userType, setModal) => {
+        if (userType === null) setModal("third");
+        else navigate("/forum");
+      },
+      }
+  ]
   
   const navigate = useNavigate();
   const userType = localStorage.getItem("userType"); //null ,'landlord' ,'tennant'
   const [modal, setModal] = useState(null); // null, 'first', 'third'
+
+  useEffect(() => {
+    if (modal !== null) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'auto';
+    }
+  
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [modal]);
+  
   return (
     <>
       <div className='min-h-screen w-full flex flex-col items-center justify-start p-10 text-white' style={{ backgroundColor: 'rgb(230, 187, 130)'}}>
