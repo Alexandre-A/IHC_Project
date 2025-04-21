@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useAuth } from "../AuthContext";
+import { useNavigate } from 'react-router-dom';
+
 import '../index.css'
 import '../App.css'
 import NavbarInicial from '../components/NavbarIncial'
@@ -9,6 +11,7 @@ function LoginPage() {
 
     const handleLoginLandlord = () => {
       login("landlord"); // Or "landlord" depending on your logic
+
     };
 
     const handleLoginTennant = () => {
