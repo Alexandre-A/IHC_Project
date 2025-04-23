@@ -12,6 +12,7 @@ function NavbarInicial({ homepage, complete}) {
     settings: "Settings",
     login: "Login",
     registo: "Registo",
+    form: "Form"
   };
 
   const links = {
@@ -24,6 +25,7 @@ function NavbarInicial({ homepage, complete}) {
     settings: "/settings",
     login: "/login",
     registo: "/registo",
+    form: "/form"
   };
 
   const currentPath = window.location.pathname;
@@ -33,6 +35,7 @@ function NavbarInicial({ homepage, complete}) {
   };
 
   return (
+    <div className="sticky top-0 z-50 bg-white shadow-md ">
     <nav className="bg-gray-800 text-white p-4 flex justify-between items-center" style={{backgroundColor: 'rgb(28, 10, 0)'}}>
       {/* Left: Home icon */}
       <div className="flex items-center space-x-4">
@@ -62,6 +65,12 @@ function NavbarInicial({ homepage, complete}) {
           </>
         ) : (
           <>
+          <a
+              href={links.form}
+              className={`hover:text-gray-300 ${currentPath === links.form ? "text-yellow-500" : ""}`}
+            >
+              {texts.form}
+            </a>
             <a
               href={links.forum}
               className={`hover:text-gray-300 ${currentPath === links.forum ? "text-yellow-500" : ""}`}
@@ -102,6 +111,7 @@ function NavbarInicial({ homepage, complete}) {
         </a>
       </div>
     </nav>
+    </div>
   );
 }
 

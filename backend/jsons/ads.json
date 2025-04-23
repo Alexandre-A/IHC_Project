@@ -1,0 +1,54 @@
+{
+    "d7c510384df5cd80c4e0cc285c53a1bba1fa037436ac58c58e9400ad595476d1": {
+        "email": "supreme_landlord@gmail.com",
+        "description": "a",
+        "date": "2025-04-23T02:28:22.847Z",
+        "image_path": "images/d7c510384df5cd80c4e0cc285c53a1bba1fa037436ac58c58e9400ad595476d1.png",
+        "name": "a",
+        "price": "a",
+        "available_date": "a",
+        "gender": "Indifferent",
+        "quantity": "a",
+        "district": "Porto",
+        "city": "Lisbon",
+        "street": "a",
+        "min_age": "a",
+        "max_age": "a",
+        "bath_share": "Shared",
+        "expense_included": "Yes",
+        "marital_status": "Yes",
+        "tags": [
+            "Gender: Indifferent",
+            "Couples: Yes",
+            "Bathroom: Shared",
+            "Expenses: Yes",
+            "\u200e Porto"
+        ]
+    },
+    "4fbef64d119b83e5b40ddd092b07b404fb591aaad5b4ac5cdc19f5a559067d46": {
+        "email": "supreme_landlord@gmail.com",
+        "description": "a",
+        "date": "2025-04-23T02:28:52.963Z",
+        "image_path": "images/4fbef64d119b83e5b40ddd092b07b404fb591aaad5b4ac5cdc19f5a559067d46.png",
+        "name": "a",
+        "price": "a",
+        "available_date": "a",
+        "gender": "Indifferent",
+        "quantity": "a",
+        "district": "Lisbon",
+        "city": "Porto",
+        "street": "a",
+        "min_age": "a",
+        "max_age": "a",
+        "bath_share": "Shared",
+        "expense_included": "Yes",
+        "marital_status": "Yes",
+        "tags": [
+            "Gender: Indifferent",
+            "Couples: Yes",
+            "Bathroom: Shared",
+            "Expenses: Yes",
+            "\u200e Lisbon"
+        ]
+    }
+}

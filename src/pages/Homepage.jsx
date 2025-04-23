@@ -63,7 +63,7 @@ function Homepage() {
   
   return (
     <>
-      <div className='min-h-screen w-full flex flex-col items-center justify-start p-10 text-white' style={{ backgroundColor: 'rgb(230, 187, 130)'}}>
+      <div className='h-screen w-full flex flex-col items-center justify-start p-4 text-white' style={{ backgroundColor: 'rgb(230, 187, 130)'}}>
         <section className="mt-10 mb-10 text-center">
           <h1 className="text-5xl font-bold uppercase tracking-wide">Easy Room</h1>
           <p className="text-lg mt-2 opacity-80">Your trusted platform for housing solutions</p>

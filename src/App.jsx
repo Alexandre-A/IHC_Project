@@ -13,6 +13,7 @@ import Login from "./pages/LoginPage";
 import Registo from "./pages/RegisterPage";
 import Homepage from './pages/Homepage'
 import NavbarInicial from './components/NavbarIncial';
+import AdFormPage from './pages/AdFormPage';
 
 
 function App() {
@@ -34,6 +35,8 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registo" element={<Registo />} />
+        <Route path="/form" element={<AdFormPage />} />
+
       </Routes>
       </main>
     </div>

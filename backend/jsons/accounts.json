@@ -1,0 +1,10 @@
+{
+  "supreme_landlord@gmail.com": {
+    "psk": "@123456",
+    "landlord_permission": true
+  },
+  "thestudent@gmail.com": {
+    "psk": "@123456",
+    "landlord_permission": false
+  }
+}

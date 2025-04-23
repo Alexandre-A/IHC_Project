@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import { useAuth } from "../AuthContext";
 import '../index.css'
 import '../App.css'
@@ -8,6 +8,21 @@ import { useToast } from '../components/Toasts/ToastService';
 function MyAds() {
   const { userType } = useAuth();
   const toast = useToast();
+
+  useEffect(() => {
+    const msg = localStorage.getItem("toastSuccess");
+    if (msg) {
+      const parsed = JSON.parse(msg);
+      showToast(toast, {
+        type: parsed.type,
+        header: parsed.header,
+        message: parsed.message
+      });
+      localStorage.removeItem("toastSuccess");
+    }
+  }, []);
+  
+  
 
   const handleLogin = () => {
     showToast(toast, {
