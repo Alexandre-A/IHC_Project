@@ -1,9 +1,9 @@
 import React, { useState,useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import Modal from "../components/Modal";
-
-
-
+import districtCityMap from '../../backend/jsons/districtCityMap.json';
+import { FaHeart, FaCamera, FaShareAlt } from 'react-icons/fa';
+import { FiXCircle, FiCheckCircle, FiInfo, FiAlertTriangle } from 'react-icons/fi'
 const ip = "127.0.0.1";
 const port = 5000;
 
@@ -35,6 +35,8 @@ const AdFormPage = () => {
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
   const [showValidationModal, setShowValidationModal] = useState(false);
   const [validationMessage, setValidationMessage] = useState("");
+  const cities = districtCityMap[formData.district] || [];
+
 
   // Helper function to update tags while avoiding duplicates
   const updateTags = (newTag, prefix) => {
@@ -66,6 +68,19 @@ const AdFormPage = () => {
       updateTags(`Couples: ${value}`, "Couples: ");
     }else if (name==="expenseIncluded")
     updateTags(`Expenses: ${value}`, "Expenses: ");
+
+    if (name === "district") {
+      setFormData((prev) => ({
+        ...prev,
+        district: value,
+        city: "", // Reset city when district changes
+      }));
+    } else {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    }
 
     setFormData((prevFormData) => ({
       ...prevFormData,
@@ -133,6 +148,9 @@ const AdFormPage = () => {
   }
 
   useEffect(() => {
+    const msg = localStorage.getItem("toastSuccess");
+    if (msg) {
+      navigate("/myads")}
     if (formData.gender) {
       updateTags(`Gender: ${formData.gender}`, "Gender: ");
     }
@@ -175,7 +193,7 @@ const AdFormPage = () => {
         method: "POST",
         body: formDataToSend,
       });
-      // inside handleSubmit
+
       if (response.ok) {
         localStorage.setItem("toastSuccess", JSON.stringify({
           type: "success",
@@ -183,21 +201,44 @@ const AdFormPage = () => {
           message: "Anúncio criado com sucesso"
         }));
       } else {
+        // Handle the case when the response is not successful
         localStorage.setItem("toastSuccess", JSON.stringify({
-          type:"error",
+          type: "error",
           header: "Erro",
-          message:"Falha na submissão do anúncio"}));
+          message: "Falha na submissão do anúncio"
+        }));
       }
-      } catch (error) {
-        localStorage.setItem("toastSuccess", JSON.stringify({
-          type:"error",
-          header: "Erro",
-          message:"Falha na submissão do anúncio"}));
-      }
-      console.log("Navigating now");
-      setTimeout(() => navigate("/myads"), 100);
+    } catch (error) {
+      // Handle error if fetch fails
+      localStorage.setItem("toastSuccess", JSON.stringify({
+        type: "error",
+        header: "Erro",
+        message: "Falha na submissão do anúncio"
+      }));
+    }
+};
 
-  };
+  const handleReset = () =>{
+    setFormData({
+      date: new Date().toISOString(), // ADD THIS
+      name: "",
+      price: "",
+      availableDate: "",
+      gender: "Indifferent",
+      quantity: "",
+      description: "",
+      district: "",
+      city: "",
+      street: "",
+      minAge: "",
+      maxAge: "",
+      maritalStatus: "Yes",
+      expenseIncluded: "Yes",
+      bathShare: "Shared",
+      tags: [],
+      image: null,
+    })
+  }
 
   // Open and close tag modal
   const openTagModal = () => setIsTagModalOpen(true);
@@ -245,6 +286,7 @@ const AdFormPage = () => {
             >
               Submission
             </button>
+            
           </div>
 
           {/* Tab Content */}
@@ -319,10 +361,12 @@ const AdFormPage = () => {
                       onChange={handleChange}
                       className="w-1/2 p-2 border rounded"
                     >
-                      <option value="">District</option>
-                      <option value="Lisbon">Lisbon</option>
-                      <option value="Porto">Porto</option>
-                      {/* Add more districts */}
+                      <option value="">Select District</option>
+                      {Object.keys(districtCityMap).map((district) => (
+                        <option key={district} value={district}>
+                          {district}
+                        </option>
+                      ))}
                     </select>
                     <select
                       name="city"
@@ -330,10 +374,13 @@ const AdFormPage = () => {
                       onChange={handleChange}
                       className="w-1/2 p-2 border rounded"
                     >
-                      <option value="">Municipality</option>
-                      <option value="Lisbon">Lisbon</option>
-                      <option value="Porto">Porto</option>
-                      {/* Add more cities */}
+                      <option value="">Select City</option>
+                      {formData.district &&
+                        districtCityMap[formData.district].map((city) => (
+                          <option key={city} value={city}>
+                            {city}
+                          </option>
+                        ))}
                     </select>
                   </div>
                 </div>
@@ -561,12 +608,22 @@ const AdFormPage = () => {
                 </div>
                 <div className="mt-2 flex justify-end">
 
+                
+            <div className="w-full flex justify-between px-1">
+                <button
+                  onClick={handleReset}
+                  className="px-4 py-2 rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500"
+                >
+                  <span className="text-lg">⟲</span> Clear All
+                </button>
+
                 <button
               onClick={handleDataEntry}
               className={`px-4 py-2 rounded right-4 bg-green-600 border-2 border-green-800 cursor-pointer hover:text-white `}
               >
               Continuar
             </button>
+              </div>
               </div>
               </div>
 
@@ -820,7 +877,48 @@ const AdFormPage = () => {
             </div>
           )}
           {activeTab === "submit" && (
-            <div className="flex flex-col items-center space-y-4 border-2 border-black-20 p-2 rounded">
+            <div className="flex flex-col items-center space-y-4 bg-gray-200/80 border-2 border-black-20 p-2 rounded">
+              <h2 className="text-xl font-semibold">Preview do Anúncio</h2>
+              <div className="flex h-42 w-full max-w-4xl overflow-hidden mx-auto bg-white shadow-md rounded-lg p-4">
+              <img
+              src={URL.createObjectURL(formData.image)}
+              alt="Room"
+              className="w-1/3 border-2 rounded object-cover h-full"
+            />
+            <div className="w-2/3 p-4 flex flex-col justify-between">
+                {/* Header Row */}
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="text-lg font-semibold">Quarto perto do deti</h3>
+                    <p className="text-sm text-gray-600">Quarto grande num t2...</p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xl font-semibold text-gray-800">320€</p>
+                    <a href="#" className="text-sm text-blue-600 hover:underline">Sr. Miguel André</a>
+                  </div>
+                </div>
+
+                {/* Tags */}
+                <div className="flex flex-wrap gap-2 mt-2">
+                  <span className="bg-gray-100 px-3 py-1 text-xs rounded-full border">Repas</span>
+                  <span className="bg-gray-100 px-3 py-1 text-xs rounded-full border">Casa de banho privativa</span>
+                  <span className="bg-gray-100 px-3 py-1 text-xs rounded-full border">T2</span>
+                </div>
+
+                {/* Action Icons */}
+                <div className="flex gap-3 justify-end mt-3">
+                  <button className="p-2 border rounded">
+                    <FiInfo size={18} />
+                  </button>
+                  <button className="p-2 border rounded ">
+                    <FaShareAlt size={18} />
+                  </button>
+                  <button className="p-2 border rounded ">
+                    <FaHeart size={18} />
+                  </button>
+                </div>
+              </div>
+              </div>
               <h2 className="text-xl font-semibold">Ready to submit?</h2>
 
               {/* Buttons on opposite ends */}

@@ -7,7 +7,7 @@ import App from './App.jsx'
 import ToastProvider from './components/Toasts/ToastProvider.jsx';
 
 createRoot(document.getElementById('root')).render(
-  //<StrictMode>
+  <StrictMode>
     <AuthProvider> {/* ✅ Wrap App with AuthProvider */}
       <ToastProvider>
         <BrowserRouter>
@@ -15,5 +15,5 @@ createRoot(document.getElementById('root')).render(
         </BrowserRouter>
       </ToastProvider>
     </AuthProvider>
-  //</StrictMode>,
+  </StrictMode>,
 )
