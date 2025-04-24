@@ -3,31 +3,66 @@ import { useNavigate } from 'react-router-dom';
 import Modal from "../components/Modal";
 import districtCityMap from '../../backend/jsons/districtCityMap.json';
 import { FaHeart, FaCamera, FaShareAlt } from 'react-icons/fa';
+import ads from '../../backend/jsons/ads.json';
+
 import { FiXCircle, FiCheckCircle, FiInfo, FiAlertTriangle } from 'react-icons/fi'
 const ip = "127.0.0.1";
 const port = 5000;
 
 const AdFormPage = () => {
   // State for form fields
+  const adId = localStorage.getItem("edit");
+
   const [formData, setFormData] = useState({
-    date: new Date().toISOString(), // ADD THIS
+    date: new Date().toISOString(),
     name: "",
     price: "",
-    availableDate: "",
+    available_date: "",
     gender: "Indifferent",
     quantity: "",
     description: "",
     district: "",
     city: "",
     street: "",
-    minAge: "",
-    maxAge: "",
-    maritalStatus: "Yes",
-    expenseIncluded: "Yes",
-    bathShare: "Shared",
+    min_age: "",
+    max_age: "",
+    marital_status: "Yes",
+    expense_included: "Yes",
+    bath_share: "Shared",
     tags: [],
     image: null,
+    isNew: [true,""]
   });
+
+  useEffect(() => {
+    const fetchAd = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/ads/${adId}`);
+        if (!response.ok) throw new Error("Ad not found");
+        const data = await response.json();
+  
+        setFormData(prev => ({
+          ...prev,
+          ...data,
+          image: data.image_url || null, // just store the string if it exists
+          isNew:[false,data.image_path.split("/")[1].split(".")[0]]
+        }));
+      } catch (error) {
+        console.error("Error fetching ad:", error);
+      }
+    };
+  
+    if (adId) {
+      fetchAd();
+    }
+  }, [adId]);
+  
+
+  /*useEffect(() => {
+    if (formData.image) {
+      console.log("Image:", formData.image);
+    }
+  }, [formData.image]);*/
 
   const navigate = useNavigate();
   const [currentTag, setCurrentTag] = useState("");
@@ -56,49 +91,40 @@ const AdFormPage = () => {
   // Handle input changes for select fields (e.g., Bathroom, Gender)
   const handleChange = (e) => {
     const { name, value } = e.target;
-
+  
     // Generate tags based on the field
     if (name === "gender") {
       updateTags(`Gender: ${value}`, "Gender: ");
-    } else if (name === "bathShare") {
+    } else if (name === "bath_share") {
       updateTags(`Bathroom: ${value}`, "Bathroom: ");
-    } else if (name==="district"){
+    } else if (name === "district") {
       updateTags(`‎ ${value}`, "‎ ");
-    }else if (name==="maritalStatus"){
+    } else if (name === "marital_status") {
       updateTags(`Couples: ${value}`, "Couples: ");
-    }else if (name==="expenseIncluded")
-    updateTags(`Expenses: ${value}`, "Expenses: ");
-
-    if (name === "district") {
-      setFormData((prev) => ({
-        ...prev,
-        district: value,
-        city: "", // Reset city when district changes
-      }));
-    } else {
-      setFormData((prev) => ({
-        ...prev,
-        [name]: value,
-      }));
+    } else if (name === "expense_included") {
+      updateTags(`Expenses: ${value}`, "Expenses: ");
     }
-
-    setFormData((prevFormData) => ({
-      ...prevFormData,
+  
+    // Update state
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
+      ...(name === "district" && { city: "" }), // Reset city if district changed
     }));
   };
+  
 
   // Handle button clicks for Expenses Included
   const handleButtonChanges = (value,type) => {
-    if (type==='expenseIncluded') {updateTags(`Expenses: ${value}`, "Expenses: ");
+    if (type==='expense_included') {updateTags(`Expenses: ${value}`, "Expenses: ");
                                   setFormData((prevFormData) => ({
                                     ...prevFormData,
-                                    expenseIncluded: value,
+                                    expense_included: value,
                                   }));}
-    else if (type==='maritalStatus') {updateTags(`Couples: ${value}`, "Couples: ");
+    else if (type==='marital_status') {updateTags(`Couples: ${value}`, "Couples: ");
                                       setFormData((prevFormData) => ({
                                         ...prevFormData,
-                                        maritalStatus: value,
+                                        marital_status: value,
                                       }));}
   };
 
@@ -119,9 +145,9 @@ const AdFormPage = () => {
     e.preventDefault();
     let changed = false;
     const requiredFields = [
-     "description", "name", "price", "availableDate",
+     "description", "name", "price", "available_date",
       "gender", "quantity", "district", "city", "street",
-      "minAge", "maxAge", "bathShare", "expenseIncluded", "maritalStatus"
+      "min_age", "max_age", "bath_share", "expense_included", "marital_status"
     ];
   
     if (!changed && !formData.image) {
@@ -154,14 +180,14 @@ const AdFormPage = () => {
     if (formData.gender) {
       updateTags(`Gender: ${formData.gender}`, "Gender: ");
     }
-    if (formData.maritalStatus) {
-      updateTags(`Couples: ${formData.maritalStatus}`, "Couples: ");
+    if (formData.marital_status) {
+      updateTags(`Couples: ${formData.marital_status}`, "Couples: ");
     }
-    if (formData.bathShare) {
-      updateTags(`Bathroom: ${formData.bathShare}`, "Bathroom: ");
+    if (formData.bath_share) {
+      updateTags(`Bathroom: ${formData.bath_share}`, "Bathroom: ");
     }
-    if (formData.expenseIncluded){
-      updateTags(`Expenses: ${formData.expenseIncluded}`, "Expenses: ")
+    if (formData.expense_included){
+      updateTags(`Expenses: ${formData.expense_included}`, "Expenses: ")
     }
   }, []);
 
@@ -169,25 +195,43 @@ const AdFormPage = () => {
     e.preventDefault();
 
     const formDataToSend = new FormData();
+    formDataToSend.append("name", formData.name);
+
     formDataToSend.append("email", "supreme_landlord@gmail.com");
     formDataToSend.append("description", formData.description);
     formDataToSend.append("date", formData.date);
-    formDataToSend.append("image", formData.image);
-    formDataToSend.append("name", formData.name);
     formDataToSend.append("price", formData.price);
-    formDataToSend.append("availableDate", formData.availableDate);
+    formDataToSend.append("available_date", formData.available_date);
     formDataToSend.append("gender", formData.gender);
     formDataToSend.append("quantity", formData.quantity);
     formDataToSend.append("district", formData.district);
     formDataToSend.append("city", formData.city);
     formDataToSend.append("street", formData.street);
-    formDataToSend.append("minAge", formData.minAge);
-    formDataToSend.append("maxAge", formData.maxAge);
-    formDataToSend.append("bathShare", formData.bathShare);
-    formDataToSend.append("expenseIncluded", formData.expenseIncluded);
-    formDataToSend.append("maritalStatus", formData.maritalStatus);
+    formDataToSend.append("min_age", formData.min_age);
+    formDataToSend.append("max_age", formData.max_age);
+    formDataToSend.append("bath_share", formData.bath_share);
+    formDataToSend.append("expense_included", formData.expense_included);
+    formDataToSend.append("marital_status", formData.marital_status);
+    formData.isNew.forEach((isNew) => formDataToSend.append("isNew[]", isNew));
     formData.tags.forEach((tag) => formDataToSend.append("tags[]", tag));
 
+    if (formData.image) {
+      if (typeof formData.image === "string") {
+        try {
+          const res = await fetch(formData.image);
+          const blob = await res.blob();
+          const filename = formData.image.split("/").pop(); // extract file name from URL
+          const file = new File([blob], filename, { type: blob.type });
+          formDataToSend.append("image", file);
+        } catch (err) {
+          console.error("Failed to fetch image from URL", err);
+        }
+      } else {
+        formDataToSend.append("image", formData.image); // new upload
+      }
+    }
+
+    if (adId) localStorage.removeItem("edit")
     try {
       const response = await fetch(`http://${ip}:${port}/form`, {
         method: "POST",
@@ -223,18 +267,18 @@ const AdFormPage = () => {
       date: new Date().toISOString(), // ADD THIS
       name: "",
       price: "",
-      availableDate: "",
+      available_date: "",
       gender: "Indifferent",
       quantity: "",
       description: "",
       district: "",
       city: "",
       street: "",
-      minAge: "",
-      maxAge: "",
-      maritalStatus: "Yes",
-      expenseIncluded: "Yes",
-      bathShare: "Shared",
+      min_age: "",
+      max_age: "",
+      marital_status: "Yes",
+      expense_included: "Yes",
+      bath_share: "Shared",
       tags: [],
       image: null,
     })
@@ -303,7 +347,11 @@ const AdFormPage = () => {
                   >
                     {formData.image ? (
                       <img
-                        src={URL.createObjectURL(formData.image)}
+                        src={
+                    typeof formData.image === "string"
+                      ? formData.image
+                      : URL.createObjectURL(formData.image)
+                  }
                         alt="Preview"
                         className="absolute inset-0 w-full h-full object-cover"
                       />
@@ -375,12 +423,11 @@ const AdFormPage = () => {
                       className="w-1/2 p-2 border rounded"
                     >
                       <option value="">Select City</option>
-                      {formData.district &&
-                        districtCityMap[formData.district].map((city) => (
-                          <option key={city} value={city}>
-                            {city}
-                          </option>
-                        ))}
+                      {districtCityMap[formData.district]?.map((city) => (
+                        <option key={city} value={city}>
+                          {city}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>
@@ -393,8 +440,8 @@ const AdFormPage = () => {
                   <div className="flex space-x-2">
                     <input
                       type="text"
-                      name="minAge"
-                      value={formData.minAge}
+                      name="min_age"
+                      value={formData.min_age}
                       onChange={handleChange}
                       placeholder="Age:"
                       className="w-1/2 p-2 border rounded"
@@ -402,8 +449,8 @@ const AdFormPage = () => {
                     <span className="self-center">to</span>
                     <input
                       type="text"
-                      name="maxAge"
-                      value={formData.maxAge}
+                      name="max_age"
+                      value={formData.max_age}
                       onChange={handleChange}
                       placeholder="Age:"
                       className="w-1/2 p-2 border rounded"
@@ -419,9 +466,9 @@ const AdFormPage = () => {
                   <div className="flex space-x-2">
                     <button
                       type="button"
-                      onClick={() => handleButtonChanges("Yes","maritalStatus")}
+                      onClick={() => handleButtonChanges("Yes","marital_status")}
                       className={`px-4 py-2 rounded cursor-pointer ${
-                        formData.maritalStatus === "Yes"
+                        formData.marital_status === "Yes"
                           ? "bg-blue-500 hover:bg-blue-600  text-white"
                           : "bg-gray-200 hover:bg-gray-300"
                       }`}
@@ -430,9 +477,9 @@ const AdFormPage = () => {
                     </button>
                     <button
                       type="button"
-                      onClick={() => handleButtonChanges("No","maritalStatus")}
+                      onClick={() => handleButtonChanges("No","marital_status")}
                       className={`px-4 py-2 rounded cursor-pointer ${
-                        formData.maritalStatus === "No"
+                        formData.marital_status === "No"
                           ? "bg-blue-500 hover:bg-blue-600  text-white"
                           : "bg-gray-200 hover:bg-gray-300"
                       }`}
@@ -465,8 +512,8 @@ const AdFormPage = () => {
                     </label>
                     <input
                       type="text"
-                      name="availableDate"
-                      value={formData.availableDate}
+                      name="available_date"
+                      value={formData.available_date}
                       onChange={handleChange}
                       placeholder="MM/DD/YYYY"
                       className="w-full p-2 border rounded"
@@ -542,9 +589,9 @@ const AdFormPage = () => {
                   <div className="flex space-x-2">
                     <button
                       type="button"
-                      onClick={() => handleButtonChanges("Yes","expenseIncluded")}
+                      onClick={() => handleButtonChanges("Yes","expense_included")}
                       className={`px-4 py-2 rounded cursor-pointer ${
-                        formData.expenseIncluded === "Yes"
+                        formData.expense_included === "Yes"
                           ? "bg-blue-500 hover:bg-blue-600  text-white"
                           : "bg-gray-200 hover:bg-gray-300"
                       }`}
@@ -553,9 +600,9 @@ const AdFormPage = () => {
                     </button>
                     <button
                       type="button"
-                      onClick={() => handleButtonChanges("No","expenseIncluded")}
+                      onClick={() => handleButtonChanges("No","expense_included")}
                       className={`px-4 py-2 rounded cursor-pointer ${
-                        formData.expenseIncluded === "No"
+                        formData.expense_included === "No"
                           ? "bg-blue-500 hover:bg-blue-600  text-white"
                           : "bg-gray-200 hover:bg-gray-300"
                       }`}
@@ -571,8 +618,8 @@ const AdFormPage = () => {
                     Bathroom:
                   </label>
                   <select
-                    name="bathShare"
-                    value={formData.bathShare}
+                    name="bath_share"
+                    value={formData.bath_share}
                     onChange={handleChange}
                     className="w-full p-2 border rounded"
                   >
@@ -688,7 +735,11 @@ const AdFormPage = () => {
                   <div className="w-full h-32 border-2 border-dashed border-gray-300 flex items-center justify-center">
                     {formData.image ? (
                       <img
-                        src={URL.createObjectURL(formData.image)}
+                        src={
+                    typeof formData.image === "string"
+                      ? formData.image
+                      : URL.createObjectURL(formData.image)
+                  }
                         alt="Preview"
                         className="h-full object-cover"
                       />
@@ -730,11 +781,11 @@ const AdFormPage = () => {
                   </label>
                   <div className="flex space-x-2">
                     <p className="w-1/2 p-2 border rounded bg-gray-100">
-                      {formData.minAge || "No age specified"}
+                      {formData.min_age || "No age specified"}
                     </p>
                     <span className="self-center">to</span>
                     <p className="w-1/2 p-2 border rounded bg-gray-100">
-                      {formData.maxAge || "No age specified"}
+                      {formData.max_age || "No age specified"}
                     </p>
                   </div>
                 </div>
@@ -745,7 +796,7 @@ const AdFormPage = () => {
                     Couples:
                   </label>
                   <p className="p-2 border rounded bg-gray-100">
-                    {formData.maritalStatus}
+                    {formData.marital_status}
                   </p>
                 </div>
               </div>
@@ -767,7 +818,7 @@ const AdFormPage = () => {
                       Available
                     </label>
                     <p className="w-full p-2 border rounded bg-gray-100">
-                      {formData.availableDate || "No date provided"}
+                      {formData.available_date || "No date provided"}
                     </p>
                   </div>
                   <div className="w-1/2">
@@ -819,7 +870,7 @@ const AdFormPage = () => {
                     Expenses included:
                   </label>
                   <p className="p-2 border rounded bg-gray-100">
-                    {formData.expenseIncluded}
+                    {formData.expense_included}
                   </p>
                 </div>
 
@@ -829,7 +880,7 @@ const AdFormPage = () => {
                     Bathroom:
                   </label>
                   <p className="w-full p-2 border rounded bg-gray-100">
-                    {formData.bathShare}
+                    {formData.bath_share}
                   </p>
                 </div>
               </div>
@@ -879,46 +930,54 @@ const AdFormPage = () => {
           {activeTab === "submit" && (
             <div className="flex flex-col items-center space-y-4 bg-gray-200/80 border-2 border-black-20 p-2 rounded">
               <h2 className="text-xl font-semibold">Preview do Anúncio</h2>
-              <div className="flex h-42 w-full max-w-4xl overflow-hidden mx-auto bg-white shadow-md rounded-lg p-4">
-              <img
-              src={URL.createObjectURL(formData.image)}
-              alt="Room"
-              className="w-1/3 border-2 rounded object-cover h-full"
-            />
-            <div className="w-2/3 p-4 flex flex-col justify-between">
-                {/* Header Row */}
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="text-lg font-semibold">Quarto perto do deti</h3>
-                    <p className="text-sm text-gray-600">Quarto grande num t2...</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-xl font-semibold text-gray-800">320€</p>
-                    <a href="#" className="text-sm text-blue-600 hover:underline">Sr. Miguel André</a>
-                  </div>
-                </div>
+              <div className="flex flex-col md:flex-row w-full max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden md:h-48">
+                <img
+                  src={
+                    typeof formData.image === "string"
+                      ? formData.image
+                      : URL.createObjectURL(formData.image)
+                  }
+                  alt="Room"
+                  className="w-full md:w-1/3 h-64 md:h-full object-cover border-2 md:rounded-none rounded-t"
+                />
 
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2 mt-2">
-                  <span className="bg-gray-100 px-3 py-1 text-xs rounded-full border">Repas</span>
-                  <span className="bg-gray-100 px-3 py-1 text-xs rounded-full border">Casa de banho privativa</span>
-                  <span className="bg-gray-100 px-3 py-1 text-xs rounded-full border">T2</span>
-                </div>
+                <div className="w-full md:w-2/3 p-4 flex flex-col justify-between">
+                  {/* Header Row */}
+                  <div className="flex flex-col md:flex-row justify-between items-start gap-2">
+                    <div>
+                      <h3 className="text-lg font-semibold">{formData.name}</h3>
+                      <p className="text-sm text-gray-600">{formData.description}</p>
+                    </div>
+                    <div className="text-left md:text-right">
+                      <p className="text-xl font-semibold text-gray-800">{formData.price}€</p>
+                      <a href="#" className="text-sm text-blue-600 hover:underline">Sr. Miguel André</a>
+                    </div>
+                  </div>
 
-                {/* Action Icons */}
-                <div className="flex gap-3 justify-end mt-3">
-                  <button className="p-2 border rounded">
-                    <FiInfo size={18} />
-                  </button>
-                  <button className="p-2 border rounded ">
-                    <FaShareAlt size={18} />
-                  </button>
-                  <button className="p-2 border rounded ">
-                    <FaHeart size={18} />
-                  </button>
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2 mt-2">
+                    {formData.tags.slice(0, 5).map((tag, i) => (
+                      <span key={i} className="bg-gray-100 px-3 py-1 text-xs rounded-full border">{tag}</span>
+                    ))}
+                    {formData.tags.length >5 && (<span className="bg-gray-100 px-3 py-1 text-xs rounded-full border">{formData.tags.length-5}+</span>)}
+                  </div>
+
+                  {/* Action Icons */}
+                  <div className="flex gap-3 justify-end mt-2">
+                    <button className="p-2 border rounded">
+                      <FiInfo size={25} />
+                    </button>
+                    <button className="p-2 border rounded">
+                      <FaShareAlt size={25} />
+                    </button>
+                    <button className="p-2 border rounded">
+                      <FaHeart size={25} />
+                    </button>
+                  </div>
                 </div>
               </div>
-              </div>
+
+
               <h2 className="text-xl font-semibold">Ready to submit?</h2>
 
               {/* Buttons on opposite ends */}

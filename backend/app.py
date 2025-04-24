@@ -9,7 +9,7 @@ ip:str = '127.0.0.1'
 port:int = 5000
 
 app = Flask(__name__)
-CORS(app, resources={r"/*": {"origins": "http://localhost:5173"}})
+CORS(app)
 
 # check if email has landlord permission
 @app.route('/isLandLord/<email>')
@@ -26,92 +26,106 @@ def respond_to_landlordQuery(email):
 # save new add
 @app.route('/form', methods=['POST'])
 def processNewAd():
-    data = request.form
+    try:
+        data = request.form
 
-    print("==== Incoming form data ====")
-    for key in request.form:
-        print(f"{key}: {request.form[key]}")
-    print("==== Incoming files ====")
-    for file_key in request.files:
-        print(f"{file_key}: {request.files[file_key].filename}")
+        print("==== Incoming form data ====")
+        for key in request.form:
+            print(f"{key}: {request.form[key]}")
+        print("==== Incoming files ====")
+        for file_key in request.files:
+            print(f"{file_key}: {request.files[file_key].filename}")
 
-    if data is None:
-        return jsonify({"error": "Invalid form data"}), 400
-    
-    required_fields = [
-        'email', 'description', 'date', 'name', 'price', 'availableDate',
-        'gender', 'quantity', 'district', 'city', 'street', 'minAge', 'maxAge',
-        'bathShare', 'expenseIncluded', 'maritalStatus'
-    ]
+        if data is None:
+            return jsonify({"error": "Invalid form data"}), 400
+        
+        required_fields = [
+            'email', 'description', 'date', 'name', 'price', 'available_date',
+            'gender', 'quantity', 'district', 'city', 'street', 'min_age', 'max_age',
+            'bath_share', 'expense_included', 'marital_status'
+        ]
 
-    email = data.get('email')
-    description = data.get('description')
-    date = data.get('date') or str(datetime.datetime.now())
-    image = request.files.get('image')
-    name = data.get('name')
-    price = data.get('price')
-    available_date = data.get('availableDate')
-    gender = data.get('gender')
-    quantity = data.get('quantity')
-    district = data.get('district')
-    city = data.get('city')
-    street = data.get('street')
-    min_age = data.get('minAge')
-    max_age = data.get('maxAge')
-    bath_share = data.get('bathShare')
-    expense_included = data.get('expenseIncluded')
-    marital_status = data.get('maritalStatus')
-    tags = data.getlist('tags[]')
+        email = data.get('email')
+        description = data.get('description')
+        date = data.get('date') or str(datetime.datetime.now())
+        image = request.files.get('image')
+        name = data.get('name')
+        price = data.get('price')
+        available_date = data.get('available_date')
+        gender = data.get('gender')
+        quantity = data.get('quantity')
+        district = data.get('district')
+        city = data.get('city')
+        street = data.get('street')
+        min_age = data.get('min_age')
+        max_age = data.get('max_age')
+        bath_share = data.get('bath_share')
+        expense_included = data.get('expense_included')
+        marital_status = data.get('marital_status')
+        tags = data.getlist('tags[]')
+        isNew = data.getlist('isNew[]')
+        print("==== ISNEW ====")
 
-    for field in required_fields:
-        if not data.get(field):
-            return jsonify({"error": f"Missing or empty field: {field}"}), 400
+        print("isNew:", isNew)
 
-    if image is None:
-        return jsonify({"error": "Image is required"}), 400
+        
+        for field in required_fields:
+            if not data.get(field):
+                return jsonify({"error": f"Missing or empty field: {field}"}), 400
 
-    accounts = fn.loadAccounts()
+        if image is None:
+            return jsonify({"error": "Image is required"}), 400
+
+        accounts = fn.loadAccounts()
 
 
+        if (str(isNew[0])=="true"):
+            import hashlib
+            hash_input = f"{description}{date}".encode() + image.read()
+            image_hash = hashlib.sha256(hash_input).hexdigest()
+            image.seek(0)
+        
+        else:
+            image_hash = isNew[1]
 
-    import hashlib
-    hash_input = f"{description}{date}".encode() + image.read()
-    image_hash = hashlib.sha256(hash_input).hexdigest()
-    image.seek(0)
+        ads = fn.loadAds()
+        ads[image_hash] = {
+            "email": email,
+            "description": description,
+            "date": date,
+            "image_path": f'images/{image_hash}.png',
+            "name": name,
+            "price": price,
+            "available_date": available_date,
+            "gender": gender,
+            "quantity": quantity,
+            "district": district,
+            "city": city,
+            "street": street,
+            "min_age": min_age,
+            "max_age": max_age,
+            "bath_share": bath_share,
+            "expense_included": expense_included,
+            "marital_status": marital_status,
+            "tags": tags,
+            "isNew": isNew
+        }
 
-    ads = fn.loadAds()
-    ads[image_hash] = {
-        "email": email,
-        "description": description,
-        "date": date,
-        "image_path": f'images/{image_hash}.png',
-        "name": name,
-        "price": price,
-        "available_date": available_date,
-        "gender": gender,
-        "quantity": quantity,
-        "district": district,
-        "city": city,
-        "street": street,
-        "min_age": min_age,
-        "max_age": max_age,
-        "bath_share": bath_share,
-        "expense_included": expense_included,
-        "marital_status": marital_status,
-        "tags": tags
-    }
+        ll_ads = fn.loadll_ads()
+        if email in ll_ads:
+            ll_ads[email].append(image_hash)
+        else:
+            ll_ads[email] = [image_hash]
 
-    ll_ads = fn.loadll_ads()
-    if email in ll_ads:
-        ll_ads[email].append(image_hash)
-    else:
-        ll_ads[email] = [image_hash]
+        fn.savell_ads(ll_ads)
+        fn.saveAds(ads)
+        image.save(f'images/{image_hash}.png')
 
-    fn.savell_ads(ll_ads)
-    fn.saveAds(ads)
-    image.save(f'images/{image_hash}.png')
+        return jsonify({"response": "OK"}), 200
+    except Exception as e:
+        print("ERROR:", str(e))
+        return jsonify({"error": str(e)}), 400
 
-    return jsonify({"response": "OK"}), 200
 
 
 # get all ads
@@ -173,3 +187,22 @@ def serve_image(filename):
 
 if __name__ == '__main__':
     app.run(host=ip, port=port)
+
+@app.route('/delete_ad/<adhc>', methods=["DELETE", "OPTIONS"])
+def delete_ad(adhc):
+    ads = fn.loadAds()
+    ll_ads = fn.loadll_ads()
+
+    # Remove the ad from the dictionary
+    if (adhc in ads):
+        del ads[adhc]
+        ll_ads["supreme_landlord@gmail.com"].remove(adhc)
+
+    # Save the updated ads back to storage
+    fn.saveAds(ads)
+    fn.savell_ads(ll_ads)
+
+    # Return a successful response indicating deletion
+    return jsonify({"message": "Ad deleted successfully"}), 200
+
+

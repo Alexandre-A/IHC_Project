@@ -11,11 +11,14 @@ function LoginPage() {
 
     const handleLoginLandlord = () => {
       login("landlord"); // Or "landlord" depending on your logic
-
+      localStorage.removeItem("loggedInEmail")
+      localStorage.setItem("loggedInEmail","supreme_landlord@gmail.com")
     };
 
     const handleLoginTennant = () => {
         login("tennant"); // Or "landlord" depending on your logic
+        localStorage.removeItem("loggedInEmail")
+        localStorage.setItem("loggedInEmail","tennant@gmail.com")
       };
 
     return (
