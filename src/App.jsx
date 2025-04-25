@@ -24,7 +24,7 @@ function App() {
   return(
     <div className="min-h-screen flex flex-col">
     <NavbarInicial homepage={isHome} complete={userType}/>
-    <main className="flex-grow">
+    <main className="flex-grow bg-gray-100">
       <Routes>
         <Route path="/" element={<Homepage />} />
         <Route path="/forum" element={<Forum />} />

@@ -22,7 +22,7 @@ function LoginPage() {
       };
 
     return (
-        <div style={{ padding: 50, zIndex: 9999, position: "relative", backgroundColor: "white" }}>
+        <div style={{ padding: 50, zIndex: 9999, position: "relative"}} className='bg-gray-100'>
           <h1>Login</h1>
           <button onClick={handleLoginTennant} className="bg-blue-500 text-white px-4 py-2 m-2">
             Login as Tenant

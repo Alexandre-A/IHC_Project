@@ -8,6 +8,8 @@ import ads from '../../backend/jsons/ads.json';
 import { FiXCircle, FiCheckCircle, FiInfo, FiAlertTriangle } from 'react-icons/fi'
 const ip = "127.0.0.1";
 const port = 5000;
+const pattern = /[0-9][0-9]\/[0-9][0-9]\/[0-9][0-9][0-9][0-9]/;
+
 
 const AdFormPage = () => {
   // State for form fields
@@ -45,7 +47,7 @@ const AdFormPage = () => {
           ...prev,
           ...data,
           image: data.image_url || null, // just store the string if it exists
-          isNew:[false,data.image_path.split("/")[1].split(".")[0]]
+          isNew:[false,adId]
         }));
       } catch (error) {
         console.error("Error fetching ad:", error);
@@ -149,6 +151,13 @@ const AdFormPage = () => {
       "gender", "quantity", "district", "city", "street",
       "min_age", "max_age", "bath_share", "expense_included", "marital_status"
     ];
+
+    const validationFields = [
+      "price", "available_date",
+      "quantity",
+      "min_age", "max_age"
+    ];
+
   
     if (!changed && !formData.image) {
       setValidationMessage(`Por favor insira uma imagem.`);
@@ -165,6 +174,35 @@ const AdFormPage = () => {
         break;
       }
     }}
+
+    for (const field of validationFields){
+      if (field!=='available_date'){
+        if (!(!isNaN(Number(formData[field])) && 
+        formData[field].trim()  !== '')){
+          setValidationMessage(`Campo ${field} inválido.`);
+          setShowValidationModal(true);
+          changed = true
+          break;
+        }
+
+        if (field==='max_age'){
+          if (Number(formData[field])<Number(formData["min_age"])){
+            setValidationMessage(`Campo ${field} inválido (Max age inferior a Min age).`);
+            setShowValidationModal(true);
+            changed = true
+            break;
+          }
+        }
+      }
+      else{
+        if (!pattern.test(formData[field])){
+          setValidationMessage(`Campo ${field} inválido.`);
+          setShowValidationModal(true);
+          changed = true
+          break;
+        }
+      }
+    }
 
     if (changed) {
       setActiveTab("enter");
@@ -281,7 +319,9 @@ const AdFormPage = () => {
       bath_share: "Shared",
       tags: [],
       image: null,
+      isNew:[true,adId]
     })
+    localStorage.removeItem("edit")
   }
 
   // Open and close tag modal
@@ -392,7 +432,7 @@ const AdFormPage = () => {
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
-                    className="w-full p-2 border rounded"
+                    className={`w-full p-2 border rounded ${formData.description.length>0?"border-green-800":"border"}`}
                     rows="4"
                   />
                 </div>
@@ -444,8 +484,13 @@ const AdFormPage = () => {
                       value={formData.min_age}
                       onChange={handleChange}
                       placeholder="Age:"
-                      className="w-1/2 p-2 border rounded"
-                    />
+                      className={`w-1/2 p-2 border rounded ${
+                        formData.min_age.length > 0 
+                          ? !isNaN(Number(formData.min_age)) && formData.min_age.trim() !== ''
+                            ? 'border-green-800'
+                            : 'border-red-800'
+                          : 'border'
+                      }`}                   />
                     <span className="self-center">to</span>
                     <input
                       type="text"
@@ -453,7 +498,13 @@ const AdFormPage = () => {
                       value={formData.max_age}
                       onChange={handleChange}
                       placeholder="Age:"
-                      className="w-1/2 p-2 border rounded"
+                      className={`w-1/2 p-2 border rounded ${
+                        formData.max_age.length > 0 
+                          ? !isNaN(Number(formData.max_age)) && formData.max_age.trim()  !== ''
+                            ? 'border-green-800'
+                            : 'border-red-800'
+                          : 'border'
+                      }`} 
                     />
                   </div>
                 </div>
@@ -500,7 +551,7 @@ const AdFormPage = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className="w-full p-2 border rounded"
+                    className={`w-full p-2 border ${formData.name.length>0?"border-green-800":"border"} rounded`}
                   />
                 </div>
 
@@ -516,7 +567,7 @@ const AdFormPage = () => {
                       value={formData.available_date}
                       onChange={handleChange}
                       placeholder="MM/DD/YYYY"
-                      className="w-full p-2 border rounded"
+                      className={`w-full p-2 border rounded ${formData.available_date.length>0?(pattern.test(formData.available_date)?"border-green-800 bg-green-100/30":"border-red-800 bg-red-100/30"):"border"}`}
                     />
                   </div>
                   <div className="w-1/2">
@@ -528,7 +579,13 @@ const AdFormPage = () => {
                       name="price"
                       value={formData.price}
                       onChange={handleChange}
-                      className="w-full p-2 border rounded"
+                      className={`w-full p-2 border rounded ${
+                        formData.price.length > 0 
+                          ? !isNaN(Number(formData.price)) && formData.price.trim() !== ''
+                            ? 'border-green-800 bg-green-100/30'
+                            : 'border-red-800 bg-red-100/30'
+                          : 'border'
+                      }`}
                     />
                   </div>
                 </div>
@@ -559,7 +616,13 @@ const AdFormPage = () => {
                       name="quantity"
                       value={formData.quantity}
                       onChange={handleChange}
-                      className="w-full p-2 border rounded"
+                      className={`w-full p-2 border rounded ${
+                        formData.quantity.length > 0 
+                          ? !isNaN(Number(formData.quantity)) && formData.quantity.trim() !== ''
+                            ? 'border-green-800 bg-green-100/30'
+                            : 'border-red-800 bg-red-100/30'
+                          : 'border'
+                      }`}
                     />
                   </div>
                 </div>
@@ -574,7 +637,7 @@ const AdFormPage = () => {
                     name="street"
                     value={formData.street}
                     onChange={handleChange}
-                    className="w-full p-2 border rounded"
+                    className={`w-full p-2 border ${formData.street.length>0?"border-green-800 bg-green-100/30":"border"} rounded `}
                   />
                 </div>
 
@@ -657,12 +720,16 @@ const AdFormPage = () => {
 
                 
             <div className="w-full flex justify-between px-1">
-                <button
+              {!adId?<button
                   onClick={handleReset}
                   className="px-4 py-2 rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500"
                 >
                   <span className="text-lg">⟲</span> Clear All
-                </button>
+                </button>:<button
+                  className="px-4 py-2 rounded"
+                >
+                
+                </button>}
 
                 <button
               onClick={handleDataEntry}

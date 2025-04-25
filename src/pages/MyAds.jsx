@@ -1,11 +1,12 @@
-import { useState,useEffect, use } from 'react'
+import { useState,useEffect } from 'react'
 import { useAuth } from "../AuthContext";
 import '../index.css'
 import '../App.css'
 import { showToast } from '../components/Toasts/ToastMessages';
 import { useToast } from '../components/Toasts/ToastService';
 import { useNavigate } from 'react-router-dom';
-import { FaTrashAlt,FaShareAlt,FaHeart } from "react-icons/fa";
+import { FaMagnifyingGlass } from "react-icons/fa6";
+import { FaTrashAlt,FaShareAlt,FaHeart,FaSortAmountUpAlt,FaSortAmountDown} from "react-icons/fa";
 import { FiEdit, FiCheckCircle, FiInfo, FiAlertTriangle } from 'react-icons/fi'
 
 const ip = "127.0.0.1";
@@ -17,6 +18,11 @@ function MyAds() {
   const navigate = useNavigate();
   const email = localStorage.getItem("landlordEmail")
   const [roomData,setRoomData] = useState([]);
+  const [search,setSearch] = useState("");
+  const [copyRoomData,setCopyRoomData] = useState([]);
+  const [temp,setTemp] = useState([]);
+  const [order, setOrder] = useState(localStorage.getItem('order') || 'ascending');
+
 
   useEffect(() => {
     const msg = localStorage.getItem("toastSuccess");
@@ -34,6 +40,7 @@ function MyAds() {
         const res = await fetch("http://localhost:5000/ads/");
         const data = await res.json();
         setRoomData(data); // data is an array of ad objects
+        setCopyRoomData(data)
       } catch (err) {
         console.error("Failed to fetch ads:", err);
       }
@@ -42,12 +49,12 @@ function MyAds() {
     fetchAds();
   }, []); 
   
+
   const handleLogin = () => {
     navigate("/form")
   };
 
   const handleEdit = (id) =>{
-    console.log(id)
     localStorage.setItem("edit",id);
     navigate("/form")
   };
@@ -82,6 +89,110 @@ function MyAds() {
     }
   };
 
+  useEffect(() => {
+    console.log("Updated copyRoomData:", copyRoomData);
+  }, [copyRoomData]);
+
+  const handleChange = (e) => {
+    const {name,value} = e.target;
+
+    if (name=="search") setSearch(value)
+  }
+
+  const handleClick = (type) => {
+    let sortedData = [...copyRoomData]; // Always start with a fresh copy
+    let newTemp = [...copyRoomData]; // Store current state for reverting
+    const order = localStorage.getItem("order") || "ascending";
+    const currentSortedType = localStorage.getItem("sorted"); // Get current sorted type
+  
+    if (type === "search") {
+      localStorage.removeItem("sorted");
+      setTemp(roomData); // Reset temp to full dataset
+      const result = roomData.filter((element) =>
+        element.name.toLowerCase().includes(search.toLowerCase())
+      );
+      setCopyRoomData(result.length > 0 ? result : roomData);
+    } else if (type === "price") {
+      if (currentSortedType === "price") {
+        localStorage.removeItem("sorted");
+        setCopyRoomData(temp); // Revert to previous state
+      } else {
+        localStorage.setItem("sorted", "price");
+        sortedData.sort((a, b) =>
+          order === "ascending" ? a.price - b.price : b.price - a.price
+        );
+        setTemp(newTemp); // Save current state
+        setCopyRoomData(sortedData);
+      }
+    } else if (type === "LastEdited") {
+      if (currentSortedType === "LastEdited") {
+        localStorage.removeItem("sorted");
+        setCopyRoomData(temp);
+      } else {
+        localStorage.setItem("sorted", "LastEdited");
+        sortedData.sort((a, b) => {
+          const dateA = new Date(a.date);
+          const dateB = new Date(b.date);
+          return order === "ascending" ? dateA - dateB : dateB - dateA;
+        });
+        setTemp(newTemp);
+        setCopyRoomData(sortedData);
+      }
+    } else if (type === "Location") {
+      if (currentSortedType === "Location") {
+        localStorage.removeItem("sorted");
+        setCopyRoomData(temp);
+      } else {
+        localStorage.setItem("sorted", "Location");
+        sortedData.sort((a, b) => {
+          const compareDistrict = a.district.localeCompare(b.district);
+          const compareCity = a.city.localeCompare(b.city);
+          if (order === "ascending") {
+            return compareDistrict !== 0 ? compareDistrict : compareCity;
+          } else {
+            return compareDistrict !== 0 ? -compareDistrict : -compareCity;
+          }
+        });
+        setTemp(newTemp);
+        setCopyRoomData(sortedData);
+      }
+    } else if (type === "order") {
+      const newOrder = order === "descending" ? "ascending" : "descending";
+      localStorage.setItem("order", newOrder);
+      setOrder(newOrder);
+  
+      // Reapply sorting based on the current sorted type
+      if (currentSortedType) {
+        sortedData = [...copyRoomData]; // Start with current data
+        if (currentSortedType === "price") {
+          sortedData.sort((a, b) =>
+            newOrder === "ascending" ? a.price - b.price : b.price - a.price
+          );
+        } else if (currentSortedType === "LastEdited") {
+          sortedData.sort((a, b) => {
+            const dateA = new Date(a.date);
+            const dateB = new Date(b.date);
+            return newOrder === "ascending" ? dateA - dateB : dateB - dateA;
+          });
+        } else if (currentSortedType === "Location") {
+          sortedData.sort((a, b) => {
+            const compareDistrict = a.district.localeCompare(b.district);
+            const compareCity = a.city.localeCompare(b.city);
+            if (newOrder === "ascending") {
+              return compareDistrict !== 0 ? compareDistrict : compareCity;
+            } else {
+              return compareDistrict !== 0 ? -compareDistrict : -compareCity;
+            }
+          });
+        }
+        setCopyRoomData(sortedData);
+      }
+    } else {
+      localStorage.setItem("sorted", "true");
+      setSorted(true);
+    }
+  };
+
 
   return (<>
       <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
@@ -94,8 +205,48 @@ function MyAds() {
     <span className="text-2xl sm:text-3xl md:text-4xl leading-none font-semibold">+</span>
     <span className="text-xl sm:text-2xl md:text-3xl leading-none font-semibold">Novo Anúncio</span>
   </button>
+  <div className="w-full max-w-4xl rounded-lg flex space-y-2 md:space-y-0 md:flex-row flex-col justify-items-center items-center
+ md:justify-between px-1">
+    <div className="flex">
+      <input type='text' name="search" placeholder='Search' autoComplete='on' onChange={handleChange} className='border-1 rounded bg-white'></input>
+      <button className={`px-4 py-1 rounded right-4 bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500`}
+              onClick={() => handleClick("search")}><FaMagnifyingGlass /></button>
+    </div>
+    <div className="flex items-center">
+            <p className='mr-1 text-sm sm:text-md'>Ordered by:</p>
+            <button
+              className={`px-3 py-1 border-t-2 border-l-2 border-b-2 rounded-l bg-gray-200 hover:bg-gray-300 cursor-pointer text-sm 
+                ${localStorage.getItem("sorted")==="price"?"bg-gray-300":"bg-gray-200"}`}
+              onClick={() => handleClick("price")}
+            >
+              Preço
+            </button>
+            <button
+              className={`px-3 py-1 border-t-2 border-b-2 bg-gray-200 hover:bg-gray-300 cursor-pointer text-sm 
+                ${localStorage.getItem("sorted")==="Location"?"bg-gray-300":"bg-gray-200"}`}
+              onClick={() => handleClick("Location")}
+            >
+              Localização
+            </button>
+            <button
+              className={`px-3 py-1 border-t-2 border-b-2 border-r-2 rounded-r bg-gray-200 hover:bg-gray-300 cursor-pointer text-sm 
+                ${localStorage.getItem("sorted")==="LastEdited"?"bg-gray-300":"bg-gray-200"}`}
+              onClick={() => handleClick("LastEdited")}
+            >
+              Última Edição
+            </button>
+            <button
+              className={`px-2 ml-2 py-1 border-2 rounded bg-gray-200 hover:bg-gray-300 cursor-pointer
+                ${localStorage.getItem("sorted")?"bg-gray-300":"bg-gray-200"}`}
+              onClick={() => handleClick("order")}
+            >
+            {order === 'descending' ? <FaSortAmountDown /> : <FaSortAmountUpAlt />}               
+            </button>
+            
+          </div>
+  </div>
       <div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-4">
-        {roomData.map((ad,index)=>(
+        {copyRoomData.map((ad,index)=>(
           <div key={index} className="flex flex-col md:flex-row w-full max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden md:h-48 mb-3 border-gray-400 border-1">
                           <img
                             src={ad.image_url}

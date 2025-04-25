@@ -8,7 +8,7 @@ function Settings() {
   const { userType } = useAuth();
   const isLandlord = userType === "landlord";
   return (
-    <div>
+    <div className='bg-gray-100'>
      
     </div>
   )
