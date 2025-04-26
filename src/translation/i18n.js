@@ -50,7 +50,8 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     progress2: "Confirm Data",
                     progress3: "Submission",
                     continue: "Continue",
-                    clearAll: "Clear All"
+                    clearAll: "Clear All",
+                    validationTitle: "Invalid Form",
 
                 },
                 adFormPt2: {
@@ -115,7 +116,8 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     progress2: "Confirmar Dados",
                     progress3: "Submeter",
                     continue: "Continuar",
-                    clearAll: "Limpar Campos"
+                    clearAll: "Limpar Campos",
+                    validationTitle: "Formulário Inválido",
                 },
                 adFormPt2: {
 

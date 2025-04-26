@@ -171,7 +171,7 @@ const AdFormPage = () => {
     if(!changed){
     for (const field of requiredFields) {
       if (!formData[field] || formData[field].trim() === "") {
-        setValidationMessage(`Por favor preencha o campo: ${field}.`);
+        setValidationMessage(t("adFormPt3.validationMessage2", { field }));
         setShowValidationModal(true);
         changed = true
         break;
@@ -182,7 +182,7 @@ const AdFormPage = () => {
       if (field!=='available_date'){
         if (!(!isNaN(Number(formData[field])) && 
         formData[field].trim()  !== '')){
-          setValidationMessage(`Campo ${field} inválido.`);
+          setValidationMessage(t("adFormPt3.validationMessage4", { field }));          
           setShowValidationModal(true);
           changed = true
           break;
@@ -190,7 +190,7 @@ const AdFormPage = () => {
 
         if (field==='max_age'){
           if (Number(formData[field])<Number(formData["min_age"])){
-            setValidationMessage(`Campo ${field} inválido (Max age inferior a Min age).`);
+            setValidationMessage(t("adFormPt3.validationMessage3", { field }));            
             setShowValidationModal(true);
             changed = true
             break;
@@ -199,7 +199,7 @@ const AdFormPage = () => {
       }
       else{
         if (!pattern.test(formData[field])){
-          setValidationMessage(`Campo ${field} inválido.`);
+          setValidationMessage(t("adFormPt3.validationMessage4", { field }));          
           setShowValidationModal(true);
           changed = true
           break;
@@ -344,14 +344,14 @@ const AdFormPage = () => {
   return (
     <div>
       <Modal open={showValidationModal} onClose={() => setShowValidationModal(false)}>
-              <div className="text-center w-56">
-                <div className="mx-auto my-4 w-48">
-                  <h3 className="text-lg font-black text-gray-800">Formulário inválido</h3>
-                  <p className="text-sm text-gray-500 my-1">
-                    {validationMessage}
-                  </p>
-                </div>
-              </div>
+      <div className="fixed inset-0 bg-black/30 z-50 flex items-center justify-center">
+        <div className="bg-white p-6 rounded-lg shadow-lg z-60 text-center w-56">
+          <div className="mx-auto my-4 w-48">
+            <h3 className="text-lg font-black text-gray-800">{adFormPt1.validationTitle}</h3>
+            <p className="text-sm text-gray-500 my-1">{validationMessage}</p>
+          </div>
+        </div>
+      </div>
             </Modal>
       <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
         {/* Main Content */}
@@ -396,9 +396,11 @@ const AdFormPage = () => {
                   <label className="block text-sm font-medium mb-1">Form</label>
 
                   <label
-                    className="w-full h-32 border-2 border-dashed cursor-pointer border-gray-300 flex items-center justify-center relative"
+                    className={`w-full h-32 border-2 border-dashed border-gray-300 flex items-center justify-center relative ${
+                      showValidationModal ? "pointer-events-none opacity-60" : "cursor-pointer"
+                    }`}
                   >
-                    {formData.image ? (
+                    {formData.image  ? (
                       <img
                         src={
                     typeof formData.image === "string"

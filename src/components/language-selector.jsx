@@ -1,7 +1,6 @@
 import {useEffect} from "react";
 import {useTranslation} from "react-i18next";
 import { TbWorld } from "react-icons/tb";
-import { FaChevronDown } from "react-icons/fa"; 
 
 const languages = [
   {code: "En", lang: "English"},
