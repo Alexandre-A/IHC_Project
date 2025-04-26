@@ -71,6 +71,15 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     validationMessage3: "Invalid {{field}} field (Max age smaller than Min age).",
                     validationMessage4: "Invalid {{field}} field.",
                 }, 
+                profile:{
+                    name: "Name",
+                    contact: "Contact",
+                    nationality: "Nationality",
+                    livedIn: "Has previously stayed in:",
+                    owns:"Landlord of the following listed accommodations:",
+                    reviews: "Other people's reviews:",
+                    message: "Message"
+                },
             }
         },
         Pt:{
@@ -135,6 +144,15 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     validationMessage2: "Por favor preencha o campo: {{field}}",
                     validationMessage3: "Campo {{field}} inválido (Max age inferior a Min age).",
                     validationMessage4: "Campo {{field}} inválido.",
+                },
+                profile:{
+                    name: "Nome",
+                    contact: "Contacto",
+                    nationality: "Nacionalidade",
+                    livedIn: "Já esteve alojado em:",
+                    owns:"Senhorio dos seguintes alojamentos listados:",
+                    reviews: "Reviews de outras pessoas:",
+                    message: "Mensagem"
                 },
             }
         }

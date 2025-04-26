@@ -1,15 +1,175 @@
-import { useState } from 'react'
-import { useAuth } from "../AuthContext";
+import { useState,useEffect } from 'react'
 import '../index.css'
 import '../App.css'
-import NavbarInicial from '../components/NavbarIncial'
+import estudanteImg from '../assets/estudante.png';
+import landlordImg from '../assets/senhorio.png';
 
-function Profile() {
-  const { userType } = useAuth();
-  const isLandlord = userType === "landlord";
-  return (
-    <div className='bg-gray-100'>
+import { useTranslation } from "react-i18next";
+import ReviewCard from '../components/ReviewCard';
+import { HiOutlineBadgeCheck } from "react-icons/hi";
+
+
+
+function Profile({userType}) {
+  const {t} = useTranslation();
+  const profile = t("profile");
+  const [roomData,setRoomData] = useState([]);
+  
+  const TennantData = {
+    photo: estudanteImg,
+    name: "Matteo Rossi",
+    contact: "936 137 388",
+    email:"thestudent@gmail.com",
+    nationality: "Italian",
+    review: [
+      {
+        name: "Ana Silva",
+        email: "ana.silva@gmail.com",
+        rating: 5,
+        comment: "Matteo was a wonderful tenant! Always paid rent on time and kept the apartment in excellent condition."
+      },
+      {
+        name: "Carlos M.",
+        email: "carlos.monteiro@gmail.com",
+        rating: 4,
+        comment: "Bom estudante, respeitoso e organizado. Não houve problemas durante o contrato de arrendamento."
+      }
+    ]
+
+    }
+
+  const LandlordData = {
+    photo: landlordImg,
+    name: "Sr. Danilo",
+    contact: "969452366",
+    email:"supreme_landlord@gmail.com",
+    nationality: "Portuguese",
+    review: [
+      {
+        name: "Laura P.",
+        email: "laura.pereira@gmail.com",
+        rating: 5,
+        comment: "Sr. Danilo was an amazing landlord. Always quick to solve any issues and very fair with the rental terms!"
+      },
+      {
+        name: "João Ferreira",
+        email: "joao.ferreira@gmail.com",
+        rating: 4,
+        comment: "A experiência foi muito boa. O Sr. Danilo é atencioso e manteve o apartamento sempre em boas condições."
+      },
+      {
+        name: "Miguel Santos",
+        email: "miguel.santos@gmail.com",
+        rating: 5,
+        comment: "Excelente senhorio! Sempre disponível para ajudar e muito compreensivo. Recomendo a 100%."
+      }
       
+    ]
+
+    }
+
+  const pageData = userType==="landlord"? LandlordData: TennantData;
+
+  useEffect(() => {
+      const fetchAds = async () => {
+        try {
+          const res = await fetch("http://localhost:5000/ads/");
+          const data = await res.json();
+          setRoomData(data);
+        } catch (err) {
+          console.error("Failed to fetch ads:", err);
+        }
+      };
+    
+      fetchAds();
+    }, []); 
+
+    useEffect(()=>{
+      console.log(roomData)
+    },[roomData])
+
+  return (
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
+      <div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-4">
+        <div className="border-t-2 border-r-2 border-l-2 bg-white rounded-t flex flex-col space-y-2 sm:space-y-0 sm:flex-row sm:justify-between pl-4 pr-4 pb-2 pt-2">
+          <div className=" flex flex-row justify-between"> 
+            <div>
+            <div className="relative w-[140px] h-[140px]">
+              <img 
+                src={pageData.photo} 
+                alt="A nice photo"
+                className="w-full h-full rounded-full object-cover border-2 border-gray-300 p-1"
+              />
+
+              <HiOutlineBadgeCheck 
+                className={`absolute bottom-1 right-1 ${userType==='landlord'?"text-blue-500":"text-black"} rounded-full w-10 h-10 p-1 translate-x-1/4 translate-y-1/4`}
+              />
+            </div>
+            </div>
+
+            <div className="flex-1 ml-4 pl-2 ">
+              <p className='mt-1'><b>{profile.name}: </b>{pageData.name}</p>
+              <p className='my-2'><b>Email: </b>{pageData.email}</p>
+              <p className='my-2'><b>{profile.contact}: </b>{pageData.contact}</p>
+              <p className=''><b>{profile.nationality}: </b>{pageData.nationality}</p>
+            </div>
+          </div>
+          <div className='flex flex-row justify-center items-baseline '>
+            <button className="px-4 text-sm rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500">
+              + {profile.message}
+            </button>
+          </div>
+        </div>
+
+        
+        <div className="border-2 bg-white flex flex-col justify-center pl-4 pr-4 pb-4 pt-1">
+
+          <p className='my-1 pl-2'><b>{userType==='landlord'?profile.owns:profile.livedIn} </b></p>
+          <div className="w-full max-w-4xl border-1 p-2 bg-gray-100 shadow-md rounded-lg h-[440px] overflow-y-auto">        
+            {roomData.map((ad, index) => (
+              (userType==='landlord' || index % 2 === 0) ? (   
+                <div key={index} className="flex flex-col md:flex-row w-full max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden md:h-48 mb-4">
+                  <img
+                    src={ad.image_url}
+                    alt="Room"
+                    className="w-full md:w-1/3 h-64 md:h-full object-cover border-2 md:rounded-none rounded-t"
+                  />
+                  <div className="w-full md:w-2/3 p-4 flex flex-col justify-between">
+                    <h3 className="text-lg font-semibold">{ad.name}</h3>
+                    <p className="text-sm text-gray-600">{ad.description}</p>
+                    <p className="text-xl font-semibold text-gray-800">{ad.price}€</p>
+
+                    <div className="flex flex-wrap gap-2 mt-2">
+                      {ad.tags?.slice(0, 5).map((tag, i) => (
+                        <span key={i} className="bg-gray-100 px-3 py-1 text-xs rounded-full border">{tag}</span>
+                      ))}
+                      {ad.tags?.length > 5 && (
+                        <span className="bg-gray-100 px-3 py-1 text-xs rounded-full border">{ad.tags.length - 5}+</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <></> 
+              )
+            ))}
+          </div>
+        </div>
+
+        <div className="border-b-2 border-r-2 border-l-2 bg-white flex flex-col justify-center pl-4 pr-4 pb-4 pt-1">
+          <div className='flex flex-row justify-between'>
+            <p className=' pl-2'><b>{profile.reviews}</b></p>
+            <button className="px-4 text-sm rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500">
+              + Review
+            </button>
+          </div>
+          <div className="w-full max-w-4xl p-2 rounded-lg h-[180px] flex flex-col md:flex-row overflow-y-auto md:overflow-x-auto md:overflow-y-hidden">   
+            {pageData.review.map((ad,index)=>(
+              <ReviewCard key={index} name={ad.name} email={ad.email} rating={ad.rating} comment={ad.comment}></ReviewCard>
+            ))}         
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

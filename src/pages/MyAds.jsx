@@ -265,7 +265,7 @@ function MyAds() {
                               </div>
                               <div className="text-left md:text-right">
                                 <p className="text-xl font-semibold text-gray-800">{ad.price}€</p>
-                                <a href="#" className="text-sm text-blue-600 hover:underline">Sr. Miguel André</a>
+                                <a href="#" className="text-sm text-blue-600 hover:underline">Sr. Danilo</a>
                               </div>
                             </div>
           
