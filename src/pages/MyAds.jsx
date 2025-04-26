@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { FaTrashAlt,FaShareAlt,FaHeart,FaSortAmountUpAlt,FaSortAmountDown} from "react-icons/fa";
 import { FiEdit, FiCheckCircle, FiInfo, FiAlertTriangle } from 'react-icons/fi'
+import { useTranslation } from "react-i18next";
 
 const ip = "127.0.0.1";
 const port = 5000;
@@ -22,7 +23,8 @@ function MyAds() {
   const [copyRoomData,setCopyRoomData] = useState([]);
   const [temp,setTemp] = useState([]);
   const [order, setOrder] = useState(localStorage.getItem('order') || 'ascending');
-
+  const {t} = useTranslation();
+  const myads = t("myads");
 
   useEffect(() => {
     const msg = localStorage.getItem("toastSuccess");
@@ -68,23 +70,23 @@ function MyAds() {
       if (response.ok) {
         localStorage.setItem("toastSuccess", JSON.stringify({
           type: "success",
-          header: "Sucesso",
-          message: "Anúncio eliminado com sucesso"
+          header: `${myads.modalTitle1}`,
+          message: `${myads.modalVariation1}`
         }));
       } else {
         // Handle the case when the response is not successful
         localStorage.setItem("toastSuccess", JSON.stringify({
           type: "error",
-          header: "Erro",
-          message: "Falha na eliminação do anúncio"
+          header: `${myads.modalTitle2}`,
+          message: `${myads.modalVariation2}`
         }));
       }
     } catch (error) {
       // Handle error if fetch fails
       localStorage.setItem("toastSuccess", JSON.stringify({
         type: "error",
-        header: "Erro",
-        message: "Falha na eliminação do anúncio"
+        header: `${myads.modalTitle2}`,
+        message: `${myads.modalVariation2}`
       }));
     }
   };
@@ -203,37 +205,37 @@ function MyAds() {
                transition-colors duration-200 cursor-pointer text-base sm:text-lg md:text-xl mb-5 shadow-md border-2 border-black"
   >
     <span className="text-2xl sm:text-3xl md:text-4xl leading-none font-semibold">+</span>
-    <span className="text-xl sm:text-2xl md:text-3xl leading-none font-semibold">Novo Anúncio</span>
+    <span className="text-xl sm:text-2xl md:text-3xl leading-none font-semibold">{myads.newAd}</span>
   </button>
   <div className="w-full max-w-4xl rounded-lg flex space-y-2 md:space-y-0 md:flex-row flex-col justify-items-center items-center
  md:justify-between px-1">
     <div className="flex">
-      <input type='text' name="search" placeholder='Search' autoComplete='on' onChange={handleChange} className='border-1 rounded bg-white'></input>
+      <input type='text' name="search" placeholder={myads.search} autoComplete='on' onChange={handleChange} className='border-1 rounded bg-white'></input>
       <button className={`px-4 py-1 rounded right-4 bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500`}
               onClick={() => handleClick("search")}><FaMagnifyingGlass /></button>
     </div>
     <div className="flex items-center">
-            <p className='mr-1 text-sm sm:text-md'>Ordered by:</p>
+            <p className='mr-1 text-sm sm:text-md'>{myads.orderedBy}</p>
             <button
               className={`px-3 py-1 border-t-2 border-l-2 border-b-2 rounded-l bg-gray-200 hover:bg-gray-300 cursor-pointer text-sm 
                 ${localStorage.getItem("sorted")==="price"?"bg-gray-300":"bg-gray-200"}`}
               onClick={() => handleClick("price")}
             >
-              Preço
+              {myads.price}
             </button>
             <button
               className={`px-3 py-1 border-t-2 border-b-2 bg-gray-200 hover:bg-gray-300 cursor-pointer text-sm 
                 ${localStorage.getItem("sorted")==="Location"?"bg-gray-300":"bg-gray-200"}`}
               onClick={() => handleClick("Location")}
             >
-              Localização
+              {myads.location}
             </button>
             <button
               className={`px-3 py-1 border-t-2 border-b-2 border-r-2 rounded-r bg-gray-200 hover:bg-gray-300 cursor-pointer text-sm 
                 ${localStorage.getItem("sorted")==="LastEdited"?"bg-gray-300":"bg-gray-200"}`}
               onClick={() => handleClick("LastEdited")}
             >
-              Última Edição
+              {myads.lastEdited}
             </button>
             <button
               className={`px-2 ml-2 py-1 border-2 rounded bg-gray-200 hover:bg-gray-300 cursor-pointer
@@ -282,14 +284,14 @@ function MyAds() {
                                 onClick={() => handleEdit(ad.image_path.split("/")[1].split(".")[0])}
                               >
                                 <FiEdit size={25} className="inline-flex align-middle" />
-                                <span className="inline-flex align-middle">Edit</span>
+                                <span className="inline-flex align-middle">{myads.edit}</span>
                               </button>
                               <button
                                 className="p-2 border rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer flex items-center gap-2"
                                 onClick={() => handleRemove(ad.image_path.split("/")[1].split(".")[0])}
                               >
                                 <FaTrashAlt size={25} className="inline-flex align-middle" />
-                                <span className="inline-flex align-middle">Delete</span>
+                                <span className="inline-flex align-middle">{myads.delete}</span>
                               </button>
                             </div>
 

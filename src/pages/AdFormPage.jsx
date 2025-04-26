@@ -4,15 +4,19 @@ import Modal from "../components/Modal";
 import districtCityMap from '../../backend/jsons/districtCityMap.json';
 import { FaHeart, FaCamera, FaShareAlt } from 'react-icons/fa';
 import ads from '../../backend/jsons/ads.json';
-
+import { useTranslation } from "react-i18next";
 import { FiXCircle, FiCheckCircle, FiInfo, FiAlertTriangle } from 'react-icons/fi'
-const ip = "127.0.0.1";
-const port = 5000;
-const pattern = /[0-9][0-9]\/[0-9][0-9]\/[0-9][0-9][0-9][0-9]/;
+
 
 
 const AdFormPage = () => {
   // State for form fields
+  const ip = "127.0.0.1";
+  const port = 5000;
+  const pattern = /[0-9][0-9]\/[0-9][0-9]\/[0-9][0-9][0-9][0-9]/;
+  const {t} = useTranslation();
+  const adFormPt1 = t("adFormPt1");
+  const adFormPt3 = t("adFormPt3");
   const adId = localStorage.getItem("edit");
 
   const [formData, setFormData] = useState({
@@ -72,7 +76,6 @@ const AdFormPage = () => {
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
   const [showValidationModal, setShowValidationModal] = useState(false);
   const [validationMessage, setValidationMessage] = useState("");
-  const cities = districtCityMap[formData.district] || [];
 
 
   // Helper function to update tags while avoiding duplicates
@@ -160,7 +163,7 @@ const AdFormPage = () => {
 
   
     if (!changed && !formData.image) {
-      setValidationMessage(`Por favor insira uma imagem.`);
+      setValidationMessage(`${adFormPt3.validationMessage1}`);
       setShowValidationModal(true);
       changed = true
     }
@@ -228,6 +231,16 @@ const AdFormPage = () => {
       updateTags(`Expenses: ${formData.expense_included}`, "Expenses: ")
     }
   }, []);
+
+  const handleRemoveTags = (index) => {
+    const updatedTags = [...formData.tags]; // clone the array
+    updatedTags.splice(index, 1);           // remove the tag
+    setFormData((prev) => ({
+      ...prev,
+      tags: updatedTags
+    }));
+  };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -350,7 +363,7 @@ const AdFormPage = () => {
                 activeTab === "enter" ? "bg-blue-500 text-white" : "bg-gray-200"
               }`}
             >
-              Enter Data
+              {adFormPt1.progress1}
             </button>
             <button
               className={`px-4 py-2 ${
@@ -359,7 +372,7 @@ const AdFormPage = () => {
                   : "bg-gray-200"
               }`}
             >
-              Confirm Data
+              {adFormPt1.progress2}
             </button>
             <button
               className={`px-4 py-2 rounded-r ${
@@ -368,7 +381,7 @@ const AdFormPage = () => {
                   : "bg-gray-200"
               }`}
             >
-              Submission
+              {adFormPt1.progress3}
             </button>
             
           </div>
@@ -432,7 +445,7 @@ const AdFormPage = () => {
                     name="description"
                     value={formData.description}
                     onChange={handleChange}
-                    className={`w-full p-2 border rounded ${formData.description.length>0?"border-green-800":"border"}`}
+                    className={`w-full p-2 border rounded ${formData.description.length>0?"border-green-800 bg-green-100/30":"border"}`}
                     rows="4"
                   />
                 </div>
@@ -487,8 +500,8 @@ const AdFormPage = () => {
                       className={`w-1/2 p-2 border rounded ${
                         formData.min_age.length > 0 
                           ? !isNaN(Number(formData.min_age)) && formData.min_age.trim() !== ''
-                            ? 'border-green-800'
-                            : 'border-red-800'
+                            ? 'border-green-800 bg-green-100/30'
+                            : 'border-red-800 bg-red-100/30'
                           : 'border'
                       }`}                   />
                     <span className="self-center">to</span>
@@ -501,8 +514,8 @@ const AdFormPage = () => {
                       className={`w-1/2 p-2 border rounded ${
                         formData.max_age.length > 0 
                           ? !isNaN(Number(formData.max_age)) && formData.max_age.trim()  !== ''
-                            ? 'border-green-800'
-                            : 'border-red-800'
+                            ? 'border-green-800 bg-green-100/30'
+                            : 'border-red-800 bg-red-100/30'
                           : 'border'
                       }`} 
                     />
@@ -551,7 +564,7 @@ const AdFormPage = () => {
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
-                    className={`w-full p-2 border ${formData.name.length>0?"border-green-800":"border"} rounded`}
+                    className={`w-full p-2 border ${formData.name.length>0?"border-green-800 bg-green-100/30":"border"} rounded`}
                   />
                 </div>
 
@@ -700,7 +713,7 @@ const AdFormPage = () => {
                   onClick={openTagModal}
                   className="p-2 bg-blue-500 text-white rounded mb-2 cursor-pointer hover:bg-blue-600"
                 >
-                  Add Tags
+                  Add/Edit Tags
                 </button>
                 <div className="mt-2">
                   {formData.tags.length > 0 ? (
@@ -724,7 +737,7 @@ const AdFormPage = () => {
                   onClick={handleReset}
                   className="px-4 py-2 rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500"
                 >
-                  <span className="text-lg">⟲</span> Clear All
+                  <span className="text-lg">⟲</span> {adFormPt1.clearAll}
                 </button>:<button
                   className="px-4 py-2 rounded"
                 >
@@ -735,7 +748,7 @@ const AdFormPage = () => {
               onClick={handleDataEntry}
               className={`px-4 py-2 rounded right-4 bg-green-600 border-2 border-green-800 cursor-pointer hover:text-white `}
               >
-              Continuar
+              {adFormPt1.continue}
             </button>
               </div>
               </div>
@@ -743,7 +756,7 @@ const AdFormPage = () => {
 
               {/* Tag Input Modal */}
               {isTagModalOpen && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                <div className="fixed inset-0 visible bg-black/30 flex items-center transition-colors justify-center z-50">
                   <div className="bg-white rounded-lg p-6 w-full max-w-md">
                     <h2 className="text-lg font-medium mb-4">Add Tags</h2>
                     <div className="flex space-x-2 mb-4">
@@ -770,9 +783,11 @@ const AdFormPage = () => {
                         formData.tags.map((tag, index) => (
                           <span
                             key={index}
-                            className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm mr-2 mb-2"
+                            className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm mr-2 mb-2 cursor-pointer hover:bg-gray-300"
+                            onClick={()=>handleRemoveTags(index)}
+
                           >
-                            {tag}
+                            {tag + " X"}
                           </span>
                         ))
                       ) : (
@@ -821,7 +836,7 @@ const AdFormPage = () => {
                   <label className="block text-sm font-medium mb-1">
                     Description:
                   </label>
-                  <p className="w-full p-2 border rounded bg-gray-100">
+                  <p className="w-full p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
                     {formData.description || "No description provided"}
                   </p>
                 </div>
@@ -847,11 +862,11 @@ const AdFormPage = () => {
                     Who are you looking for:
                   </label>
                   <div className="flex space-x-2">
-                    <p className="w-1/2 p-2 border rounded bg-gray-100">
+                    <p className="w-1/2 p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
                       {formData.min_age || "No age specified"}
                     </p>
                     <span className="self-center">to</span>
-                    <p className="w-1/2 p-2 border rounded bg-gray-100">
+                    <p className="w-1/2 p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
                       {formData.max_age || "No age specified"}
                     </p>
                   </div>
@@ -873,7 +888,7 @@ const AdFormPage = () => {
                 {/* Name */}
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">Name</label>
-                  <p className="w-full p-2 border rounded bg-gray-100">
+                  <p className="w-full p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
                     {formData.name || "No name provided"}
                   </p>
                 </div>
@@ -892,7 +907,7 @@ const AdFormPage = () => {
                     <label className="block text-sm font-medium mb-1">
                       Price
                     </label>
-                    <p className="w-full p-2 border rounded bg-gray-100">
+                    <p className="w-full p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
                       {formData.price || "No price provided"}
                     </p>
                   </div>
@@ -912,7 +927,7 @@ const AdFormPage = () => {
                     <label className="block text-sm font-medium mb-1">
                       Quantity
                     </label>
-                    <p className="w-full p-2 border rounded bg-gray-100">
+                    <p className="w-full p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
                       {formData.quantity || "No room number provided"}
                     </p>
                   </div>
@@ -923,7 +938,7 @@ const AdFormPage = () => {
                   <label className="block text-sm font-medium mb-1">
                     Street or Avenue
                   </label>
-                  <p className="w-full p-2 border rounded bg-gray-100">
+                  <p className="w-full p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
                     {formData.street || "No street provided"}
                   </p>
                 </div>
@@ -978,7 +993,7 @@ const AdFormPage = () => {
               onClick={() => setActiveTab("enter")}
               className={`px-4 py-2 rounded right-4 bg-red-600 border-2 border-red-800 cursor-pointer hover:text-white `}
               >
-              Retroceder
+              {adFormPt3.goBack}
             </button>
             
               </div>
@@ -988,7 +1003,7 @@ const AdFormPage = () => {
               onClick={() => setActiveTab("submit")}
               className={`px-4 py-2 rounded right-4 bg-green-600 border-2 border-green-800 cursor-pointer hover:text-white `}
               >
-              Continuar
+              {adFormPt1.continue}
             </button>
             
               </div>
@@ -996,7 +1011,7 @@ const AdFormPage = () => {
           )}
           {activeTab === "submit" && (
             <div className="flex flex-col items-center space-y-4 bg-gray-200/80 border-2 border-black-20 p-2 rounded">
-              <h2 className="text-xl font-semibold">Preview do Anúncio</h2>
+              <h2 className="text-xl font-semibold">{adFormPt3.adPreview}</h2>
               <div className="flex flex-col md:flex-row w-full max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden md:h-48">
                 <img
                   src={
@@ -1045,7 +1060,7 @@ const AdFormPage = () => {
               </div>
 
 
-              <h2 className="text-xl font-semibold">Ready to submit?</h2>
+              <h2 className="text-xl font-semibold">{adFormPt3.readyMessage}</h2>
 
               {/* Buttons on opposite ends */}
               <div className="w-full flex justify-between px-4">
@@ -1053,14 +1068,14 @@ const AdFormPage = () => {
                   onClick={() => setActiveTab("confirm")}
                   className="px-4 py-2 rounded bg-red-600 border-2 border-red-800 cursor-pointer hover:text-white"
                 >
-                  Retroceder
+                  {adFormPt3.goBack}
                 </button>
 
                 <button
                   onClick={handleSubmit}
                   className="px-4 py-2 rounded bg-green-600 hover:text-white border-2 border-green-800 cursor-pointer"
                 >
-                  Submit Ad
+                  {adFormPt3.submit}
                 </button>
               </div>
             </div>

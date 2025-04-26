@@ -5,19 +5,22 @@ import '../App.css'
 import { SedanSVG } from '../assets/SedanSVG';
 import Modal from '../components/Modal';
 import { Forum } from '../assets/Forum';
+import { useTranslation } from "react-i18next";
 
   
 function Homepage() {
   const Bright_orange= "rgb(28, 10, 0)";
   const Dark_cyan="rgb(63, 35, 5)";
   const Very_dark_cyan= "rgb(96, 54, 1)";
+  const {t} = useTranslation();
+  const homepage = t("homepage");
 
   const data = [
     {
       bgcolour: Bright_orange,
       icon: <SedanSVG className="mb-8"/>,
-      heading: "Área de Senhorio",
-      paragraph: "Área destinada à publicação e edição de anúncios",
+      heading: homepage.header1,
+      paragraph: homepage.paragraph1,
       inverted: false,
       onclick: (userType, setModal) => {
         if (userType !== "landlord") setModal("first");
@@ -27,16 +30,16 @@ function Homepage() {
     {
       bgcolour: Dark_cyan,
       icon: <SedanSVG className="mb-8"/>,
-      heading: "Explorar",
-      paragraph: "Àrea destinada à procura de alojamento e consulta de detalhes dos mesmos",
+      heading: homepage.header2,
+      paragraph: homepage.paragraph2,
       inverted: true,
       onclick: () => {navigate("/ads")},
       },
     {
       bgcolour: Very_dark_cyan,
       icon: <Forum className="mb-8"/>,
-      heading: "Fórum",
-      paragraph: "Àrea destinada à partilha pública de informação entre users",
+      heading: homepage.header3,
+      paragraph: homepage.paragraph3,
       inverted: false,
       onclick: (userType, setModal) => {
         if (userType === null) setModal("third");
@@ -68,7 +71,7 @@ function Homepage() {
           <h1 className="text-5xl font-bold uppercase tracking-wide">Easy Room</h1>
           <p className="text-lg mt-2 opacity-80">Your trusted platform for housing solutions</p>
         </section>
-        <section className='rounded-md overflow-hidden grid grid-cols-1 md:grid-cols-3 mt-10 text-white'>
+        <section className='rounded-md  grid grid-cols-1 md:grid-cols-3 mt-10 text-white'>
           {/* Card */}
           {data.map((data, index) => (
             <Card 
@@ -86,9 +89,9 @@ function Homepage() {
       <Modal open={modal == "first"} onClose={() => setModal(null)}>
         <div className="text-center w-56">
           <div className="mx-auto my-4 w-48">
-            <h3 className="text-lg font-black text-gray-800">Acesso Inválido</h3>
+            <h3 className="text-lg font-black text-gray-800">{homepage.modalTitle}</h3>
             <p className="text-sm text-gray-500 my-1">
-              É necessário fazer login com conta de senhorio para aceder à secção Publicar Anúncio
+              {homepage.modalVariation1}
             </p>
           </div>
         </div>
@@ -96,9 +99,9 @@ function Homepage() {
       <Modal open={modal == "third"} onClose={() => setModal(null)}>
         <div className="text-center w-56">
           <div className="mx-auto my-4 w-48">
-            <h3 className="text-lg font-black text-gray-800">Acesso Inválido</h3>
+            <h3 className="text-lg font-black text-gray-800">{homepage.modalTitle}</h3>
             <p className="text-sm text-gray-500 my-1">
-              É necessário fazer login com conta de senhorio ou inquilino para aceder à secção Publicar Anúncio
+            {homepage.modalVariation2}
             </p>
           </div>
         </div>
