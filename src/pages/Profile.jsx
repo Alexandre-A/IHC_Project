@@ -3,19 +3,77 @@ import '../index.css'
 import '../App.css'
 import estudanteImg from '../assets/estudante.png';
 import landlordImg from '../assets/senhorio.png';
-
+import { useParams } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import ReviewCard from '../components/ReviewCard';
 import { HiOutlineBadgeCheck } from "react-icons/hi";
+import Modal from "../components/Modal";
 
 
 
-function Profile({userType}) {
+
+function Profile() {
+  const { userType } = useParams();
   const {t} = useTranslation();
   const profile = t("profile");
   const [roomData,setRoomData] = useState([]);
+  const type = localStorage.getItem("userType");
+  const [isTagModalOpen, setIsTagModalOpen] = useState(false);
+  const [comment, setComment] = useState("");
+  const [rating, setRating] = useState("");
+  const [showValidationModal, setShowValidationModal] = useState(false);
+  const [validationMessage, setValidationMessage] = useState("");
+  const [email, setEmail] = useState(type==='landlord'?"supreme_landlord@gmail.com":"thestudent@gmail.com");
+  const [name, setName] = useState(type==='landlord'?"Sr Danilo":"Matteo Rossi");
+
+  // Open and close tag modal
+  const openTagModal = () => setIsTagModalOpen(true);
+  const closeTagModal = () => {
+    const numericRating = Number(rating);
+    console.log(rating)
+    if (rating===''|| isNaN(numericRating) || numericRating < 0 || numericRating > 5) {
+      return;
+    }
+    if (userType === 'landlord') {
+      const updatedData = {
+        ...LandlordData,
+        review: [
+          ...LandlordData.review,
+          {
+            name: name,
+            email: email,
+            rating: numericRating,
+            comment: comment,
+          }
+        ]
+      };
+      setLandlordData(updatedData);
+      localStorage.setItem('landlordData', JSON.stringify(updatedData));
+    } else {
+      const updatedData = {
+        ...TennantData,
+        review: [
+          ...TennantData.review,
+          {
+            name: name,
+            email: email,
+            rating: numericRating,
+            comment: comment,
+          }
+        ]
+      };
+      setTennantData(updatedData);
+      localStorage.setItem('tennantData', JSON.stringify(updatedData));
+    }
+    
+
+    setIsTagModalOpen(false);
+    setRating('');
+    setComment('');}
+
   
-  const TennantData = {
+  
+  const [TennantData,setTennantData] = useState({
     photo: estudanteImg,
     name: "Matteo Rossi",
     contact: "936 137 388",
@@ -34,11 +92,13 @@ function Profile({userType}) {
         rating: 4,
         comment: "Bom estudante, respeitoso e organizado. Não houve problemas durante o contrato de arrendamento."
       }
-    ]
+    ],
+    canMessage: type?(type==='tennant'?false:true):(false),
+    canReview: type?(type==='tennant'?false:true):(false),
+    canEdit: type?(type==='tennant'?true:false):(false),    
+  })
 
-    }
-
-  const LandlordData = {
+  const [LandlordData, setLandlordData] = useState({
     photo: landlordImg,
     name: "Sr. Danilo",
     contact: "969452366",
@@ -64,11 +124,31 @@ function Profile({userType}) {
         comment: "Excelente senhorio! Sempre disponível para ajudar e muito compreensivo. Recomendo a 100%."
       }
       
-    ]
+    ],
+    canMessage: type?(type==='landlord'?false:true):(false),
+    canReview: type?(type==='landlord'?false:true):(false),
+    canEdit: type?(type==='landlord'?true:false):(false),
 
+    })
+
+  const [pageData,setPageData] = useState(userType==="landlord"? LandlordData: TennantData);
+
+  useEffect(()=>{
+    setPageData(userType==="landlord"? LandlordData: TennantData)
+  },[LandlordData,TennantData])
+
+  useEffect(() => {
+    const savedLandlord = localStorage.getItem('landlordData');
+    const savedTennant = localStorage.getItem('tennantData');
+  
+    if (savedLandlord) {
+      setLandlordData(JSON.parse(savedLandlord));
     }
-
-  const pageData = userType==="landlord"? LandlordData: TennantData;
+    if (savedTennant) {
+      setTennantData(JSON.parse(savedTennant));
+    }
+  }, []);
+  
 
   useEffect(() => {
       const fetchAds = async () => {
@@ -89,7 +169,18 @@ function Profile({userType}) {
     },[roomData])
 
   return (
+    
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
+      <Modal open={showValidationModal} onClose={() => setShowValidationModal(false)}>
+      <div className="fixed inset-0 bg-black/30 z-60 flex items-center justify-center">   
+        <div className="bg-white p-6 rounded-lg shadow-lg text-center w-56">
+                <div className="mx-auto my-4 w-48">
+                  <h3 className="text-lg font-black text-gray-800">{profile.validationTitle}</h3>
+                  <p className="text-sm text-gray-500 my-1">{validationMessage}</p>
+                </div>
+              </div>
+            </div>
+                  </Modal>
       <div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-4">
         <div className="border-t-2 border-r-2 border-l-2 bg-white rounded-t flex flex-col space-y-2 sm:space-y-0 sm:flex-row sm:justify-between pl-4 pr-4 pb-2 pt-2">
           <div className=" flex flex-row justify-between"> 
@@ -115,9 +206,16 @@ function Profile({userType}) {
             </div>
           </div>
           <div className='flex flex-row justify-center items-baseline '>
-            <button className="px-4 text-sm rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500">
+            {pageData.canMessage?
+            <button className="px-4 rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500">
               + {profile.message}
-            </button>
+            </button>:<></>
+            }
+            {pageData.canEdit?
+            <button className="px-4 rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500">
+              + {profile.edit}
+            </button>:<></>
+            }
           </div>
         </div>
 
@@ -159,9 +257,11 @@ function Profile({userType}) {
         <div className="border-b-2 border-r-2 border-l-2 bg-white flex flex-col justify-center pl-4 pr-4 pb-4 pt-1">
           <div className='flex flex-row justify-between'>
             <p className=' pl-2'><b>{profile.reviews}</b></p>
-            <button className="px-4 text-sm rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500">
+            {pageData.canMessage?
+            <button className="px-4 text-sm rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500"
+            onClick={openTagModal}>
               + Review
-            </button>
+            </button>:<></>}
           </div>
           <div className="w-full max-w-4xl p-2 rounded-lg h-[180px] flex flex-col md:flex-row overflow-y-auto md:overflow-x-auto md:overflow-y-hidden">   
             {pageData.review.map((ad,index)=>(
@@ -170,6 +270,37 @@ function Profile({userType}) {
           </div>
         </div>
       </div>
+      {isTagModalOpen && (
+                  <div className="fixed inset-0 visible bg-black/30 flex items-center transition-colors justify-center z-50">                  <div className="bg-white rounded-lg p-6 w-full max-w-md">
+                    <h2 className="text-lg font-medium mb-4">Review</h2>
+                    <div className="flex space-x-2 mb-4 flex-col">
+                      <input
+                        type="text"
+                        value={rating}
+                        onChange={(e) => setRating(e.target.value)}
+                        placeholder={`${profile.enterRating}`}
+                        className={`w-full p-2 border rounded mb-2 ${(isNaN(Number(rating)) || Number(rating) < 0 || Number(rating) > 5||rating==='')?"border-red-600":"border-green-600"}`}
+                      />
+
+                      <textarea
+                      className="w-full p-2 border rounded"
+                      placeholder={`${profile.enterComment}`}
+                      type="text"
+                      value={comment}
+                      onChange={(e) => setComment(e.target.value)}>
+
+                      </textarea>
+                      
+                    </div>
+                    <button
+                      onClick={closeTagModal}
+                      className="w-full p-2 bg-gray-500 cursor-pointer text-white rounded hover:bg-gray-600"
+                    >
+                      Done
+                    </button>
+                  </div>
+                </div>
+              )}
     </div>
   )
 }

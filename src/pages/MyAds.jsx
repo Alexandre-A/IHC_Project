@@ -8,19 +8,22 @@ import { useNavigate } from 'react-router-dom';
 import { FaMagnifyingGlass } from "react-icons/fa6";
 import { FaTrashAlt,FaShareAlt,FaHeart,FaSortAmountUpAlt,FaSortAmountDown} from "react-icons/fa";
 import { FiEdit, FiCheckCircle, FiInfo, FiAlertTriangle } from 'react-icons/fi'
+import { PiEyeFill } from "react-icons/pi";
+import { GiSightDisabled } from "react-icons/gi";
 import { useTranslation } from "react-i18next";
 
 const ip = "127.0.0.1";
 const port = 5000;
 
 function MyAds() {
-  const { userType } = useAuth();
   const toast = useToast();
   const navigate = useNavigate();
   const email = localStorage.getItem("landlordEmail")
   const [roomData,setRoomData] = useState([]);
   const [search,setSearch] = useState("");
   const [copyRoomData,setCopyRoomData] = useState([]);
+  const [disabledRoomData,setdisabledRoomData] = useState([]);
+  const [copydisabledRoomData,setCopydisabledRoomData] = useState([]);
   const [temp,setTemp] = useState([]);
   const [order, setOrder] = useState(localStorage.getItem('order') || 'ascending');
   const {t} = useTranslation();
@@ -43,6 +46,11 @@ function MyAds() {
         const data = await res.json();
         setRoomData(data); // data is an array of ad objects
         setCopyRoomData(data)
+
+        const res2 = await fetch("http://localhost:5000/disabled_ads/");
+        const data2 = await res2.json();
+        setdisabledRoomData(data2); // data is an array of ad objects
+        setCopydisabledRoomData(data2)
       } catch (err) {
         console.error("Failed to fetch ads:", err);
       }
@@ -60,6 +68,66 @@ function MyAds() {
     localStorage.setItem("edit",id);
     navigate("/form")
   };
+
+  const handleDisable = async (adhc) =>{
+    try {
+      const response = await fetch(`http://${ip}:${port}/disable_ad/${adhc}`, {
+        method: "POST",
+      });
+
+      if (response.ok) {
+        localStorage.setItem("toastSuccess", JSON.stringify({
+          type: "success",
+          header: `${myads.modalTitle1}`,
+          message: `${myads.modalVariation3}`
+        }));
+      } else {
+        // Handle the case when the response is not successful
+        localStorage.setItem("toastSuccess", JSON.stringify({
+          type: "error",
+          header: `${myads.modalTitle2}`,
+          message: `${myads.modalVariation3}`
+        }));
+      }
+    } catch (error) {
+      // Handle error if fetch fails
+      localStorage.setItem("toastSuccess", JSON.stringify({
+        type: "error",
+        header: `${myads.modalTitle2}`,
+        message: `${myads.modalVariation3}`
+      }));
+    }
+  }
+
+  const handleEnable = async (adhc) =>{
+    try {
+      const response = await fetch(`http://${ip}:${port}/enable_ad/${adhc}`, {
+        method: "POST",
+      });
+
+      if (response.ok) {
+        localStorage.setItem("toastSuccess", JSON.stringify({
+          type: "success",
+          header: `${myads.modalTitle1}`,
+          message: `${myads.modalVariation3}`
+        }));
+      } else {
+        // Handle the case when the response is not successful
+        localStorage.setItem("toastSuccess", JSON.stringify({
+          type: "error",
+          header: `${myads.modalTitle2}`,
+          message: `${myads.modalVariation3}`
+        }));
+      }
+    } catch (error) {
+      // Handle error if fetch fails
+      localStorage.setItem("toastSuccess", JSON.stringify({
+        type: "error",
+        header: `${myads.modalTitle2}`,
+        message: `${myads.modalVariation3}`
+      }));
+    }
+  }
 
   const handleRemove = async (adhc) =>{
     try {
@@ -94,6 +162,10 @@ function MyAds() {
   useEffect(() => {
     console.log("Updated copyRoomData:", copyRoomData);
   }, [copyRoomData]);
+
+  useEffect(() => {
+    console.log("Updated copyRoomData:", disabledRoomData);
+  }, [disabledRoomData]);
 
   const handleChange = (e) => {
     const {name,value} = e.target;
@@ -247,9 +319,76 @@ function MyAds() {
             
           </div>
   </div>
-      <div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-4">
+      <div className="w-full max-w-4xl bg-white shadow-md rounded-t-lg pl-4 pr-4 pb-4 pt-2">
+        <p><b>{myads.enabledTitle}</b></p>
+        <div className="w-full max-w-4xl border-1 p-2 bg-gray-100 shadow-md rounded-lg h-[540px] md:h-[410px] overflow-y-auto">        
+
         {copyRoomData.map((ad,index)=>(
           <div key={index} className="flex flex-col md:flex-row w-full max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden md:h-48 mb-3 border-gray-400 border-1">
+                          <img
+                            src={ad.image_url}
+                            alt="Room"
+                            className="w-full md:w-1/3 h-64 md:h-full object-cover border-2 md:rounded-none rounded-t"
+                          />
+          
+                          <div className="w-full md:w-2/3 p-4 flex flex-col justify-between">
+                            {/* Header Row */}
+                            <div className="flex flex-col md:flex-row justify-between items-start gap-2">
+                              <div>
+                                <h3 className="text-lg font-semibold">{ad.name}</h3>
+                                <p className="text-sm text-gray-600">{ad.description}</p>
+                              </div>
+                              <div className="text-left md:text-right">
+                                <p className="text-xl font-semibold text-gray-800">{ad.price}€</p>
+                                <a href="/profile/landlord" className="text-sm text-blue-600 hover:underline">Sr. Danilo</a>
+                              </div>
+                            </div>
+          
+                            {/* Tags */}
+                            <div className="flex flex-wrap gap-2 mt-2">
+                              {ad.tags.slice(0, 5).map((tag, i) => (
+                                <span key={i} className="bg-gray-100 px-3 py-1 text-xs rounded-full border">{tag}</span>
+                              ))}
+                              {ad.tags.length >5 && (<span className="bg-gray-100 px-3 py-1 text-xs rounded-full border">{ad.tags.length-5}+</span>)}
+                            </div>
+          
+                            {/* Action Icons */}
+                            <div className="flex gap-3 justify-end mt-2">
+                              <button
+                                className="p-2 border rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer flex items-center gap-2"
+                                onClick={() => handleDisable(ad.image_path.split("/")[1].split(".")[0])}
+                              >
+                                <GiSightDisabled size={25} className="inline-flex align-middle" />
+                                <span className="inline-flex align-middle">{myads.disable}</span>
+                              </button>
+                    
+                              <button
+                                className="p-2 border rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer flex items-center gap-2"
+                                onClick={() => handleEdit(ad.image_path.split("/")[1].split(".")[0])}
+                              >
+                                <FiEdit size={25} className="inline-flex align-middle" />
+                                <span className="inline-flex align-middle">{myads.edit}</span>
+                              </button>
+                              <button
+                                className="p-2 border rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer flex items-center gap-2"
+                                onClick={() => handleRemove(ad.image_path.split("/")[1].split(".")[0])}
+                              >
+                                <FaTrashAlt size={25} className="inline-flex align-middle" />
+                                <span className="inline-flex align-middle">{myads.delete}</span>
+                              </button>
+                            </div>
+
+                          </div>
+                        </div>
+        ))}
+        </div>
+      </div>
+      <div className="w-full max-w-4xl bg-white shadow-md rounded-b-lg pl-4 pr-4 pb-4">
+        <p><b>{myads.disabledTitle}</b></p>
+        <div className="w-full max-w-4xl border-1 p-2 bg-gray-100 shadow-md rounded-lg h-[540px] md:h-[230px] overflow-y-auto">        
+
+        {disabledRoomData.map((ad,index)=>(
+          <div key={index} className="flex flex-col md:flex-row w-full max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden md:h-48 mb-3 border-gray-700 border-1 opacity-65">
                           <img
                             src={ad.image_url}
                             alt="Room"
@@ -281,26 +420,19 @@ function MyAds() {
                             <div className="flex gap-3 justify-end mt-2">
                               <button
                                 className="p-2 border rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer flex items-center gap-2"
-                                onClick={() => handleEdit(ad.image_path.split("/")[1].split(".")[0])}
+                                onClick={() => handleEnable(ad.image_path.split("/")[1].split(".")[0])}
                               >
-                                <FiEdit size={25} className="inline-flex align-middle" />
-                                <span className="inline-flex align-middle">{myads.edit}</span>
-                              </button>
-                              <button
-                                className="p-2 border rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer flex items-center gap-2"
-                                onClick={() => handleRemove(ad.image_path.split("/")[1].split(".")[0])}
-                              >
-                                <FaTrashAlt size={25} className="inline-flex align-middle" />
-                                <span className="inline-flex align-middle">{myads.delete}</span>
-                              </button>
+                                <PiEyeFill size={25} className="inline-flex align-middle" />
+                                <span className="inline-flex align-middle">{myads.enable}</span>
+                              </button> 
                             </div>
-
                           </div>
                         </div>
         ))}
-</div>
-</div>
-</>
+        </div>
+      </div>
+    </div>
+  </>
 
 
 

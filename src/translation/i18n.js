@@ -34,6 +34,8 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                 myads:{
                     newAd: " New Ad",
                     orderedBy: "Ordered by:",
+                    enabledTitle: "Enabled Ads:",
+                    disabledTitle: "Disabled Ads:",
                     search:"Search",
                     price: "Price",
                     location: "Location",
@@ -44,6 +46,10 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     modalTitle2: "Error",
                     modalVariation1: "Ad eliminated successfully",
                     modalVariation2: "Failure with the ad's elimination",
+                    modalVariation3: "Operation successful",
+                    modalVariation4: "Operation has failed",
+                    enable: "Enable",
+                    disable: "Disable",
                 },
                 adFormPt1: {
                     progress1: "Enter Data",
@@ -78,7 +84,13 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     livedIn: "Has previously stayed in:",
                     owns:"Landlord of the following listed accommodations:",
                     reviews: "Other people's reviews:",
-                    message: "Message"
+                    message: "Message",
+                    edit: "Edit",
+                    enterRating: "Enter the rating (0-5):",
+                    enterComment: "Enter the comment:",
+                    validationMessage: "Rating has to be between 0 and 5",
+                    validationTitle: "Invalid Review",
+
                 },
             }
         },
@@ -109,6 +121,8 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                 myads:{
                     newAd: " Novo Anúncio",
                     orderedBy: "Ordenado por:",
+                    enabledTitle: "Anúncios ativos:",
+                    disabledTitle: "Anúncios inativos:",
                     search:"Pesquisar",
                     price: "Preço",
                     location: "Localização",
@@ -119,6 +133,10 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     modalTitle2: "Erro",
                     modalVariation1: "Anúncio eliminado com sucesso",
                     modalVariation2: "Falha na eliminação do anúncio",
+                    modalVariation3: "Sucesso na operação",
+                    modalVariation4: "Falha na operação",
+                    enable: "Ativar",
+                    disable: "Desativar",
                 },
                 adFormPt1: {
                     progress1: "Inserir Dados",
@@ -152,7 +170,12 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     livedIn: "Já esteve alojado em:",
                     owns:"Senhorio dos seguintes alojamentos listados:",
                     reviews: "Reviews de outras pessoas:",
-                    message: "Mensagem"
+                    medit: "Editar",essage: "Mensagem",
+                    edit: "Editar",
+                    enterRating: "Insira o rating (0-5):",
+                    enterComment: "Insira o comentário:",
+                    validationMessage: "O rating tem que estar entre 0 e 5",
+                    validationTitle: "Invalid Review",
                 },
             }
         }

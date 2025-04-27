@@ -1,7 +1,7 @@
 import json
 
 direct = 'jsons/'
-files = [ 'ads.json', 'll_ads.json']
+files = [ 'ads.json', 'll_ads.json','disabledAds.json']
 
 def loadAccounts():
     with open( direct + 'accounts.json', 'r') as f:
@@ -18,6 +18,11 @@ def loadll_ads():
         info: dict = json.load(f)
     return info
 
+def loadDisabled_ads():
+    with open( direct +'disabledAds.json', 'r') as f:
+        info: dict = json.load(f)
+    return info
+
 def saveAds(data):
 
     with open(direct +'ads.json', 'w') as f:
@@ -31,6 +36,11 @@ def saveAccounts(data):
 def savell_ads(data):
 
     with open(direct +'ll_ads.json', 'w') as f:
+        json.dump(data, f, indent=4)
+
+def saveDisabled_ads(data):
+
+    with open(direct +'disabledAds.json', 'w') as f:
         json.dump(data, f, indent=4)
 
 def clearJsons():

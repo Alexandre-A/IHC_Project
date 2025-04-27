@@ -25,7 +25,7 @@ function NavbarInicial({ homepage, complete}) {
     messages: "/messages",
     ads: "/ads",
     myads: "/myads",
-    profile: "/profile",
+    profile: "/profile/" + localStorage.getItem("userType"),
     settings: "/settings",
     login: "/login",
     registo: "/registo",

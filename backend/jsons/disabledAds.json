@@ -1,0 +1,32 @@
+{
+    "c76dfe9e2e9b39129bc5b6fe26fcb8ed898bb333e499b569a160c1926e27717c": {
+        "email": "supreme_landlord@gmail.com",
+        "description": "a",
+        "date": "2025-04-24T14:56:14.867Z",
+        "image_path": "images/c76dfe9e2e9b39129bc5b6fe26fcb8ed898bb333e499b569a160c1926e27717c.png",
+        "name": "tu",
+        "price": "1",
+        "available_date": "a",
+        "gender": "Indifferent",
+        "quantity": "a",
+        "district": "Leiria",
+        "city": "Marinha Grande",
+        "street": "a",
+        "min_age": "a",
+        "max_age": "a",
+        "bath_share": "Private",
+        "expense_included": "Yes",
+        "marital_status": "Yes",
+        "tags": [
+            "Gender: Indifferent",
+            "Couples: Yes",
+            "Expenses: Yes",
+            "Bathroom: Private",
+            "\u200e Leiria"
+        ],
+        "isNew": [
+            "false",
+            "c76dfe9e2e9b39129bc5b6fe26fcb8ed898bb333e499b569a160c1926e27717c"
+        ]
+    }
+}

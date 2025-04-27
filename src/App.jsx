@@ -31,8 +31,7 @@ function App() {
         <Route path="/messages" element={<Messages />} />
         <Route path="/ads" element={<Ads />} />
         <Route path="/myads" element={<MyAds />} />
-        <Route path="/profile" element={<Profile userType={localStorage.getItem("userType")}/>} />
-        <Route path="/settings" element={<Settings />} />
+        <Route path="/profile/:userType" element={<Profile />} />        <Route path="/settings" element={<Settings />} />
         <Route path="/login" element={<Login />} />
         <Route path="/registo" element={<Registo />} />
         <Route path="/form" element={<AdFormPage />} />

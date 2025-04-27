@@ -139,6 +139,17 @@ def getAds():
         ads_with_images.append(ad_info)
     return jsonify(ads_with_images), 200
 
+# get all ads
+@app.route('/disabled_ads/')
+def get_disabled_Ads():
+    dis_ads = fn.loadDisabled_ads()
+    # Assuming dis_ads is a dictionary with ad details including image_path
+    dis_ads_with_images = []
+    for ad_id, ad_info in dis_ads.items():
+        ad_info['image_url'] = request.host_url + ad_info['image_path']
+        dis_ads_with_images.append(ad_info)
+    return jsonify(dis_ads_with_images), 200
+
 # get an specific ad info
 @app.route('/ads/<adhc>')
 def getad(adhc):
@@ -148,6 +159,18 @@ def getad(adhc):
         return jsonify({"error": "add not found"}), 400
 
     ad = ads[adhc].copy()
+    ad['image_url'] = request.host_url + ad['image_path']
+    return jsonify(ad),200
+
+# get an specific ad info
+@app.route('/ads/<adhc>')
+def getDisabledad(adhc):
+    dis_ads = fn.loadDisabled_ads()
+
+    if not adhc in dis_ads:
+        return jsonify({"error": "add not found"}), 400
+
+    ad = dis_ads[adhc].copy()
     ad['image_url'] = request.host_url + ad['image_path']
     return jsonify(ad),200
 
@@ -206,3 +229,68 @@ def delete_ad(adhc):
     return jsonify({"message": "Ad deleted successfully"}), 200
 
 
+# disable ad
+@app.route('/disable_ad/<adhc>', methods=['POST'])
+def disableAd(adhc):
+    try:
+        #Fetching the ad
+        ads = fn.loadAds()
+        target_ad = ads[adhc].copy()
+
+        #Saving the ad to new location
+        dis_ads = fn.loadDisabled_ads()
+
+        dis_ads[adhc] = target_ad
+        fn.saveDisabled_ads(dis_ads)
+
+        # Remove the ad from the original dictionary
+        if (adhc in ads):
+            del ads[adhc]
+        
+        fn.saveAds(ads)
+
+        return jsonify({"response": "OK"}), 200
+    except Exception as e:
+        print("ERROR:", str(e))
+        return jsonify({"error": str(e)}), 400
+    
+
+# enable ad
+@app.route('/enable_ad/<adhc>', methods=['POST'])
+def enableAd(adhc):
+    try:
+        #Fetching the ad
+        dis_ads = fn.loadDisabled_ads()
+        target_ad = dis_ads[adhc].copy()
+
+        #Saving the ad to new location
+        ads = fn.loadAds()
+
+        ads[adhc] = target_ad
+        fn.saveAds(ads)
+
+        # Remove the ad from the original dictionary
+        if (adhc in dis_ads):
+            del dis_ads[adhc]
+        
+        fn.saveDisabled_ads(dis_ads)
+
+        return jsonify({"response": "OK"}), 200
+    except Exception as e:
+        print("ERROR:", str(e))
+        return jsonify({"error": str(e)}), 400
+    
+
+@app.route('/delete_disabled_ad/<adhc>', methods=["DELETE", "OPTIONS"])
+def delete_disabled_ad(adhc):
+    dis_ads = fn.loadDisabled_ads()
+
+    # Remove the ad from the dictionary
+    if (adhc in dis_ads):
+        del dis_ads[adhc]
+
+    # Save the updated dis_ads back to storage
+    fn.saveDisabled_ads(dis_ads)
+
+    # Return a successful response indicating deletion
+    return jsonify({"message": "Ad deleted successfully"}), 200
