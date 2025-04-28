@@ -1,23 +1,20 @@
-import React from "react";
-import { useAuth } from "../AuthContext";
+import React, {useState} from "react";
+import { useNavigate } from 'react-router-dom';
 import { FaUser, FaCog, FaHome } from "react-icons/fa";
 import LanguageSelector from "./language-selector";
 import { useTranslation } from "react-i18next";
+import LoginModal from "./LoginModal";
+import { showToast } from '../components/Toasts/ToastMessages';
+import { useToast } from '../components/Toasts/ToastService';
 
 function NavbarInicial({ homepage, complete}) {
   const {t} = useTranslation();
   const navbar = t("navbar");
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [tabChosen, setTabChosen] = useState("SignIn");
+  const navigate = useNavigate();
+  const toast = useToast();
 
-  const texts = {
-    forum: "Forum",
-    messages: "Messages",
-    ads: "Ads",
-    myads: "My Ads",
-    profile: "Profile",
-    settings: "Settings",
-    login: "Login",
-    registo: "Registo",
-  };
 
   const links = {
     home: "/",
@@ -44,14 +41,30 @@ function NavbarInicial({ homepage, complete}) {
     localStorage.removeItem("Placeholder")
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem("userType")
+    navigate(links.home)
+    showToast(toast, {
+      type: "success",
+      header: navbar.modalTitle1,
+      message: navbar.modalVariation1
+    });
+  }
+
   return (
     <div className="sticky top-0 z-50 bg-white shadow-md ">
+      <LoginModal 
+                isOpen={isLoginOpen} 
+                onClose={() => setIsLoginOpen(false)} 
+                tabChosen={tabChosen} 
+                setTabChosen={setTabChosen}
+            />
     <nav className="bg-gray-800 text-white p-4 flex justify-between items-center" style={{backgroundColor: 'rgb(28, 10, 0)'}}>
       {/* Left: Home icon */}
       <div className="flex items-center space-x-4 text-sm sm:text-base ">
         <button
           onClick={handleHomeClick}
-          className="hover:text-gray-300"
+          className="hover:text-gray-300 cursor-pointer"
           title="Home"
         >
           <FaHome className="w-6 h-6" />
@@ -60,20 +73,14 @@ function NavbarInicial({ homepage, complete}) {
         {/* Nav Links */}
         {homepage ? (
           <>
-            <a
-              onClick={handleLocalStorage}
-              href={links.login}
-              className={`hover:text-gray-300 ${currentPath === links.login ? "text-yellow-500" : ""}`}
-            >
-              {navbar.login}
-            </a>
-            <a
-              onClick={handleLocalStorage}
-              href={links.registo}
-              className={`hover:text-gray-300 ${currentPath === links.registo ? "text-yellow-500" : ""}`}
-            >
-              {navbar.registo}
-            </a>
+            <button onClick={() => { setTabChosen("SignIn"); setIsLoginOpen(true); }}
+              className="cursor-pointer hover:text-gray-300">
+                    {navbar.login}
+                </button>
+                <button onClick={() => { setTabChosen("SignUp"); setIsLoginOpen(true); }}
+                  className="cursor-pointer hover:text-gray-300">
+                    {navbar.registo}
+                </button>
           </>
         ) : (
           <>
@@ -114,10 +121,31 @@ function NavbarInicial({ homepage, complete}) {
       {/* Right: Icons */}
       <div className="flex space-x-4">
         <LanguageSelector></LanguageSelector>
-        <a
-          onClick={handleLocalStorage} href={links.profile} className="hover:text-gray-300">
-          <FaUser className="w-6 h-6" title={navbar.profile} />
-        </a>
+        
+
+        <button className="relative flex justify-center items-center  border focus:outline-none shadow
+        text-white rounded-full focus:ring ring-white group cursor-pointer">
+          <FaUser className="w-6 h-6 p-1" title={navbar.profile} />
+          <div className="absolute hidden group-focus:block top-full right-0 min-w-full w-max bg-white shadow-md mt-1 rounded text-black">
+            <ul className="text-left border rounded">
+              {!localStorage.getItem("userType")?
+              <>
+              <li className="px-4 py-1 hover:bg-gray-100 border-b"
+              onClick={() => { setTabChosen("SignIn"); setIsLoginOpen(true); }}>{navbar.login}</li>
+              <li className="px-4 py-1 hover:bg-gray-100 border-b"
+              onClick={() => { setTabChosen("SignUp"); setIsLoginOpen(true); }}>{navbar.registo}</li>
+              </>:<>
+              <li className="px-4 py-1 hover:bg-gray-100 border-b"
+              onClick={()=>navigate(links.profile)}>{navbar.profile}</li>
+              <li className="px-4 py-1 hover:bg-gray-100 border-b"
+              onClick={handleLogout}>{navbar.logOut}</li>
+              </>
+              }
+
+            </ul>
+
+          </div>
+        </button>
         {/*
         <a
           onClick={handleLocalStorage} href={links.settings} className="hover:text-gray-300">

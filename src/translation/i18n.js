@@ -19,6 +19,9 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     settings: "Settings",
                     login: "Login",
                     registo: "Register",
+                    logOut: "Logout",
+                    modalTitle1: "Success",
+                    modalVariation1: "Logout successful",
                 },
                 homepage:{
                     header1: "Landlord Area",
@@ -92,6 +95,23 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     validationTitle: "Invalid Review",
 
                 },
+                loginPage:{
+                    name: "Name",
+                    signIn:"Sign In",
+                    signUp: "Sign Up",
+                    contact: "Contact",
+                    nationality: "Nacionality",
+                    confirm: "Confirm",
+                    terms: "Terms and conditions: by signing up you accept the Terms and Conditions for collecting, sharing, and using your data.",
+                    landlordAccount: "Landlord Account",
+                    tenantAccount: "Tenant Account",
+                    hideText:"Hide example accounts",
+                    showText:"Show example accounts",
+                    landlord: "Landlord",
+                    tenant:"Tenant",
+                    modalTitle1: "Success",
+                    modalVariation1: "Sign in successful",
+                },
             }
         },
         Pt:{
@@ -106,6 +126,9 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     settings: "Settings",
                     login: "Login",
                     registo: "Registo",
+                    logOut: "Logout",
+                    modalTitle1: "Sucesso",
+                    modalVariation1: "Logout bem sucedido",
                 },
                 homepage:{
                     header1: "Área de Senhorio",
@@ -176,6 +199,23 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     enterComment: "Insira o comentário:",
                     validationMessage: "O rating tem que estar entre 0 e 5",
                     validationTitle: "Invalid Review",
+                },
+                loginPage:{
+                    name: "Nome",
+                    signIn:"Iniciar Sessão",
+                    signUp: "Registar",
+                    contact: "Contacto",
+                    nationality: "Nacionalidade",
+                    confirm: "Confirmar",
+                    terms: "Termos e condições: ao aceitar dá consentimento para que os seus dados sejam coletados, compartilhados e utilizados.",
+                    landlordAccount: "Conta de Senhorio",
+                    tenantAccount: "Conta de inquilino",
+                    hideText:"Esconder contas-exemplo",
+                    showText:"Mostrar contas-exemplo",
+                    landlord: "Senhorio",
+                    tenant:"Inquilino",
+                    modalTitle1: "Sucesso",
+                    modalVariation1: "Início de sessão bem sucedido",
                 },
             }
         }

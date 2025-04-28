@@ -14,6 +14,11 @@ export default {
       },
     },
   },
+  variants:{
+    extend:{
+      display: ['group-focus'] //child changes when parent is focused
+    }
+  },
   plugins: [],
 }
 

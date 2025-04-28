@@ -32,7 +32,7 @@ function App() {
         <Route path="/ads" element={<Ads />} />
         <Route path="/myads" element={<MyAds />} />
         <Route path="/profile/:userType" element={<Profile />} />        <Route path="/settings" element={<Settings />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login tabChosen={"SignIn"}/>} />
         <Route path="/registo" element={<Registo />} />
         <Route path="/form" element={<AdFormPage />} />
 

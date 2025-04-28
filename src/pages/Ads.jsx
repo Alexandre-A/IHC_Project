@@ -10,10 +10,14 @@ function Ads() {
   const {t} = useTranslation()
   const { userType } = useAuth();
   const isLandlord = userType === "landlord";
+
+
+
   return (
     <div className='bg-gray-100'>
       <h1>{t("greeting")}</h1>
       <LanguageSelector></LanguageSelector>
+      
     </div>
   )
 }

@@ -6,6 +6,7 @@ import { SedanSVG } from '../assets/SedanSVG';
 import Modal from '../components/Modal';
 import { Forum } from '../assets/Forum';
 import { useTranslation } from "react-i18next";
+import { FaBuilding, FaMapMarkedAlt, FaComments } from 'react-icons/fa';
 
   
 function Homepage() {
@@ -18,7 +19,7 @@ function Homepage() {
   const data = [
     {
       bgcolour: Bright_orange,
-      icon: <SedanSVG className="mb-8"/>,
+      icon: <FaBuilding size={40} className="text-[#F0BB78] mr-3" />,
       heading: homepage.header1,
       paragraph: homepage.paragraph1,
       inverted: false,
@@ -29,7 +30,7 @@ function Homepage() {
       },
     {
       bgcolour: Dark_cyan,
-      icon: <SedanSVG className="mb-8"/>,
+      icon: <FaMapMarkedAlt size={40} className="text-[#F0BB78] mr-3" />,
       heading: homepage.header2,
       paragraph: homepage.paragraph2,
       inverted: true,
@@ -37,7 +38,7 @@ function Homepage() {
       },
     {
       bgcolour: Very_dark_cyan,
-      icon: <Forum className="mb-8"/>,
+      icon: <FaComments size={40} className="text-[#F0BB78] mr-3" />,
       heading: homepage.header3,
       paragraph: homepage.paragraph3,
       inverted: false,
@@ -120,19 +121,17 @@ function Card({icon, heading, paragraph, bgcolour, inverted, onClick}) {
       <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none" />
       {!inverted ? (
         <>
-          {icon}
-          <h2 className='uppercase font-bold text-3xl mb-8'>{heading}</h2>
+          <h2 className='uppercase font-bold text-3xl mb-8 flex flex-row'>{icon}{heading}</h2>
           <p className="text-sm leading-relaxed mb-6 opacity-0 group-hover:opacity-100 transform transition-all duration-300 group-hover:-translate-y-2">
             {paragraph}
           </p>
         </>
       ) : (
         <>
-          <p className="text-sm leading-relaxed mb-15 opacity-0 group-hover:opacity-100 transform transition-all duration-300 group-hover:-translate-y-2">
+          <p className="text-sm leading-relaxed md:mb-25 mb-12 opacity-0 group-hover:opacity-100 transform transition-all duration-300 group-hover:-translate-y-2">
             {paragraph}
           </p>
-          {icon}
-          <h2 className='uppercase font-bold text-3xl'>{heading}</h2>
+          <h2 className='uppercase font-bold text-3xl flex flex-row'>{icon}{heading}</h2>
         </>
       )}
     </section>

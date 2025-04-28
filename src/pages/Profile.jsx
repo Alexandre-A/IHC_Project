@@ -51,9 +51,9 @@ function Profile() {
       localStorage.setItem('landlordData', JSON.stringify(updatedData));
     } else {
       const updatedData = {
-        ...TennantData,
+        ...TenantData,
         review: [
-          ...TennantData.review,
+          ...TenantData.review,
           {
             name: name,
             email: email,
@@ -62,7 +62,7 @@ function Profile() {
           }
         ]
       };
-      setTennantData(updatedData);
+      setTenantData(updatedData);
       localStorage.setItem('tennantData', JSON.stringify(updatedData));
     }
     
@@ -73,7 +73,7 @@ function Profile() {
 
   
   
-  const [TennantData,setTennantData] = useState({
+  const [TenantData,setTenantData] = useState({
     photo: estudanteImg,
     name: "Matteo Rossi",
     contact: "936 137 388",
@@ -93,9 +93,9 @@ function Profile() {
         comment: "Bom estudante, respeitoso e organizado. Não houve problemas durante o contrato de arrendamento."
       }
     ],
-    canMessage: type?(type==='tennant'?false:true):(false),
-    canReview: type?(type==='tennant'?false:true):(false),
-    canEdit: type?(type==='tennant'?true:false):(false),    
+    canMessage: type?(type==='tenant'?false:true):(false),
+    canReview: type?(type==='tenant'?false:true):(false),
+    canEdit: type?(type==='tenant'?true:false):(false),    
   })
 
   const [LandlordData, setLandlordData] = useState({
@@ -131,11 +131,11 @@ function Profile() {
 
     })
 
-  const [pageData,setPageData] = useState(userType==="landlord"? LandlordData: TennantData);
+  const [pageData,setPageData] = useState(userType==="landlord"? LandlordData: TenantData);
 
   useEffect(()=>{
-    setPageData(userType==="landlord"? LandlordData: TennantData)
-  },[LandlordData,TennantData])
+    setPageData(userType==="landlord"? LandlordData: TenantData)
+  },[LandlordData,TenantData])
 
   useEffect(() => {
     const savedLandlord = localStorage.getItem('landlordData');
@@ -145,7 +145,7 @@ function Profile() {
       setLandlordData(JSON.parse(savedLandlord));
     }
     if (savedTennant) {
-      setTennantData(JSON.parse(savedTennant));
+      setTenantData(JSON.parse(savedTennant));
     }
   }, []);
   

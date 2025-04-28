@@ -1,59 +1,47 @@
-import { useState } from 'react'
+import { useState } from 'react';
+import { FaEyeSlash, FaEye } from 'react-icons/fa';
 import { useAuth } from "../AuthContext";
-import { useNavigate } from 'react-router-dom';
-import { useTranslation } from "react-i18next";
-import { FaEye, FaEyeSlash } from 'react-icons/fa'; 
+import { useTranslation } from 'react-i18next';
+import { showToast } from '../components/Toasts/ToastMessages';
+import { useToast } from '../components/Toasts/ToastService';
 
-
-import '../index.css'
-import '../App.css'
-import NavbarInicial from '../components/NavbarIncial'
-
-function LoginPage({tabChosen}) {
-    const { login } = useAuth();  // Get the login function from the context
-    const {t} = useTranslation();
+function LoginModal({ isOpen, onClose, tabChosen, setTabChosen }) {
+    const toast = useToast();
+    const { login } = useAuth();
+    const { t } = useTranslation();
     const loginPage = t("loginPage");
+
     const [password, setPassword] = useState("");
     const [email, setEmail] = useState("");
-    const [isHidden,setIsHidden] = useState(true);
-    const [showAccounts,setShowAccounts] = useState(false);
-    const [colour,setColour] = useState("");
+    const [isHidden, setIsHidden] = useState(true);
+    const [showAccounts, setShowAccounts] = useState(false);
+    const [colour, setColour] = useState("");
 
-    const [tabChosenVar,setTabChosenVar] = useState(tabChosen);
+    if (!isOpen) return null;
 
-    const [isTagModalOpen, setIsTagModalOpen] = useState(false);
-    const openTagModal = () => setIsTagModalOpen(true);
-    const closeTagModal = () => {
-      if (tabChosenVar==='SignIn') {
-        if (email==="supreme_landlord@gmail.com"){
-          if (password!=="@123456Land") return;
-          else {
-            login("landlord"); 
-            localStorage.removeItem("loggedInEmail")
-            localStorage.setItem("loggedInEmail","supreme_landlord@gmail.com")
-          }
+    const handleLogin = () => {
+        if (tabChosen === 'SignIn') {
+            if (email === "supreme_landlord@gmail.com" && password === "@123456Land") {
+                login("landlord");
+                localStorage.setItem("loggedInEmail", "supreme_landlord@gmail.com");
+            } else if (email === "thestudent@gmail.com" && password === "@123456Tent") {
+                login("tenant");
+                localStorage.setItem("loggedInEmail", "tennant@gmail.com");
+            } else {
+                return; 
+            }
         }
-        else if (email==="thestudent@gmail.com"){
-          if (password!=="@123456Tent") return;
-          else {
-            login("tennant"); 
-            localStorage.removeItem("loggedInEmail")
-            localStorage.setItem("loggedInEmail","tennant@gmail.com")
-          }
-        }
-        else return;
-      }
-      setIsTagModalOpen(false);}
+        onClose(); 
+        showToast(toast, {
+            type: "success",
+            header: loginPage.modalTitle1,
+            message: loginPage.modalVariation1
+          });
+    }
 
     return (
-        <div style={{ padding: 50, zIndex: 9999, position: "relative"}} className='bg-gray-100'>
-          <button className="px-4 text-sm rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500"
-            onClick={openTagModal}>
-              + Review
-            </button>
-      {isTagModalOpen && (
-                <div className="fixed inset-0 visible bg-black/30 flex items-center transition-colors justify-center z-50"
-                onClick={()=>setIsTagModalOpen(false)}>                  
+        <div className="fixed inset-0 visible bg-black/30 flex items-center transition-colors justify-center z-50"
+                onClick={onClose}>                  
                   <div className="bg-white rounded-lg p-6 w-full max-w-md"
                   onClick={(e) => e.stopPropagation()}>
                     <div className="flex space-x-2 mb-4 mt-4 flex-col">
@@ -61,16 +49,16 @@ function LoginPage({tabChosen}) {
                       <div className=" flex flex-row">
                         <div className=" border-l-1 border-t-1 border-b-1 mb-4 w-1/2">
                           <button
-                            onClick={()=>setTabChosenVar("SignIn")}
-                            className={`w-full p-2 bg-gray-500 cursor-pointer text-white hover:bg-gray-700 ${tabChosenVar==='SignIn'?"bg-gray-700":"bg-gray-500"}`}
+                            onClick={() => setTabChosen("SignIn")}
+                            className={`w-full p-2 bg-gray-500 cursor-pointer text-white hover:bg-gray-700 ${tabChosen==='SignIn'?"bg-gray-700":"bg-gray-500"}`}
                           >
                             {loginPage.signIn}
                           </button>
                         </div>
                         <div className=" border-1 mb-4 w-1/2">
                           <button
-                            onClick={()=>setTabChosenVar("SignUp")}
-                            className={`w-full p-2 bg-gray-500 cursor-pointer text-white hover:bg-gray-700 ${tabChosenVar==='SignUp'?"bg-gray-700":"bg-gray-500"}`}
+                            onClick={()=>setTabChosen("SignUp")}
+                            className={`w-full p-2 bg-gray-500 cursor-pointer text-white hover:bg-gray-700 ${tabChosen==='SignUp'?"bg-gray-700":"bg-gray-500"}`}
                           >
                             {loginPage.signUp}
                           </button>
@@ -78,7 +66,7 @@ function LoginPage({tabChosen}) {
                       </div>
 
                       <div className="flex space-x-2 mb-4 flex-col">
-                        {tabChosenVar==='SignIn'?<>
+                        {tabChosen==='SignIn'?<>
                               <h2>Email</h2>
                               <input
                                 type="text"
@@ -113,7 +101,7 @@ function LoginPage({tabChosen}) {
 
                               <div className='flex flex-row justify-between w-full'>
                               <button
-                                onClick={closeTagModal}
+                                onClick={handleLogin}
                                 className="w-1/3 p-2 mt-4 bg-gray-500 cursor-pointer text-white rounded hover:bg-gray-600 flex items-center justify-end"
                               >
                                 {loginPage.signIn}
@@ -228,7 +216,7 @@ function LoginPage({tabChosen}) {
                               />
                               <p className='text-xs mt-3'>{loginPage.terms}</p>
                               <button
-                                onClick={closeTagModal}
+                                onClick={handleLogin}
                                 className="w-1/2 p-2 mt-3 bg-gray-500 cursor-pointer text-white rounded hover:bg-gray-600 flex items-center justify-end"
                                 >
                                 {loginPage.signUp}
@@ -240,12 +228,8 @@ function LoginPage({tabChosen}) {
                     </div>
                     
                   </div>
-                </div>
-              )}
         </div>
-      );
-      
-  
+    );
 }
 
-export default LoginPage
+export default LoginModal;
