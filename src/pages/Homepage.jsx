@@ -2,9 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import '../index.css'
 import '../App.css'
-import { SedanSVG } from '../assets/SedanSVG';
 import Modal from '../components/Modal';
-import { Forum } from '../assets/Forum';
 import { useTranslation } from "react-i18next";
 import { FaBuilding, FaMapMarkedAlt, FaComments } from 'react-icons/fa';
 

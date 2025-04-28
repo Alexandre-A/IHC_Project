@@ -9,8 +9,6 @@ import Ads from "./pages/Ads";
 import MyAds from "./pages/MyAds";
 import Profile from "./pages/Profile";
 import Settings from "./pages/Settings";
-import Login from "./pages/LoginPage";
-import Registo from "./pages/RegisterPage";
 import Homepage from './pages/Homepage'
 import NavbarInicial from './components/NavbarIncial';
 import AdFormPage from './pages/AdFormPage';
@@ -31,9 +29,8 @@ function App() {
         <Route path="/messages" element={<Messages />} />
         <Route path="/ads" element={<Ads />} />
         <Route path="/myads" element={<MyAds />} />
-        <Route path="/profile/:userType" element={<Profile />} />        <Route path="/settings" element={<Settings />} />
-        <Route path="/login" element={<Login tabChosen={"SignIn"}/>} />
-        <Route path="/registo" element={<Registo />} />
+        <Route path="/profile/:userType" element={<Profile />} />        
+        <Route path="/settings" element={<Settings />} />
         <Route path="/form" element={<AdFormPage />} />
 
       </Routes>
