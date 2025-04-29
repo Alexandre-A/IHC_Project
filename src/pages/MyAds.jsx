@@ -331,16 +331,22 @@ function MyAds() {
                             className="w-full md:w-1/3 h-64 md:h-full object-cover border-2 md:rounded-none rounded-t"
                           />
           
-                          <div className="w-full md:w-2/3 p-4 flex flex-col justify-between">
+                          <div className="w-full md:w-2/3  p-4 flex flex-col justify-between">
                             {/* Header Row */}
                             <div className="flex flex-col md:flex-row justify-between items-start gap-2">
-                              <div>
-                                <h3 className="text-lg font-semibold">{ad.name}</h3>
-                                <p className="text-sm text-gray-600">{ad.description}</p>
+                              <div className='w-4/6'>
+                                <h3 className="text-lg font-semibold overflow-hidden text-ellipsis whitespace-nowrap">{ad.name}</h3>
+                                <p className="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap">{ad.description}</p>
                               </div>
-                              <div className="text-left md:text-right">
-                                <p className="text-xl font-semibold text-gray-800">{ad.price}€</p>
-                                <a href="/profile/landlord" className="text-sm text-blue-600 hover:underline">Sr. Danilo</a>
+                              <div className="w-2/6">
+                                <p className="text-xl font-semibold text-gray-800 flex items-center w-full justify-start md:justify-end">
+                                  <span className="overflow-hidden text-ellipsis whitespace-nowrap">{ad.price}</span>
+                                  <span className="ml-1">€</span>
+                                </p>
+
+                                <a href="/profile/landlord" className="text-sm text-blue-600 hover:underline block text-left md:text-right overflow-hidden text-ellipsis whitespace-nowrap">
+                                  Sr. Danilo
+                                </a>
                               </div>
                             </div>
           
@@ -398,13 +404,19 @@ function MyAds() {
                           <div className="w-full md:w-2/3 p-4 flex flex-col justify-between">
                             {/* Header Row */}
                             <div className="flex flex-col md:flex-row justify-between items-start gap-2">
-                              <div>
-                                <h3 className="text-lg font-semibold">{ad.name}</h3>
-                                <p className="text-sm text-gray-600">{ad.description}</p>
+                              <div className='w-4/6'>
+                                <h3 className="text-lg font-semibold overflow-hidden text-ellipsis whitespace-nowrap">{ad.name}</h3>
+                                <p className="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap">{ad.description}</p>
                               </div>
-                              <div className="text-left md:text-right">
-                                <p className="text-xl font-semibold text-gray-800">{ad.price}€</p>
-                                <a href="#" className="text-sm text-blue-600 hover:underline">Sr. Danilo</a>
+                              <div className="w-2/6">
+                                <p className="text-xl font-semibold text-gray-800 flex items-center w-full justify-start md:justify-end">
+                                  <span className="overflow-hidden text-ellipsis whitespace-nowrap">{ad.price}</span>
+                                  <span className="ml-1">€</span>
+                                </p>
+
+                                <a href="/profile/landlord" className="text-sm text-blue-600 hover:underline block text-left md:text-right overflow-hidden text-ellipsis whitespace-nowrap">
+                                  Sr. Danilo
+                                </a>
                               </div>
                             </div>
           

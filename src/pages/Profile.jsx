@@ -233,9 +233,9 @@ function Profile() {
                     className="w-full md:w-1/3 h-64 md:h-full object-cover border-2 md:rounded-none rounded-t"
                   />
                   <div className="w-full md:w-2/3 p-4 flex flex-col justify-between">
-                    <h3 className="text-lg font-semibold">{ad.name}</h3>
-                    <p className="text-sm text-gray-600">{ad.description}</p>
-                    <p className="text-xl font-semibold text-gray-800">{ad.price}€</p>
+                    <h3 className="text-lg font-semibold overflow-hidden text-ellipsis whitespace-nowrap">{ad.name}</h3>
+                    <p className="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap">{ad.description}</p>
+                    <p className="text-xl font-semibold text-gray-800 overflow-hidden text-ellipsis whitespace-nowrap">{ad.price}€</p>
 
                     <div className="flex flex-wrap gap-2 mt-2">
                       {ad.tags?.slice(0, 5).map((tag, i) => (

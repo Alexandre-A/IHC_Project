@@ -26,6 +26,7 @@ function NavbarInicial({ homepage, complete}) {
     settings: "/settings",
     login: "/login",
     registo: "/registo",
+    form: "/form",
   };
 
   const currentPath = window.location.pathname;
@@ -109,7 +110,7 @@ function NavbarInicial({ homepage, complete}) {
               <a
                 onClick={handleLocalStorage}
                 href={links.myads}
-                className={`hover:text-gray-300 ${currentPath === links.myads ? "text-yellow-500" : ""}`}
+                className={`hover:text-gray-300 ${currentPath === links.myads || currentPath === links.form ? "text-yellow-500" : ""}`}
               >
                 {navbar.myads}
               </a>

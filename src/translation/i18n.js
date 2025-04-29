@@ -112,6 +112,16 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     modalTitle1: "Success",
                     modalVariation1: "Sign in successful",
                 },
+                messages:{
+                    orderedBy: "Ordered by:",
+                    enabledTitle: "Active messages:",
+                    disabledTitle: "Archived messages:",
+                    search:"Search",
+                    name: "Name",
+                    lastEdited: "Last edited",
+                    archive: " Archive conversation",
+                    activate: " Activate conversation"
+                }
             }
         },
         Pt:{
@@ -217,6 +227,16 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     modalTitle1: "Sucesso",
                     modalVariation1: "Início de sessão bem sucedido",
                 },
+                messages:{
+                    orderedBy: "Ordenado por:",
+                    enabledTitle: "Mensagens ativas:",
+                    disabledTitle: "Mensagens arquivadas:",
+                    search:"Pesquisar",
+                    name: "Nome",
+                    lastEdited: "Última Edição",
+                    archive: "Arquivar Conversa",
+                    activate: "Ativar conversa"
+                }
             }
         }
     }

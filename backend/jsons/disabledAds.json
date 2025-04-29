@@ -28,5 +28,35 @@
             "false",
             "c76dfe9e2e9b39129bc5b6fe26fcb8ed898bb333e499b569a160c1926e27717c"
         ]
+    },
+    "6d7a3a180c9263122be880916bb61385d7e77a8c9c23047a6f47f887db33d82e": {
+        "email": "supreme_landlord@gmail.com",
+        "description": "dadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "date": "2025-04-25T19:10:54.086Z",
+        "image_path": "images/6d7a3a180c9263122be880916bb61385d7e77a8c9c23047a6f47f887db33d82e.png",
+        "name": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaasda",
+        "price": "122222222222222222222222",
+        "available_date": "69/01/3025",
+        "gender": "Indifferent",
+        "quantity": "122222222222222222222222222",
+        "district": "Lisboa",
+        "city": "Sintra",
+        "street": "sdadaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "min_age": "122222222222",
+        "max_age": "13222222222222222222",
+        "bath_share": "Shared",
+        "expense_included": "Yes",
+        "marital_status": "Yes",
+        "tags": [
+            "Gender: Indifferent",
+            "Bathroom: Shared",
+            "\u200e Lisboa",
+            "Expenses: Yes",
+            "Couples: Yes"
+        ],
+        "isNew": [
+            "true",
+            ""
+        ]
     }
 }

@@ -294,3 +294,136 @@ def delete_disabled_ad(adhc):
 
     # Return a successful response indicating deletion
     return jsonify({"message": "Ad deleted successfully"}), 200
+
+
+# save new message
+@app.route('/sendMessage', methods=['POST'])
+def sendMessage():
+    try:
+        data = request.form
+
+        print("==== Incoming form data ====")
+        for key in request.form:
+            print(f"{key}: {request.form[key]}")
+        print("==== Incoming files ====")
+        for file_key in request.files:
+            print(f"{file_key}: {request.files[file_key].filename}")
+
+        if data is None:
+            return jsonify({"error": "Invalid form data"}), 400
+        
+        required_fields = [
+            'date', 'name','image_path', 'is_banned', 'last_message'
+            'messages', 'topic_of_interest','unique_id'
+        ]
+
+        unique_id = data.get('unique_id')
+        date = data.get('date') or str(datetime.datetime.now())
+        image_path = data.get('image_path')
+        name = data.get('name')
+        is_banned = data.get('is_banned')
+        last_message = data.get('last_message')
+        topic_of_interest = data.get('topic_of_interest')
+        message = data.getlist('message[]')
+
+        
+        for field in required_fields:
+            if not data.get(field):
+                return jsonify({"error": f"Missing or empty field: {field}"}), 400
+
+        messages = fn.loadMessages()
+
+        messages[unique_id] = {
+            "unique_id":unique_id,
+            "date": date,
+            "image_path": image_path,
+            "name": name,
+            "is_banned": is_banned,
+            "last_message": last_message,
+            "messages": message,
+            "topic_of_interest": topic_of_interest
+        }
+
+        fn.saveMessages(messages)
+        return jsonify({"response": "OK"}), 200
+    except Exception as e:
+        print("ERROR:", str(e))
+        return jsonify({"error": str(e)}), 400
+    
+
+# get all messages
+@app.route('/messages/')
+def get_messages():
+    messages = fn.loadMessages()
+    # Assuming messages is a dictionary with message details including image_path
+    messages_with_images = []
+    for message_id, message_info in messages.items():
+        message_info['image_url'] = request.host_url + message_info['image_path']
+        messages_with_images.append(message_info)
+    return jsonify(messages_with_images), 200
+
+# get all ads
+@app.route('/disabled_messages/')
+def get_disabled_Messages():
+    dis_messages = fn.loadDisabled_messages()
+    # Assuming dis_messages is a dictionary with message details including image_path
+    dis_messages_with_images = []
+    for message_id, message_info in dis_messages.items():
+        message_info['image_url'] = request.host_url + message_info['image_path']
+        dis_messages_with_images.append(message_info)
+    return jsonify(dis_messages_with_images), 200
+
+
+# disable message
+@app.route('/disable_message/<adhc>', methods=['POST'])
+def disableMessage(adhc):
+    try:
+        #Fetching the message
+        messages = fn.loadMessages()
+        target_message = messages[adhc].copy()
+
+        #Saving the message to new location
+        dis_messages = fn.loadDisabled_messages()
+
+        dis_messages[adhc] = target_message
+        fn.saveDisabled_Messages(dis_messages)
+
+        # Remove the message from the original dictionary
+        if (adhc in messages):
+            del messages[adhc]
+        
+        fn.saveMessages(messages)
+
+        return jsonify({"response": "OK"}), 200
+    except Exception as e:
+        print("ERROR:", str(e))
+        return jsonify({"error": str(e)}), 400
+    
+
+# enable message
+@app.route('/enable_message/<adhc>', methods=['POST'])
+def enableMessage(adhc):
+    try:
+        #Fetching the message
+        dis_messages = fn.loadDisabled_messages()
+        target_message = dis_messages[adhc].copy()
+
+        #Saving the message to new location
+        messages = fn.loadMessages()
+
+        messages[adhc] = target_message
+        fn.saveMessages(messages)
+
+        # Remove the message from the original dictionary
+        if (adhc in dis_messages):
+            del dis_messages[adhc]
+        
+        fn.saveDisabled_Messages(dis_messages)
+
+        return jsonify({"response": "OK"}), 200
+    except Exception as e:
+        print("ERROR:", str(e))
+        return jsonify({"error": str(e)}), 400
+    
+
+    

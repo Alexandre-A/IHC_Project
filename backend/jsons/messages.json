@@ -1,0 +1,94 @@
+{
+    "landlord": {
+        "unique_id": "landlord",
+        "date": "2025-04-24T14:20:14.600Z",
+        "image_path": "images/senhorio.png",
+        "name": "Sr. Danilo",
+        "is_banned": "false",
+        "last_message": "yay",
+        "messages": [
+            [
+                "blabla",
+                "sender"
+            ],
+            [
+                "blabla2",
+                "sender"
+            ],
+            [
+                "teste",
+                "receiver"
+            ],
+            [
+                "wow",
+                "sender"
+            ],
+            [
+                "yay",
+                "receiver"
+            ]
+        ],
+        "topic_of_interest": ""
+    },
+    "landlord2": {
+        "unique_id": "landlord2",
+        "date": "2025-04-24T14:20:14.600Z",
+        "image_path": "images/3405cad130b49a9127b4b84d1ed0ed62560d9b79f739825cfb0f3fe215adedc8.png",
+        "name": "Sr. Danilo",
+        "is_banned": "true",
+        "last_message": "dsadasdadsd",
+        "messages": [],
+        "topic_of_interest": ""
+    },
+    "landlord3": {
+        "unique_id": "landlord3",
+        "date": "2025-04-24T14:20:14.600Z",
+        "image_path": "images/3405cad130b49a9127b4b84d1ed0ed62560d9b79f739825cfb0f3fe215adedc8.png",
+        "name": "Sr. Danilo",
+        "is_banned": "true",
+        "last_message": "hgfhfghfghfhf",
+        "messages": [],
+        "topic_of_interest": ""
+    },
+    "tenant": {
+        "unique_id": "tenant",
+        "date": "2025-04-24T14:20:14.600Z",
+        "image_path": "images/estudante.png",
+        "name": "Matteo Rossi",
+        "is_banned": "false",
+        "last_message": "yay",
+        "messages": [
+            [
+                "blabla",
+                "receiver"
+            ],
+            [
+                "blabla2",
+                "receiver"
+            ],
+            [
+                "teste",
+                "sender"
+            ],
+            [
+                "wow",
+                "receiver"
+            ],
+            [
+                "yay",
+                "sender"
+            ]
+        ],
+        "topic_of_interest": ""
+    },
+    "tenant3": {
+        "unique_id": "tenant3",
+        "date": "2025-04-24T14:20:14.600Z",
+        "image_path": "images/3405cad130b49a9127b4b84d1ed0ed62560d9b79f739825cfb0f3fe215adedc8.png",
+        "name": "Sr. Danilo",
+        "is_banned": "true",
+        "last_message": "aweascccbgg",
+        "messages": [],
+        "topic_of_interest": ""
+    }
+}
