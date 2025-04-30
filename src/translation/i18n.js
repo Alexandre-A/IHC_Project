@@ -22,6 +22,7 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     logOut: "Logout",
                     modalTitle1: "Success",
                     modalVariation1: "Logout successful",
+                    modalVariation2:"It's mandatory to login with a landlord or tenant account to access the messages area",
                 },
                 homepage:{
                     header1: "Landlord Area",
@@ -121,7 +122,10 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     lastEdited: "Last edited",
                     archive: " Archive conversation",
                     activate: " Activate conversation"
-                }
+                },
+                privateMessage:{
+                    type: "Type a message"
+                },
             }
         },
         Pt:{
@@ -139,6 +143,7 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     logOut: "Logout",
                     modalTitle1: "Sucesso",
                     modalVariation1: "Logout bem sucedido",
+                    modalVariation2: "É necessário fazer login com conta de senhorio ou inquilino para aceder à secção de Mensagens"
                 },
                 homepage:{
                     header1: "Área de Senhorio",
@@ -236,6 +241,9 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     lastEdited: "Última Edição",
                     archive: "Arquivar Conversa",
                     activate: "Ativar conversa"
+                },
+                privateMessage:{
+                    type: "Escreva uma messagem"
                 }
             }
         }

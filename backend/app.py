@@ -9,7 +9,7 @@ ip:str = '127.0.0.1'
 port:int = 5000
 
 app = Flask(__name__)
-CORS(app)
+CORS(app,supports_credentials=True)
 
 # check if email has landlord permission
 @app.route('/isLandLord/<email>')
@@ -300,14 +300,7 @@ def delete_disabled_ad(adhc):
 @app.route('/sendMessage', methods=['POST'])
 def sendMessage():
     try:
-        data = request.form
-
-        print("==== Incoming form data ====")
-        for key in request.form:
-            print(f"{key}: {request.form[key]}")
-        print("==== Incoming files ====")
-        for file_key in request.files:
-            print(f"{file_key}: {request.files[file_key].filename}")
+        data = request.get_json()
 
         if data is None:
             return jsonify({"error": "Invalid form data"}), 400
@@ -318,18 +311,13 @@ def sendMessage():
         ]
 
         unique_id = data.get('unique_id')
-        date = data.get('date') or str(datetime.datetime.now())
+        date = data.get('date')
         image_path = data.get('image_path')
         name = data.get('name')
         is_banned = data.get('is_banned')
         last_message = data.get('last_message')
         topic_of_interest = data.get('topic_of_interest')
-        message = data.getlist('message[]')
-
-        
-        for field in required_fields:
-            if not data.get(field):
-                return jsonify({"error": f"Missing or empty field: {field}"}), 400
+        message = data.get('messages')
 
         messages = fn.loadMessages()
 
@@ -424,6 +412,18 @@ def enableMessage(adhc):
     except Exception as e:
         print("ERROR:", str(e))
         return jsonify({"error": str(e)}), 400
+    
+# get an specific ad info
+@app.route('/getMessage/<adhc>')
+def getMessage(adhc):
+    messages = fn.loadMessages()
+
+    if not adhc in messages:
+        return jsonify({"error": "add not found"}), 400
+
+    message = messages[adhc].copy()
+    message['image_url'] = request.host_url + message['image_path']
+    return jsonify(message),200
     
 
     

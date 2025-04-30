@@ -1,11 +1,13 @@
-import React, {useState} from "react";
-import { useNavigate } from 'react-router-dom';
+import React, {useEffect, useState} from "react";
+import { useNavigate,useLocation } from 'react-router-dom';
 import { FaUser, FaCog, FaHome } from "react-icons/fa";
 import LanguageSelector from "./language-selector";
 import { useTranslation } from "react-i18next";
 import LoginModal from "./LoginModal";
 import { showToast } from '../components/Toasts/ToastMessages';
 import { useToast } from '../components/Toasts/ToastService';
+import Modal from '../components/Modal';
+
 
 function NavbarInicial({ homepage, complete}) {
   const {t} = useTranslation();
@@ -14,6 +16,10 @@ function NavbarInicial({ homepage, complete}) {
   const [tabChosen, setTabChosen] = useState("SignIn");
   const navigate = useNavigate();
   const toast = useToast();
+  const location = useLocation();
+  const [modal, setModal] = useState(null); // null, 'first', 'third'
+  const userType = localStorage.getItem("userType")
+
 
 
   const links = {
@@ -27,6 +33,7 @@ function NavbarInicial({ homepage, complete}) {
     login: "/login",
     registo: "/registo",
     form: "/form",
+    private: "/privateMessage/:user"
   };
 
   const currentPath = window.location.pathname;
@@ -37,7 +44,7 @@ function NavbarInicial({ homepage, complete}) {
     localStorage.removeItem("Placeholder")
   };
 
-  const handleLocalStorage = () => {
+  const handleLocalStorage = (tab) => {
     localStorage.removeItem("edit")
     localStorage.removeItem("Placeholder")
   }
@@ -54,6 +61,15 @@ function NavbarInicial({ homepage, complete}) {
 
   return (
     <div className="sticky top-0 z-50 bg-white shadow-md ">
+      <Modal open={modal == "first"} onClose={() => setModal(null)}>
+              <div className="text-center w-56">
+                <div className="mx-auto my-4 w-48">
+                  <p className="text-sm text-black my-1">
+                    {navbar.modalVariation2}
+                  </p>
+                </div>
+              </div>
+            </Modal>
       <LoginModal 
                 isOpen={isLoginOpen} 
                 onClose={() => setIsLoginOpen(false)} 
@@ -86,21 +102,28 @@ function NavbarInicial({ homepage, complete}) {
         ) : (
           <>
             <a
-              onClick={handleLocalStorage}
+              onClick={()=> handleLocalStorage("forum")}
               href={links.forum}
               className={`hover:text-gray-300 ${currentPath === links.forum ? "text-yellow-500" : ""}`}
             >
               {navbar.forum}
             </a>
             <a
-              onClick={handleLocalStorage}
-              href={links.messages}
-              className={`hover:text-gray-300 ${currentPath === links.messages ? "text-yellow-500" : ""}`}
+              onClick={(e)=> {
+                if (!localStorage.getItem("userType")) {
+                  setModal('first');
+                  e.preventDefault(); // prevent navigation
+                  return;
+                }
+                setModal("")
+                handleLocalStorage("messages")}}
+              href={localStorage.getItem("userType")?links.messages:""}
+              className={`hover:text-gray-300 ${currentPath === links.messages ||location.pathname.startsWith("/privateMessage/") ? "text-yellow-500" : ""}`}
             >
               {navbar.messages}
             </a>
             <a
-              onClick={handleLocalStorage}
+              onClick={()=> handleLocalStorage("ads")}
               href={links.ads}
               className={`hover:text-gray-300 ${currentPath === links.ads ? "text-yellow-500" : ""}`}
             >
@@ -108,7 +131,7 @@ function NavbarInicial({ homepage, complete}) {
             </a>
             {complete =='landlord' && (
               <a
-                onClick={handleLocalStorage}
+                onClick={()=> handleLocalStorage("myads")}
                 href={links.myads}
                 className={`hover:text-gray-300 ${currentPath === links.myads || currentPath === links.form ? "text-yellow-500" : ""}`}
               >
@@ -149,7 +172,7 @@ function NavbarInicial({ homepage, complete}) {
         </button>
         {/*
         <a
-          onClick={handleLocalStorage} href={links.settings} className="hover:text-gray-300">
+          onClick={()=> handleLocalStorage("")} href={links.settings} className="hover:text-gray-300">
           <FaCog className="w-6 h-6" title={navbar.settings} />
         </a>
          */}

@@ -2,12 +2,12 @@ import { useState,useEffect } from 'react'
 import { useAuth } from "../AuthContext";
 import { useTranslation } from "react-i18next";
 import { FaMagnifyingGlass } from "react-icons/fa6";
-import { PiEyeFill } from "react-icons/pi";
-import { GiSightDisabled } from "react-icons/gi";
-import { FiEdit, FiArchive, } from 'react-icons/fi'
+import { useNavigate } from 'react-router-dom';
+import {FiArchive, } from 'react-icons/fi'
 import { LuArchiveRestore } from "react-icons/lu";
 import { FaAngleUp,FaAngleDown } from "react-icons/fa";
-import { FaTrashAlt,FaShareAlt,FaHeart,FaSortAmountUpAlt,FaSortAmountDown} from "react-icons/fa";
+import { FaSortAmountUpAlt,FaSortAmountDown} from "react-icons/fa";
+
 import '../index.css'
 import '../App.css'
 
@@ -15,6 +15,7 @@ const ip = "127.0.0.1";
 const port = 5000;
 
 function Messages() {
+  const navigate = useNavigate();
   const { userType } = useAuth();
   const {t} = useTranslation();
   const messages = t("messages");
@@ -195,6 +196,16 @@ function Messages() {
       }
     };
 
+    const handlePrivate = (ad) =>{
+      console.log("yay")
+      navigate("/privateMessage/"+ad.unique_id);
+
+    }
+
+    const handleBan = (ad) =>{
+      console.log("sad")
+    }
+
   return (
     <>
       <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
@@ -235,8 +246,8 @@ function Messages() {
         <p><b>{messages.enabledTitle}</b></p>
         <div className="w-full max-w-4xl border-1 p-2 bg-gray-100 shadow-md rounded-lg h-[540px] md:h-[410px] overflow-y-auto">        
 
-        {copyRoomData.map((ad,index)=>(
-          <div key={index} className="flex flex-row md:flex-row w-full max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden md:h-[160px] mb-3 border-black border-1">
+        {copyRoomData.filter((ad)=>!ad.unique_id.includes(localStorage.getItem("userType"))).map((ad,index)=>(
+          <div key={index} className="flex flex-row md:flex-row w-full max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden md:h-[160px] mb-3 border-black border">
                           <div className="w-full md:w-1/4 p-2 flex flex-col justify-between">
                             <img
                               src={ad.image_url}
@@ -244,12 +255,13 @@ function Messages() {
                               className=" ml-2 border-black justify-center rounded-full h-36 w-36 object-cover border-3"
                             />
                           </div>
-                          <div className="w-full md:w-3/4 p-4 flex flex-col justify-between">
+                          <div className="w-full md:w-3/4 p-4 flex flex-col justify-between cursor-pointer"
+                          onClick={()=>ad.is_banned==="true"?handleBan(ad):handlePrivate(ad)}>
                             {/* Header Row */}
                             <div className="flex flex-col md:flex-row justify-between items-start gap-2">
                               <div className='w-4/6'>
                                 <h3 className="text-lg font-semibold overflow-hidden text-ellipsis whitespace-nowrap">{ad.name}</h3>
-                                <p className="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap">{ad.last_message}</p>
+                                <p className=" text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap">{ad.last_message}</p>
                               </div>
                               <div className="w-2/6">
                                 <p className="text-xl font-semibold text-gray-800 flex items-center w-full justify-start md:justify-end">
@@ -263,7 +275,8 @@ function Messages() {
                             <div className="flex gap-3 justify-end">
                               <button
                                 className="p-2 border rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer flex items-center gap-2"
-                                onClick={() => handleDisable(ad.unique_id)}
+                                onClick={(e) => {e.stopPropagation();
+                                  handleDisable(ad.unique_id)}}
                               >
                                 <FiArchive size={25} className="inline-flex align-middle" />
                                 <span className="inline-flex align-middle">{messages.archive}</span>
@@ -289,7 +302,7 @@ function Messages() {
         {showAccounts?
         <div className="w-full max-w-4xl border-1  rounded-b p-2 bg-gray-100 shadow-md  h-[540px] md:h-[180px] overflow-y-auto">        
 
-        {showAccounts && disabledRoomData.map((ad,index)=>(
+        {showAccounts && disabledRoomData.filter((ad)=>!ad.unique_id.includes(localStorage.getItem("userType"))).map((ad,index)=>(
           <div key={index} className="flex flex-row md:flex-row w-full max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden md:h-[160px] mb-3 border-gray-700 border-1 opacity-65">
                           <div className="w-full md:w-1/4 p-2 flex flex-col justify-between">
                             <img
@@ -317,7 +330,8 @@ function Messages() {
                             <div className="flex gap-3 justify-end mt-2">
                               <button
                                 className="p-2 border rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer flex items-center gap-2"
-                                onClick={() => handleEnable(ad.unique_id)}
+                                onClick={(e) => {e.stopPropagation();
+                                  handleEnable(ad.unique_id)}}
                               >
                                 <LuArchiveRestore size={25} className="inline-flex align-middle" />
                                 <span className="inline-flex align-middle">{messages.activate}</span>
