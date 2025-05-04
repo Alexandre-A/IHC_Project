@@ -425,7 +425,7 @@ const AdFormPage = () => {
                             d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                           />
                         </svg>
-                        <span className="text-sm">Click to upload</span>
+                        <span className="text-sm">{adFormPt1.clickUpload}</span>
                       </div>
                     )}
 
@@ -441,7 +441,7 @@ const AdFormPage = () => {
                 {/* Description */}
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">
-                    Description:
+                    {adFormPt1.description}
                   </label>
                   <textarea
                     name="description"
@@ -455,7 +455,7 @@ const AdFormPage = () => {
                 {/* Location */}
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">
-                    Location:
+                    {adFormPt1.location}
                   </label>
                   <div className="flex space-x-2">
                     <select
@@ -464,7 +464,7 @@ const AdFormPage = () => {
                       onChange={handleChange}
                       className="w-1/2 p-2 border rounded"
                     >
-                      <option value="">Select District</option>
+                      <option value="">{adFormPt1.selectDistrict}</option>
                       {Object.keys(districtCityMap).map((district) => (
                         <option key={district} value={district}>
                           {district}
@@ -477,7 +477,7 @@ const AdFormPage = () => {
                       onChange={handleChange}
                       className="w-1/2 p-2 border rounded"
                     >
-                      <option value="">Select City</option>
+                      <option value="">{adFormPt1.selectCity}</option>
                       {districtCityMap[formData.district]?.map((city) => (
                         <option key={city} value={city}>
                           {city}
@@ -490,7 +490,7 @@ const AdFormPage = () => {
                 {/* Target Audience */}
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">
-                    Who are you looking for:
+                    {adFormPt1.lookingFor}
                   </label>
                   <div className="flex space-x-2">
                     <input
@@ -498,7 +498,7 @@ const AdFormPage = () => {
                       name="min_age"
                       value={formData.min_age}
                       onChange={handleChange}
-                      placeholder="Age:"
+                      placeholder={adFormPt1.age}
                       className={`w-1/2 p-2 border rounded ${
                         formData.min_age.length > 0 
                           ? !isNaN(Number(formData.min_age)) && formData.min_age.trim() !== ''
@@ -512,7 +512,7 @@ const AdFormPage = () => {
                       name="max_age"
                       value={formData.max_age}
                       onChange={handleChange}
-                      placeholder="Age:"
+                      placeholder={adFormPt1.age}
                       className={`w-1/2 p-2 border rounded ${
                         formData.max_age.length > 0 
                           ? !isNaN(Number(formData.max_age)) && formData.max_age.trim()  !== ''
@@ -527,7 +527,7 @@ const AdFormPage = () => {
                 {/* Marital Status */}
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">
-                    Couples:
+                    {adFormPt1.couples}
                   </label>
                   <div className="flex space-x-2">
                     <button
@@ -539,7 +539,7 @@ const AdFormPage = () => {
                           : "bg-gray-200 hover:bg-gray-300"
                       }`}
                     >
-                      Yes
+                      {adFormPt1.yes}
                     </button>
                     <button
                       type="button"
@@ -550,7 +550,7 @@ const AdFormPage = () => {
                           : "bg-gray-200 hover:bg-gray-300"
                       }`}
                     >
-                      No
+                      {adFormPt1.no}
                     </button>
                   </div>
                 </div>
@@ -560,7 +560,7 @@ const AdFormPage = () => {
               <div>
                 {/* Name */}
                 <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">Name</label>
+                  <label className="block text-sm font-medium mb-1">{adFormPt1.name}</label>
                   <input
                     type="text"
                     name="name"
@@ -570,11 +570,11 @@ const AdFormPage = () => {
                   />
                 </div>
 
-                {/* Price and Available Date */}
+                {/* {adFormPt1.description} and Available Date */}
                 <div className="mb-4 flex space-x-2">
                   <div className="w-1/2">
                     <label className="block text-sm font-medium mb-1">
-                      Available
+                      {adFormPt1.available}
                     </label>
                     <input
                       type="text"
@@ -587,7 +587,7 @@ const AdFormPage = () => {
                   </div>
                   <div className="w-1/2">
                     <label className="block text-sm font-medium mb-1">
-                      Price
+                      {adFormPt1.price}
                     </label>
                     <input
                       type="text"
@@ -609,7 +609,7 @@ const AdFormPage = () => {
                 <div className="mb-4 flex space-x-2">
                   <div className="w-1/2">
                     <label className="block text-sm font-medium mb-1">
-                      Gender
+                      {adFormPt1.gender}
                     </label>
                     <select
                       name="gender"
@@ -617,14 +617,14 @@ const AdFormPage = () => {
                       onChange={handleChange}
                       className="w-full p-2 border rounded"
                     >
-                      <option value="Indifferent">Indifferent</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
+                      <option value="Indifferent">{adFormPt1.indifferent}</option>
+                      <option value="Male">{adFormPt1.male}</option>
+                      <option value="Female">{adFormPt1.female}</option>
                     </select>
                   </div>
                   <div className="w-1/2">
                     <label className="block text-sm font-medium mb-1">
-                      Quantity
+                      {adFormPt1.quantity}
                     </label>
                     <input
                       type="text"
@@ -645,7 +645,7 @@ const AdFormPage = () => {
                 {/* Street */}
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">
-                    Street or Avenue
+                    {adFormPt1.street}
                   </label>
                   <input
                     type="text"
@@ -659,10 +659,10 @@ const AdFormPage = () => {
                 {/* Pet Allowance (Expenses Included) */}
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">
-                    Accommodation Details
+                    {adFormPt1.accommodationDetails}
                   </label>
                   <label className="block text-sm font-medium mb-1">
-                    Expenses included:
+                    {adFormPt1.expenses}
                   </label>
                   <div className="flex space-x-2">
                     <button
@@ -674,7 +674,7 @@ const AdFormPage = () => {
                           : "bg-gray-200 hover:bg-gray-300"
                       }`}
                     >
-                      Yes
+                      {adFormPt1.yes}
                     </button>
                     <button
                       type="button"
@@ -685,7 +685,7 @@ const AdFormPage = () => {
                           : "bg-gray-200 hover:bg-gray-300"
                       }`}
                     >
-                      No
+                      {adFormPt1.no}
                     </button>
                   </div>
                 </div>
@@ -693,7 +693,7 @@ const AdFormPage = () => {
                 {/* bath Share (Bathroom) */}
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">
-                    Bathroom:
+                    {adFormPt1.bathroom}
                   </label>
                   <select
                     name="bath_share"
@@ -701,8 +701,8 @@ const AdFormPage = () => {
                     onChange={handleChange}
                     className="w-full p-2 border rounded"
                   >
-                    <option value="Shared">Shared</option>
-                    <option value="Private">Private</option>
+                    <option value="Shared">{adFormPt1.shared}</option>
+                    <option value="Private">{adFormPt1.private}</option>
                   </select>
                 </div>
               </div>
@@ -715,7 +715,7 @@ const AdFormPage = () => {
                   onClick={openTagModal}
                   className="p-2 bg-blue-500 text-white rounded mb-2 cursor-pointer hover:bg-blue-600"
                 >
-                  Add/Edit Tags
+                  {adFormPt1.addEditTags}
                 </button>
                 <div className="mt-2">
                   {formData.tags.length > 0 ? (
@@ -760,13 +760,13 @@ const AdFormPage = () => {
               {isTagModalOpen && (
                 <div className="fixed inset-0 visible bg-black/30 flex items-center transition-colors justify-center z-50">
                   <div className="bg-white rounded-lg p-6 w-full max-w-md">
-                    <h2 className="text-lg font-medium mb-4">Add Tags</h2>
+                    <h2 className="text-lg font-medium mb-4">{adFormPt1.addTags}</h2>
                     <div className="flex space-x-2 mb-4">
                       <input
                         type="text"
                         value={currentTag}
                         onChange={(e) => setCurrentTag(e.target.value)}
-                        placeholder="Enter a tag"
+                        placeholder={adFormPt1.enterTags}
                         className="w-full p-2 border rounded"
                       />
                       <button
@@ -774,12 +774,12 @@ const AdFormPage = () => {
                         onClick={handleAddTag}
                         className="p-2 bg-blue-500 hover:bg-blue-600 cursor-pointer text-white rounded"
                       >
-                        Add
+                        {adFormPt1.add}
                       </button>
                     </div>
                     <div className="mb-4">
                       <h3 className="text-sm font-medium mb-2">
-                        Current Tags:
+                      {adFormPt1.currentTags}
                       </h3>
                       {formData.tags.length > 0 ? (
                         formData.tags.map((tag, index) => (
@@ -800,7 +800,7 @@ const AdFormPage = () => {
                       onClick={closeTagModal}
                       className="w-full p-2 bg-gray-500 cursor-pointer text-white rounded hover:bg-gray-600"
                     >
-                      Done
+                      {adFormPt1.done}
                     </button>
                   </div>
                 </div>
@@ -836,7 +836,7 @@ const AdFormPage = () => {
                 {/* Description */}
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">
-                    Description:
+                    {adFormPt1.description}
                   </label>
                   <p className="w-full p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
                     {formData.description || "No description provided"}
@@ -846,7 +846,7 @@ const AdFormPage = () => {
                 {/* Location */}
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">
-                    Location:
+                    {adFormPt1.location}
                   </label>
                   <div className="flex space-x-2">
                     <p className="w-1/2 p-2 border rounded bg-gray-100">
@@ -861,7 +861,7 @@ const AdFormPage = () => {
                 {/* Target Audience */}
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">
-                    Who are you looking for:
+                    {adFormPt1.lookingFor}
                   </label>
                   <div className="flex space-x-2">
                     <p className="w-1/2 p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
@@ -877,7 +877,7 @@ const AdFormPage = () => {
                 {/* Marital Status */}
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">
-                    Couples:
+                    {adFormPt1.couples}
                   </label>
                   <p className="p-2 border rounded bg-gray-100">
                     {formData.marital_status}
@@ -889,17 +889,17 @@ const AdFormPage = () => {
               <div>
                 {/* Name */}
                 <div className="mb-4">
-                  <label className="block text-sm font-medium mb-1">Name</label>
+                  <label className="block text-sm font-medium mb-1">{adFormPt1.name}</label>
                   <p className="w-full p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
                     {formData.name || "No name provided"}
                   </p>
                 </div>
 
-                {/* Price and Available Date */}
+                {/* Prices and Available Date */}
                 <div className="mb-4 flex space-x-2">
                   <div className="w-1/2">
                     <label className="block text-sm font-medium mb-1">
-                      Available
+                      {adFormPt1.available}
                     </label>
                     <p className="w-full p-2 border rounded bg-gray-100">
                       {formData.available_date || "No date provided"}
@@ -907,7 +907,7 @@ const AdFormPage = () => {
                   </div>
                   <div className="w-1/2">
                     <label className="block text-sm font-medium mb-1">
-                      Price
+                      {adFormPt1.price}
                     </label>
                     <p className="w-full p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
                       {formData.price || "No price provided"}
@@ -919,7 +919,7 @@ const AdFormPage = () => {
                 <div className="mb-4 flex space-x-2">
                   <div className="w-1/2">
                     <label className="block text-sm font-medium mb-1">
-                      Gender
+                      {adFormPt1.gender}
                     </label>
                     <p className="w-full p-2 border rounded bg-gray-100">
                       {formData.gender}
@@ -927,7 +927,7 @@ const AdFormPage = () => {
                   </div>
                   <div className="w-1/2">
                     <label className="block text-sm font-medium mb-1">
-                      Quantity
+                      {adFormPt1.quantity}
                     </label>
                     <p className="w-full p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
                       {formData.quantity || "No room number provided"}
@@ -938,7 +938,7 @@ const AdFormPage = () => {
                 {/* Street */}
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">
-                    Street or Avenue
+                    {adFormPt1.street}
                   </label>
                   <p className="w-full p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
                     {formData.street || "No street provided"}
@@ -948,10 +948,10 @@ const AdFormPage = () => {
                 {/* Pet Allowance */}
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">
-                    Accommodation Details
+                    {adFormPt1.accommodationDetails}
                   </label>
                   <label className="block text-sm font-medium mb-1">
-                    Expenses included:
+                    {adFormPt1.expenses}
                   </label>
                   <p className="p-2 border rounded bg-gray-100">
                     {formData.expense_included}
@@ -961,7 +961,7 @@ const AdFormPage = () => {
                 {/* bath Share */}
                 <div className="mb-4">
                   <label className="block text-sm font-medium mb-1">
-                    Bathroom:
+                    {adFormPt1.bathroom}
                   </label>
                   <p className="w-full p-2 border rounded bg-gray-100">
                     {formData.bath_share}
