@@ -1,0 +1,63 @@
+{
+    "landlord2": {
+        "unique_id": "landlord2",
+        "date": "2025-04-24T14:20:14.600Z",
+        "created": "Sr. Danilo",
+        "last_message": "dsadasdadsd",
+        "messages": [],
+    },
+    "landlord3": {
+        "unique_id": "landlord3",
+        "date": "2025-04-24T14:20:14.600Z",
+        "created": "Sr. Danilo",
+        "last_message": "hgfhfghfghfhf",
+        "messages": [],
+    },
+    "tenant3": {
+        "unique_id": "tenant3",
+        "date": "2025-04-24T14:20:14.600Z",
+        "created": "Sr. Danilo",
+        "last_message": "aweascccbgg",
+        "messages": [],
+    },
+    "landlord": {
+        "unique_id": "landlord",
+        "date": "2025-04-24T14:20:14.600Z",
+        "created": "Sr. Danilo",
+        "last_message": "oa",
+        "messages": [
+            [
+                "blabla",
+                "Sr. Danilo"
+            ],
+            [
+                "blabla2",
+                "Matteo Rossi"
+            ],
+            [
+                "teste",
+                "Djigiridiji"
+            ]
+        ],
+    },
+    "tenant": {
+        "unique_id": "tenant",
+        "date": "2025-04-24T14:20:14.600Z",
+        "created": "Matteo Rossi",
+        "last_message": "oa",
+        "messages": [
+            [
+                "Ouvi dizer que o grupo SONAI está a financiar guerrilhas moçambicanas",
+                "Matteo Rossi"
+            ],
+            [
+                "blabla2",
+                "Sr. Danilo"
+            ],
+            [
+                "fixe",
+                "Djigiridiji"
+            ]
+        ],
+    }
+}
