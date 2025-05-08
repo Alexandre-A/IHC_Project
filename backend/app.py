@@ -3,7 +3,6 @@ from flask_cors import CORS
 import functions as fn
 
 import json
-import os
 
 ip:str = '127.0.0.1'
 port:int = 5000
@@ -38,7 +37,7 @@ def processNewAd():
 
         if data is None:
             return jsonify({"error": "Invalid form data"}), 400
-        
+
         required_fields = [
             'email', 'description', 'date', 'name', 'price', 'available_date',
             'gender', 'quantity', 'district', 'city', 'street', 'min_age', 'max_age',
@@ -68,7 +67,7 @@ def processNewAd():
 
         print("isNew:", isNew)
 
-        
+
         for field in required_fields:
             if not data.get(field):
                 return jsonify({"error": f"Missing or empty field: {field}"}), 400
@@ -84,7 +83,7 @@ def processNewAd():
             hash_input = f"{description}{date}".encode() + image.read()
             image_hash = hashlib.sha256(hash_input).hexdigest()
             image.seek(0)
-        
+
         else:
             image_hash = isNew[1]
 
@@ -246,14 +245,14 @@ def disableAd(adhc):
         # Remove the ad from the original dictionary
         if (adhc in ads):
             del ads[adhc]
-        
+
         fn.saveAds(ads)
 
         return jsonify({"response": "OK"}), 200
     except Exception as e:
         print("ERROR:", str(e))
         return jsonify({"error": str(e)}), 400
-    
+
 
 # enable ad
 @app.route('/enable_ad/<adhc>', methods=['POST'])
@@ -272,14 +271,14 @@ def enableAd(adhc):
         # Remove the ad from the original dictionary
         if (adhc in dis_ads):
             del dis_ads[adhc]
-        
+
         fn.saveDisabled_ads(dis_ads)
 
         return jsonify({"response": "OK"}), 200
     except Exception as e:
         print("ERROR:", str(e))
         return jsonify({"error": str(e)}), 400
-    
+
 
 @app.route('/delete_disabled_ad/<adhc>', methods=["DELETE", "OPTIONS"])
 def delete_disabled_ad(adhc):
@@ -304,7 +303,7 @@ def sendMessage():
 
         if data is None:
             return jsonify({"error": "Invalid form data"}), 400
-        
+
         required_fields = [
             'date', 'name','image_path', 'is_banned', 'last_message'
             'messages', 'topic_of_interest','unique_id'
@@ -337,7 +336,7 @@ def sendMessage():
     except Exception as e:
         print("ERROR:", str(e))
         return jsonify({"error": str(e)}), 400
-    
+
 
 # get all messages
 @app.route('/messages/')
@@ -379,14 +378,14 @@ def disableMessage(adhc):
         # Remove the message from the original dictionary
         if (adhc in messages):
             del messages[adhc]
-        
+
         fn.saveMessages(messages)
 
         return jsonify({"response": "OK"}), 200
     except Exception as e:
         print("ERROR:", str(e))
         return jsonify({"error": str(e)}), 400
-    
+
 
 # enable message
 @app.route('/enable_message/<adhc>', methods=['POST'])
@@ -405,14 +404,14 @@ def enableMessage(adhc):
         # Remove the message from the original dictionary
         if (adhc in dis_messages):
             del dis_messages[adhc]
-        
+
         fn.saveDisabled_Messages(dis_messages)
 
         return jsonify({"response": "OK"}), 200
     except Exception as e:
         print("ERROR:", str(e))
         return jsonify({"error": str(e)}), 400
-    
+
 # get an specific ad info
 @app.route('/getMessage/<adhc>')
 def getMessage(adhc):
@@ -424,6 +423,3 @@ def getMessage(adhc):
     message = messages[adhc].copy()
     message['image_url'] = request.host_url + message['image_path']
     return jsonify(message),200
-    
-
-    

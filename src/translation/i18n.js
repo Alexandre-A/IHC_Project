@@ -153,11 +153,19 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                 privateMessage:{
                     type: "Type a message"
                 },
+                adsPage:{
+                    search:"Search",
+                  
+                },
             }
         },
         Pt:{
             translation:{
                 greeting: "Olá mundo",
+                
+                adsPage:{
+                    search:"Pesquisar",  
+                },
                 navbar:{
                     forum: "Fórum",
                     messages: "Mensagens",
