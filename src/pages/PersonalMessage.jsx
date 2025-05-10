@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import LanguageSelector from '../components/language-selector';
 import { PiPaperPlaneTiltBold } from "react-icons/pi";
 import { useParams } from 'react-router-dom';
+import ReturnButton from '../components/ReturnButton';
 
 
 
@@ -153,8 +154,11 @@ const handleAddMessage = async () => {
 
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
-      <div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-4">
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-4xl  shadow-md rounded-lg p-4 flex flex-col items-start">
+        <ReturnButton previousPage={"/messages"}></ReturnButton>
+        {/* Main Content */}
+        <div className="w-full max-w-4xl bg-white shadow-md rounded-r-lg rounded-b-lg p-4">
         
 
         
@@ -190,7 +194,7 @@ const handleAddMessage = async () => {
                           onClick={handleAddMessage}><PiPaperPlaneTiltBold /></button>
         </div>
       </div>
-      
+    </div>
     </div>
   )
 }

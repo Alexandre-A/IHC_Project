@@ -6,6 +6,7 @@ import { FaHeart, FaCamera, FaShareAlt } from 'react-icons/fa';
 import ads from '../../backend/jsons/ads.json';
 import { useTranslation } from "react-i18next";
 import { FiXCircle, FiCheckCircle, FiInfo, FiAlertTriangle } from 'react-icons/fi'
+import ReturnButton from "../components/ReturnButton";
 
 
 
@@ -353,9 +354,11 @@ const AdFormPage = () => {
         </div>
       </div>
             </Modal>
-      <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+      <div className="w-full max-w-4xl rounded-lg p-4 flex flex-col items-start">
+        <ReturnButton previousPage={"/myads"}></ReturnButton>
         {/* Main Content */}
-        <div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-4">
+        <div className="w-full max-w-4xl bg-white shadow-md rounded-r-lg rounded-b-lg p-4">
           {/* Tabs */}
           <div className="flex mb-4">
             <button
@@ -1083,6 +1086,7 @@ const AdFormPage = () => {
             </div>
           )}
         </div>
+      </div>
       </div>
     </div>
   );
