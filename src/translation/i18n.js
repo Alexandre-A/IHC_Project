@@ -162,12 +162,39 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     location: "Location",
                     lastEdited: "Last Edited",
                     modalTitle2: "Error",
-                    cannot: "It is not allowed to message yourself"
-
+                    cannot: "It is not allowed to message yourself",
+                    showFilter:"Show Filters",
+                    hideFilter:"Hide Filters",
+                    resetFilter:"Reset Filters",
+                    applyFilter:"Apply Filters",
+                    disclaimer: "Only filled in fields will be applied",
+                    couplesYes: "Couples: Yes",
+                    couplesNo: "Couples: No",
+                    ageMin: "Min Age",
+                    ageMax: "Max Age",
+                    gender: "Gender: Indifferent",
+                    male:"Gender: Male",
+                    female:"Gender: Female",
+                    priceMin: "Min Price",
+                    priceMax: "Max Price",
+                    available:"Available by (date)",
+                    expensesYes:"Expenses included:",
+                    expensesNo:"Expenses not included:",
+                    shared:"Bathroom: shared",
+                    private:"Bathroom: private",
+                    street:"Street or Avenue",
+                    selectCity: "City",
+                    selectDistrict: "District",
+                    warning:"Warning",
+                    warningMessage:"Feature not yet implemented",
+                    success:"Success",
+                    successMessage:"Filters applied"
                 },
                 adInfo:{
                     modalTitle2: "Error",
                     cannot: "It is not allowed to message yourself",
+                    warning:"Warning",
+                    warningMessage:"Feature not yet implemented",
                 },
 
             }
@@ -333,6 +360,7 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     showFilter:"Mostrar Filtros",
                     hideFilter:"Esconder Filtros",
                     resetFilter:"Reset Filtros",
+                    applyFilter:"Aplicar Filtros",
                     disclaimer: "Apenas campos preenchidos serão aplicados",
                     couplesYes: "Casais: Sim",
                     couplesNo: "Casais: Não",
@@ -352,12 +380,16 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     selectCity: "Cidade",
                     selectDistrict: "Distrito",
                     warning:"Aviso",
-                    warningMessage:"Feature ainda não implementada"
+                    warningMessage:"Feature ainda não implementada",
+                    success:"Sucesso",
+                    successMessage:"Filtros aplicados"
 
                 },
                 adInfo:{
-                     modalTitle2: "Erro",
-                    cannot: "Não é possível enviar mensagem a si mesmo"
+                    modalTitle2: "Erro",
+                    cannot: "Não é possível enviar mensagem a si mesmo",
+                    warning:"Aviso",
+                    warningMessage:"Feature ainda não implementada",
                 },
             }
         }

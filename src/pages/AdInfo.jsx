@@ -65,8 +65,8 @@ function AdInfo() {
   const handleFavourite =()=>{
     showToast(toast, {
       type: "warning",
-      header: "wow",
-      message: "working"
+      header: adInfo.warning,
+      message: adInfo.warningMessage
     });
   }
   useEffect(() => {

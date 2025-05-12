@@ -121,16 +121,16 @@ function Ads() {
       setCopyRoomData(filtered);
       showToast(toast, {
         type: "success",
-        header: "wow",
-        message: "working"
+        header: adsPage.success,
+        message: adsPage.successMessage
       });
     };
     
     const handleFavourite =()=>{
       showToast(toast, {
         type: "warning",
-        header: "wow",
-        message: "working"
+        header: adsPage.warning,
+        message: adsPage.warningMessage
       });
     }
 
@@ -297,40 +297,40 @@ function Ads() {
             onClick={() => setShowFilters(!showFilters)}
             className="mb-4 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 cursor-pointer transition"
           >
-            {showFilters ? "Esconder Filtros" : "Mostrar Filtros"}
+            {showFilters ? adsPage.hideFilter : adsPage.showFilter}
           </button>
 
           {/* Dropdown Filter Panel */}
           {showFilters && (
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white p-4 rounded  shadow-md border-1 mb-2 transition-all duration-300">
               <div className="col-span-2 md:col-span-4 flex justify-center mt-2">
-                <p><b>Only filled in fields will be applied</b></p>
+                <p><b>{adsPage.disclaimer}</b></p>
               </div>
               <select className="border p-2 rounded" value={filters.gender} onChange={(e) => setFilters({ ...filters, gender: e.target.value })}>
-                <option value="Indifferent">Género: qualquer</option>
-                <option value="Male">Masculino</option>
-                <option value="Female">Feminino</option>
+                <option value="Indifferent">{adsPage.gender}</option>
+                <option value="Male">{adsPage.male}</option>
+                <option value="Female">{adsPage.female}</option>
               </select>
 
               <select className="border p-2 rounded" value={filters.marital_status} onChange={(e) => setFilters({ ...filters, marital_status: e.target.value })}>
-                <option value="Yes">Casais: sim</option>
-                <option value="No">Casais: não</option>
+                <option value="Yes">{adsPage.couplesYes}</option>
+                <option value="No">{adsPage.couplesNo}</option>
               </select>
 
               <select className="border p-2 rounded" value={filters.bath_share} onChange={(e) => setFilters({ ...filters, bath_share: e.target.value })}>
-                <option value="Shared">Casa de banho: partilhada</option>
-                <option value="Private">Privativa</option>
+                <option value="Shared">{adsPage.shared}</option>
+                <option value="Private">{adsPage.private}</option>
               </select>
               
               <select className="border p-2 rounded" value={filters.expense_included} onChange={(e) => setFilters({ ...filters, expense_included: e.target.value })}>
-                <option value="Yes">Despesas incluídas</option>
-                <option value="No">Não incluídas</option>
+                <option value="Yes">{adsPage.expensesYes}</option>
+                <option value="No">{adsPage.expensesNo}</option>
               </select>
 
 
               <input
                 type="number"
-                placeholder="Preço mínimo"
+                placeholder={adsPage.priceMin}
                 className="border p-2 rounded"
                 value={filters.minprice}
                 onChange={(e) => setFilters({ ...filters, minprice: e.target.value })}
@@ -339,7 +339,7 @@ function Ads() {
 
               <input
                 type="number"
-                placeholder="Preço máximo"
+                placeholder={adsPage.priceMax}
                 className="border p-2 rounded"
                 value={filters.maxprice}
                 onChange={(e) => setFilters({ ...filters, maxprice: e.target.value })}
@@ -348,7 +348,7 @@ function Ads() {
 
               <input
               type="text"
-              placeholder="Idade mínima"
+              placeholder={adsPage.ageMin}
               className="border p-2 rounded"
               value={filters.min_age}
               onChange={(e) => setFilters({ ...filters, min_age: e.target.value })}
@@ -356,7 +356,7 @@ function Ads() {
 
               <input
               type="text"
-              placeholder="Idade máxima"
+              placeholder={adsPage.ageMax}
               className="border p-2 rounded"
               value={filters.max_age}
               onChange={(e) => setFilters({ ...filters, max_age: e.target.value })}
@@ -364,7 +364,7 @@ function Ads() {
 
               <input
                 type="text"
-                placeholder="Distrito"
+                placeholder={adsPage.selectDistrict}
                 className="border p-2 rounded"
                 value={filters.district}
                 onChange={(e) => setFilters({ ...filters, district: e.target.value })}
@@ -372,7 +372,7 @@ function Ads() {
 
               <input
                 type="text"
-                placeholder="Cidade"
+                placeholder={adsPage.selectCity}
                 className="border p-2 rounded"
                 value={filters.city}
                 onChange={(e) => setFilters({ ...filters, city: e.target.value })}
@@ -380,7 +380,7 @@ function Ads() {
 
               <input
                 type="text"
-                placeholder="Rua"
+                placeholder={adsPage.street}
                 className="border p-2 rounded"
                 value={filters.street}
                 onChange={(e) => setFilters({ ...filters, street: e.target.value })}
@@ -389,7 +389,7 @@ function Ads() {
 
               <input
                 type="text"
-                placeholder="Entrar (data)"
+                placeholder={adsPage.available}
                 className="border p-2 rounded"
                 value={filters.available_date}
                 onChange={(e) => setFilters({ ...filters, available_date: e.target.value })}
@@ -400,7 +400,7 @@ function Ads() {
                   className="px-4 py-2 bg-blue-500 text-white cursor-pointer rounded hover:bg-blue-600"
                   onClick={handleFilterApply}
                 >
-                  Aplicar Filtros
+                  {adsPage.applyFilter}
                 </button>
 
                 <button
@@ -424,7 +424,7 @@ function Ads() {
                     setCopyRoomData(roomData);
                   }}
                 >
-                  Reset Filtros
+                  {adsPage.resetFilter}
                 </button>
               </div>
             </div>
