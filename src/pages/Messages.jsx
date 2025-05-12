@@ -202,9 +202,6 @@ function Messages() {
 
     }
 
-    const handleBan = (ad) =>{
-      console.log("sad")
-    }
 
   return (
     <>
@@ -256,7 +253,7 @@ function Messages() {
                             />
                           </div>
                           <div className="w-full md:w-3/4 p-4 flex flex-col justify-between cursor-pointer"
-                          onClick={()=>ad.is_banned==="true"?handleBan(ad):handlePrivate(ad)}>
+                          onClick={()=>handlePrivate(ad)}>
                             {/* Header Row */}
                             <div className="flex flex-col md:flex-row justify-between items-start gap-2">
                               <div className='w-4/6'>

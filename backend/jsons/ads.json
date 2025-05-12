@@ -11,7 +11,7 @@
         "quantity": "1",
         "district": "Aveiro",
         "city": "Aveiro",
-        "street": "a",
+        "street": "AVENIDA DR LOUREN\u00c7O PEIXINHO N\u00ba 169, 3800-999, Aveiro",
         "min_age": "18",
         "max_age": "18",
         "bath_share": "Shared",
@@ -25,8 +25,8 @@
             "\u200e Aveiro"
         ],
         "isNew": [
-            "true",
-            ""
+            "false",
+            "3405cad130b49a9127b4b84d1ed0ed62560d9b79f739825cfb0f3fe215adedc8"
         ]
     },
     "1070e6d76a7cdfd96c6cdc6b195b5c4720918c6c83e729b77159d14641a3e1f7": {
@@ -117,36 +117,6 @@
         "isNew": [
             "false",
             "863036e4d7c170c1baa13ddd1de43195a0d0db25618322f770ecff99cb23ceae"
-        ]
-    },
-    "c76dfe9e2e9b39129bc5b6fe26fcb8ed898bb333e499b569a160c1926e27717c": {
-        "email": "supreme_landlord@gmail.com",
-        "description": "a",
-        "date": "2025-04-24T14:56:14.867Z",
-        "image_path": "images/c76dfe9e2e9b39129bc5b6fe26fcb8ed898bb333e499b569a160c1926e27717c.png",
-        "name": "tu",
-        "price": "1",
-        "available_date": "a",
-        "gender": "Indifferent",
-        "quantity": "a",
-        "district": "Leiria",
-        "city": "Marinha Grande",
-        "street": "a",
-        "min_age": "a",
-        "max_age": "a",
-        "bath_share": "Private",
-        "expense_included": "Yes",
-        "marital_status": "Yes",
-        "tags": [
-            "Gender: Indifferent",
-            "Couples: Yes",
-            "Expenses: Yes",
-            "Bathroom: Private",
-            "\u200e Leiria"
-        ],
-        "isNew": [
-            "false",
-            "c76dfe9e2e9b39129bc5b6fe26fcb8ed898bb333e499b569a160c1926e27717c"
         ]
     },
     "6d7a3a180c9263122be880916bb61385d7e77a8c9c23047a6f47f887db33d82e": {

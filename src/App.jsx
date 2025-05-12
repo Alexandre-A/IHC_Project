@@ -13,6 +13,7 @@ import Homepage from './pages/Homepage'
 import NavbarInicial from './components/NavbarIncial';
 import AdFormPage from './pages/AdFormPage';
 import PersonalMessage from './pages/PersonalMessage';
+import AdInfo from './pages/AdInfo';
 
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/form" element={<AdFormPage />} />
         <Route path="/privateMessage/:user" element={<PersonalMessage />} />
+        <Route path="/adInfo/:ad" element={<AdInfo />} />
 
       </Routes>
       </main>

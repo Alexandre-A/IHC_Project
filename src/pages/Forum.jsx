@@ -457,6 +457,7 @@ function Forum() {
                 </button>
                 <button
                   type="submit"
+                  //ALTERAR AQUI
                   className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
                 >
                   {t("forum.createTopic") || "Create Topic"}
@@ -471,7 +472,7 @@ function Forum() {
           <h2 className="text-xl font-semibold mb-4">{t("forum.discussions") || "Discussions"}</h2>
           {copyTopics.length > 0 ? (
             <div className="space-y-4">
-              {copyTopics.map((topic) => (
+              {copyTopics.map((topic,id) => (
                 <div key={topic.id} className="border rounded-lg overflow-hidden">
                   <div className="p-4 bg-white">
                     <div className="flex justify-between items-start">

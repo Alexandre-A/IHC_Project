@@ -155,8 +155,21 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                 },
                 adsPage:{
                     search:"Search",
-                  
+                    details:"Details",
+                    message:"Message",
+                    orderedBy: "Ordered by:",
+                    price: "Price",
+                    location: "Location",
+                    lastEdited: "Last Edited",
+                    modalTitle2: "Error",
+                    cannot: "It is not allowed to message yourself"
+
                 },
+                adInfo:{
+                    modalTitle2: "Error",
+                    cannot: "It is not allowed to message yourself",
+                },
+
             }
         },
         Pt:{
@@ -306,7 +319,46 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                 },
                 privateMessage:{
                     type: "Escreva uma messagem"
-                }
+                },
+                adsPage:{
+                    search:"Pesquisar",
+                    details:"Detalhes",
+                    message:"Mensagens",
+                    orderedBy: "Ordenado por:",
+                    price: "Preço",
+                    location: "Localização",
+                    lastEdited: "Última Edição",
+                    modalTitle2: "Erro",
+                    cannot: "Não é possível enviar mensagem a si mesmo",
+                    showFilter:"Mostrar Filtros",
+                    hideFilter:"Esconder Filtros",
+                    resetFilter:"Reset Filtros",
+                    disclaimer: "Apenas campos preenchidos serão aplicados",
+                    couplesYes: "Casais: Sim",
+                    couplesNo: "Casais: Não",
+                    ageMin: "Idade mínima",
+                    ageMax: "Idade máxima",
+                    gender: "Género: Indiferente",
+                    male:"Género: Masculino",
+                    female:"Género: Feminino",
+                    priceMin: "Preço mínimo",
+                    priceMax: "Preço máximo",
+                    available:"Disponível em (data)",
+                    expensesYes:"Despesas incluídas:",
+                    expensesNo:"Despesas não incluídas:",
+                    shared:"Casa de banho: partilhada",
+                    private:"Casa de banho: privativa",
+                    street:"Rua ou avenida",
+                    selectCity: "Cidade",
+                    selectDistrict: "Distrito",
+                    warning:"Aviso",
+                    warningMessage:"Feature ainda não implementada"
+
+                },
+                adInfo:{
+                     modalTitle2: "Erro",
+                    cannot: "Não é possível enviar mensagem a si mesmo"
+                },
             }
         }
     }

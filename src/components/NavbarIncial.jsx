@@ -33,7 +33,8 @@ function NavbarInicial({ homepage, complete}) {
     login: "/login",
     registo: "/registo",
     form: "/form",
-    private: "/privateMessage/:user"
+    private: "/privateMessage/:user",
+    private: "/adInfo/:ad"
   };
 
   const currentPath = window.location.pathname;
@@ -125,7 +126,7 @@ function NavbarInicial({ homepage, complete}) {
             <a
               onClick={()=> handleLocalStorage("ads")}
               href={links.ads}
-              className={`hover:text-gray-300 ${currentPath === links.ads ? "text-yellow-500" : ""}`}
+              className={`hover:text-gray-300 ${currentPath === links.ads ||location.pathname.startsWith("/adInfo/") ? "text-yellow-500" : ""}`}
             >
               {navbar.ads}
             </a>

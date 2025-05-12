@@ -8,6 +8,7 @@ import LanguageSelector from '../components/language-selector';
 import { PiPaperPlaneTiltBold } from "react-icons/pi";
 import { useParams } from 'react-router-dom';
 import ReturnButton from '../components/ReturnButton';
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -17,6 +18,7 @@ function PersonalMessage() {
   const userType = localStorage.getItem("userType")
   const { user } = useParams();
   const [currentMessage, setCurrentMessage] = useState("");
+  const [changes,setChanges] = useState(false);
   
   
   const [messageData, setMessageData] = useState({
@@ -126,6 +128,7 @@ const handleAddMessage = async () => {
       messages: [...prev.messages, [newMessage, "sender"]],
     }));
     setCurrentMessage(""); // Reset input field after sending message
+    setChanges(true);
   }
 
   if((user==='landlord'&&userType==='tenant')||(user==='tenant'&&userType==='landlord')){
@@ -153,21 +156,67 @@ const handleAddMessage = async () => {
 
 
 
+    function ReturnWithSave({ previousPage, user, userType, messageRef, messageRefClone }) {
+      const navigate = useNavigate();
+    
+      const handleClick = () => {
+        if (changes){
+          const blob = new Blob([JSON.stringify(messageRef.current)], {
+            type: "application/json",
+          });
+          navigator.sendBeacon("http://localhost:5000/sendMessage", blob);
+      
+          if (
+            (user === "landlord" && userType === "tenant") ||
+            (user === "tenant" && userType === "landlord")
+          ) {
+            const blob2 = new Blob([JSON.stringify(messageRefClone.current)], {
+              type: "application/json",
+            });
+            navigator.sendBeacon("http://localhost:5000/sendMessage", blob2);
+          }
+        }
+    
+        navigate(previousPage);
+      };
+    
+      return (
+        <div onClick={handleClick}>
+          <ReturnButton previousPage={previousPage} />
+        </div>
+      );
+    }
+    
+    // ...later in the same file, inside your render:
+    <ReturnWithSave
+      previousPage="/messages"
+      user={user}
+      userType={userType}
+      messageRef={messageRef}
+      messageRefClone={messageRefClone}
+    />
+
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="w-full max-w-4xl  shadow-md rounded-lg p-4 flex flex-col items-start">
-        <ReturnButton previousPage={"/messages"}></ReturnButton>
+        <ReturnWithSave
+          previousPage="/messages"
+          user={user}
+          userType={userType}
+          messageRef={messageRef}
+          messageRefClone={messageRefClone}
+        />        
         {/* Main Content */}
         <div className="w-full max-w-4xl bg-white shadow-md rounded-r-lg rounded-b-lg p-4">
         
 
         
         <div className="border-2 bg-white flex flex-row  pl-4 pr-4 pb-2 pt-2">
-            <img
-            src={messageData.image_url}
-            alt="Room"
-            className=" ml-2 border-black rounded-full h-24 w-24 object-cover border-3 justify-start"
-            />
+        <img
+    src={messageData.image_path}
+    alt={messageData.name}
+    className="ml-2 border-black rounded-full h-24 w-24 object-cover border-3"
+  />
             <p className='flex ml-10 text-2xl font-bold  items-center  '>{messageData.name}</p>
         </div>
 
