@@ -65,12 +65,23 @@ function NavbarInicial({ homepage, complete}) {
       <Modal open={modal == "first"} onClose={() => setModal(null)}>
               <div className="text-center w-56">
                 <div className="mx-auto my-4 w-48">
+                  <h3 className="text-lg font-black text-gray-800">{navbar.modalTitle}</h3>
                   <p className="text-sm text-black my-1">
                     {navbar.modalVariation2}
                   </p>
                 </div>
               </div>
             </Modal>
+      <Modal open={modal == "third"} onClose={() => setModal(null)}>
+        <div className="text-center w-56">
+          <div className="mx-auto my-4 w-48">
+            <h3 className="text-lg font-black text-gray-800">{navbar.modalTitle}</h3>
+            <p className="text-sm text-black my-1">
+              {navbar.modalVariation3}
+            </p>
+          </div>
+        </div>
+      </Modal>
       <LoginModal 
                 isOpen={isLoginOpen} 
                 onClose={() => setIsLoginOpen(false)} 
@@ -103,7 +114,14 @@ function NavbarInicial({ homepage, complete}) {
         ) : (
           <>
             <a
-              onClick={()=> handleLocalStorage("forum")}
+              onClick={(e)=> {
+                if (!localStorage.getItem("userType")) {
+                  setModal('third');
+                  e.preventDefault(); // prevent navigation
+                  return;
+                }
+                setModal("")
+                handleLocalStorage("messages")}}
               href={links.forum}
               className={`hover:text-gray-300 ${currentPath === links.forum ? "text-yellow-500" : ""}`}
             >

@@ -161,10 +161,16 @@ function Ads() {
     
   
   
-    const handleMessage = () =>{
-      if (userType==='landlord'){
-       setModal("Active")
-      }else navigate("/privateMessage/landlord")
+    const handleMessage = (e) =>{
+      if (userType){
+        if (userType==='landlord'){
+         setModal("Active")
+        }else navigate("/privateMessage/landlord")
+      }else{
+        setModal('first');
+        e.preventDefault(); // prevent navigation
+        }
+      
     };
   
     const handleInfo = async (adhc) =>{
@@ -282,16 +288,26 @@ function Ads() {
   
   
     return (<>
-    <Modal open={modal == "Active"} onClose={() => setModal(null)}>
-            <div className="text-center w-56">
-              <div className="mx-auto my-4 w-48">
-                <h3 className="text-lg font-black text-gray-800">{adsPage.modalTitle2}</h3>
-                <p className="text-sm text-gray-500 my-1">
-                  {adsPage.cannot}
-                </p>
-              </div>
+        <Modal open={modal == "Active"} onClose={() => setModal(null)}>
+          <div className="text-center w-56">
+            <div className="mx-auto my-4 w-48">
+              <h3 className="text-lg font-black text-gray-800">{adsPage.modalTitle2}</h3>
+              <p className="text-sm text-gray-500 my-1">
+                {adsPage.cannot}
+              </p>
             </div>
-          </Modal>
+          </div>
+        </Modal>
+        <Modal open={modal == "first"} onClose={() => setModal(null)}>
+          <div className="text-center w-56">
+            <div className="mx-auto my-4 w-48">
+              <h3 className="text-lg font-black text-gray-800">{adsPage.modalTitle}</h3>
+              <p className="text-sm text-black my-1">
+                {adsPage.modalVariation2}
+              </p>
+            </div>
+          </div>
+        </Modal>
         <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
           <button
             onClick={() => setShowFilters(!showFilters)}
@@ -521,7 +537,7 @@ function Ads() {
                       
                                 <button
                                   className="p-2 border rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer flex items-center gap-2"
-                                  onClick={() => handleMessage()}
+                                  onClick={(e) => handleMessage(e)}
                                 >
                                   <LuMessageCircleMore size={25} className="inline-flex align-middle" />
                                   <span className="inline-flex align-middle">{adsPage.message}</span>

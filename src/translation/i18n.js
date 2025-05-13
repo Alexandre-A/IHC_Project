@@ -20,9 +20,12 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     login: "Login",
                     registo: "Register",
                     logOut: "Logout",
+                    modalTitle: "Invalid Access",
                     modalTitle1: "Success",
                     modalVariation1: "Logout successful",
                     modalVariation2:"It's mandatory to login with a landlord or tenant account to access the messages area",
+                    modalVariation3:"It's mandatory to login with a landlord or tenant account to access the forum",
+
                 },
                 homepage:{
                     header1: "Landlord Area",
@@ -188,13 +191,19 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     warning:"Warning",
                     warningMessage:"Feature not yet implemented",
                     success:"Success",
-                    successMessage:"Filters applied"
+                    successMessage:"Filters applied",
+                    modalTitle: "Invalid Access",
+                    modalVariation2:"It's mandatory to login with a landlord or tenant account to access the messages area",
+
                 },
                 adInfo:{
                     modalTitle2: "Error",
                     cannot: "It is not allowed to message yourself",
                     warning:"Warning",
                     warningMessage:"Feature not yet implemented",
+                    errorMap:"Street not found – showing approximate location",
+                    years:"Years old",
+                    reviews: "Other people's reviews:",
                 },
 
             }
@@ -216,9 +225,12 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     login: "Login",
                     registo: "Registo",
                     logOut: "Logout",
+                    modalTitle: "Accesso Inválido",
                     modalTitle1: "Sucesso",
                     modalVariation1: "Logout bem sucedido",
-                    modalVariation2: "É necessário fazer login com conta de senhorio ou inquilino para aceder à secção de Mensagens"
+                    modalVariation2: "É necessário fazer login com conta de senhorio ou inquilino para aceder à secção de Mensagens",
+                    modalVariation3: "É necessário fazer login com conta de senhorio ou inquilino para aceder à secção de Fórum"
+
                 },
                 homepage:{
                     header1: "Área de Senhorio",
@@ -228,7 +240,7 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     header3: "Fórum",
                     paragraph3: "Àrea destinada à partilha pública de informação entre users",
                     modalTitle:"Acesso Inválido",
-                    modalVariation1: "É necessário fazer login com conta de senhorio para aceder à secção Publicar Anúncio",
+                    modalVariation1: "É necessário fazer login com conta de senhorio para aceder à secção de senhorio",
                     modalVariation2: "É necessário fazer login com conta de senhorio ou inquilino para aceder à secção de Fórum"
                 },
                 myads:{
@@ -382,7 +394,9 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     warning:"Aviso",
                     warningMessage:"Feature ainda não implementada",
                     success:"Sucesso",
-                    successMessage:"Filtros aplicados"
+                    successMessage:"Filtros aplicados",
+                    modalTitle: "Accesso Inválido",
+                    modalVariation2: "É necessário fazer login com conta de senhorio ou inquilino para aceder à secção de Mensagens",
 
                 },
                 adInfo:{
@@ -390,6 +404,9 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     cannot: "Não é possível enviar mensagem a si mesmo",
                     warning:"Aviso",
                     warningMessage:"Feature ainda não implementada",
+                    errorMap:"Rua não encontrada – mostrando localização aproximada",
+                    years:"Anos",
+                    reviews: "Reviews de outras pessoas:",
                 },
             }
         }

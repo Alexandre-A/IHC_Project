@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState,useMemo } from 'react'
 import '../index.css'
 import '../App.css'
 import { useTranslation } from 'react-i18next';
@@ -15,6 +15,7 @@ import { LuMessageCircleMore } from "react-icons/lu";
 import Modal from '../components/Modal';
 import { showToast } from "../components/Toasts/ToastMessages";
 import { useToast } from "../components/Toasts/ToastService";
+import ReviewCard from '../components/ReviewCard';
 
 const defaultIcon = L.icon({
   iconUrl,
@@ -30,6 +31,81 @@ function AdInfo() {
   const { ad } = useParams();
   const [userType,setUserType] = useState(localStorage.getItem('userType'))
   const [modal, setModal] = useState(null); // null, 'first', 'third'
+  const [pageData, setPageData] = useState({
+    review: [
+      {
+        name: "Emily Chen",
+        email: "emily.chen@example.com",
+        rating: 5,
+        comment: "One of the best rental experiences I've had. The apartment was spotless and well-equipped."
+      },
+      {
+        name: "Carlos Mendes",
+        email: "carlos.mendes@gmail.com",
+        rating: 3,
+        comment: "A localização era ótima, mas houve alguns problemas com o aquecedor durante o inverno."
+      },
+      {
+        name: "James O'Hara",
+        email: "james.ohara@example.com",
+        rating: 2,
+        comment: "The place was okay, but communication with the landlord could have been much better."
+      },
+      {
+        name: "Ana Beatriz",
+        email: "ana.b@gmail.com",
+        rating: 5,
+        comment: "Apartamento impecável! Tive uma estadia maravilhosa e o proprietário foi sempre muito gentil."
+      },
+      {
+        name: "Tomás Oliveira",
+        email: "tomas.oliveira@gmail.com",
+        rating: 3,
+        comment: "A estadia foi razoável, mas achei o apartamento menor do que nas fotos."
+      },
+      {
+        name: "Helen Moore",
+        email: "helen.moore@example.com",
+        rating: 5,
+        comment: "Absolutely loved staying here! Quiet neighborhood and the host was very thoughtful."
+      },
+      {
+        name: "Sofia Lima",
+        email: "sofia.lima@gmail.com",
+        rating: 4,
+        comment: "Gostei muito do apartamento, limpo e bem localizado. O senhorio foi educado e prestativo."
+      },
+      {
+        name: "Robert Klein",
+        email: "robert.klein@example.com",
+        rating: 2,
+        comment: "The location was good, but the place was dusty and not well maintained."
+      },
+      {
+        name: "Mariana Nunes",
+        email: "mariana.nunes@gmail.com",
+        rating: 4,
+        comment: "Boa experiência no geral. Tive um pequeno problema com a internet, mas foi resolvido rapidamente."
+      },
+      {
+        name: "Isabela Rocha",
+        email: "isabela.rocha@gmail.com",
+        rating: 5,
+        comment: "Tudo perfeito! O Sr. Danilo cuidou de todos os detalhes para garantir uma estadia confortável."
+      }
+    ],
+  });
+  const displayedReviews = useMemo(() => {
+    const shuffled = [...pageData.review].sort(() => 0.5 - Math.random());
+    const guaranteed = shuffled.slice(0, 2);
+    const remaining = shuffled.slice(2);
+    return [
+      ...guaranteed,
+      ...remaining.filter(() => Math.random() < 0.1),
+    ];
+  }, [pageData.review]); // Only re-run if reviews change
+  
+  
 
 
   const [formData, setFormData] = useState({
@@ -177,6 +253,9 @@ function AdInfo() {
               <b>{adFormPt1.price}:</b>{" "}
               {formData.price + "€" || "No price provided"}
             </p>
+            <a href="/profile/landlord" className=" text-blue-600 hover:underline block text-left overflow-hidden text-ellipsis whitespace-nowrap">
+              Sr. Danilo
+            </a>
           </div>
         </div>
 
@@ -185,7 +264,7 @@ function AdInfo() {
           {/* Left Details */}
           <div className="space-y-4">
             <Detail label={adFormPt1.lookingFor}>
-              {formData.min_age} - {formData.max_age || "Not specified"}
+              {formData.min_age} - {formData.max_age || "Not specified"} {adInfo.years}
             </Detail>
             <Detail label={adFormPt1.couples} value={formData.marital_status} />
             <Detail label={adFormPt1.gender} value={formData.gender} />
@@ -219,7 +298,7 @@ function AdInfo() {
 
             {zoomLevel === 14 && (
               <p className="text-red-600 text-sm italic text-center mt-1">
-                📍 Street not found – showing approximate location
+                📍 {adInfo.errorMap}
               </p>
             )}
           </div>
@@ -241,6 +320,28 @@ function AdInfo() {
             ) : (
               <p className="text-gray-500 text-sm">No tags added</p>
             )}
+          </div>
+        </div>
+        <div className="border-2 rounded bg-white flex flex-col justify-center pl-4 pr-4 pb-4 pt-1">
+          <div className='flex flex-row justify-between'>
+            <p className=' pl-2'><b>{adInfo.reviews}</b></p>
+            <button className="px-4 text-sm rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500"
+            onClick={()=>handleFavourite()}>
+              + Review
+            </button>
+          </div>
+          <div className="w-full max-w-4xl p-2 rounded-lg h-[180px] flex flex-col md:flex-row overflow-y-auto md:overflow-x-auto md:overflow-y-hidden">   
+          {displayedReviews.map((ad, index) => (
+            <ReviewCard
+              key={index}
+              name={ad.name}
+              email={ad.email}
+              rating={ad.rating}
+              comment={ad.comment}
+            />
+          ))}
+
+
           </div>
         </div>
       </div>
