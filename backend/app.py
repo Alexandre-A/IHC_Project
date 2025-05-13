@@ -416,6 +416,7 @@ def enableMessage(adhc):
 @app.route('/getMessage/<adhc>')
 def getMessage(adhc):
     messages = fn.loadMessages()
+    
 
     if not adhc in messages:
         return jsonify({"error": "add not found"}), 400
@@ -423,3 +424,77 @@ def getMessage(adhc):
     message = messages[adhc].copy()
     message['image_url'] = request.host_url + message['image_path']
     return jsonify(message),200
+
+
+@app.route('/sendThreadMessage', methods=['POST'])
+def send_thread_message():
+    try:
+        # Parse fields from the form
+        id = request.form.get('id')
+        title = request.form.get('title')
+        content = request.form.get('content')
+        author = request.form.get('author')
+        authorId = request.form.get('authorId')
+        authorType = request.form.get('authorType')
+        category = request.form.get('category')
+        datePosted = request.form.get('datePosted')
+        likes = int(request.form.get('likes'))
+        replies = int(request.form.get('replies'))
+        tags = json.loads(request.form.get('tags'))
+        messages = json.loads(request.form.get('messages'))
+
+        # Save uploaded image if present
+        if 'image' in request.files:
+            image = request.files['image']
+            filename = secure_filename(image.filename)
+            image.save(os.path.join("backend/uploads", filename))
+
+        threads = fn.loadThreads()
+        threads["forum" + id] = {
+            "id": id,
+            "title": title,
+            "content": content,
+            "author": author,
+            "authorId": authorId,
+            "authorType": authorType,
+            "category": category,
+            "datePosted": datePosted,
+            "likes": likes,
+            "replies": replies,
+            "tags": tags,
+            "messages": messages
+        }
+
+        fn.saveThread(threads)
+        return jsonify({"response": "OK"}), 200
+    except Exception as e:
+        print("ERROR:", str(e))
+        return jsonify({"error": str(e)}), 400
+
+
+# Get a specific thread
+@app.route('/getThread/<thread_id>', methods=['GET'])
+def get_thread_message(thread_id):
+    threads = fn.loadThreads()
+
+    # Find the thread with the matching ID
+    print(thread_id)
+    for thread_i, thread_data in threads.items():
+        print(f"Thread ID: {thread_i}")
+        print(f"Title: {thread_data['title']}")
+        print(f"Author: {thread_data['author']}")
+        print()
+
+    thread = next((thread_data for thread_i, thread_data in threads.items() if "forum"+thread_data['id'] == thread_id), None)
+
+    if thread is None:
+        return jsonify({"error": "Thread not found"}), 404
+
+    return jsonify(threads[thread_id]), 200
+
+
+# Get all threads
+@app.route('/threads/', methods=['GET'])
+def get_all_threads():
+    messages = fn.loadThreads()
+    return jsonify(messages), 200

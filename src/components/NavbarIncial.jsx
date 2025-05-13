@@ -34,7 +34,7 @@ function NavbarInicial({ homepage, complete}) {
     registo: "/registo",
     form: "/form",
     private: "/privateMessage/:user",
-    private: "/adInfo/:ad"
+    adInfo: "/adInfo/:ad"
   };
 
   const currentPath = window.location.pathname;
@@ -123,7 +123,7 @@ function NavbarInicial({ homepage, complete}) {
                 setModal("")
                 handleLocalStorage("messages")}}
               href={links.forum}
-              className={`hover:text-gray-300 ${currentPath === links.forum ? "text-yellow-500" : ""}`}
+              className={`hover:text-gray-300 ${currentPath === links.forum  ||location.pathname.startsWith("/forum/")? "text-yellow-500" : ""}`}
             >
               {navbar.forum}
             </a>

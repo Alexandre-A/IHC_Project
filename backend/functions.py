@@ -33,6 +33,11 @@ def loadDisabled_messages():
         info: dict = json.load(f)
     return info
 
+def loadThreads():
+    with open( direct +'forum.json', 'r') as f:
+        info: dict = json.load(f)
+    return info
+
 def saveAds(data):
 
     with open(direct +'ads.json', 'w') as f:
@@ -61,6 +66,11 @@ def saveMessages(data):
 def saveDisabled_Messages(data):
 
     with open(direct +'disabledMessages.json', 'w') as f:
+        json.dump(data, f, indent=4)
+
+def saveThread(data):
+
+    with open(direct +'forum.json', 'w') as f:
         json.dump(data, f, indent=4)
 
 def clearJsons():

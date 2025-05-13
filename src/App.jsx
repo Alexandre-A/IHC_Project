@@ -14,6 +14,7 @@ import NavbarInicial from './components/NavbarIncial';
 import AdFormPage from './pages/AdFormPage';
 import PersonalMessage from './pages/PersonalMessage';
 import AdInfo from './pages/AdInfo';
+import ForumThread from './pages/ForumThread';
 
 
 function App() {
@@ -36,7 +37,7 @@ function App() {
         <Route path="/form" element={<AdFormPage />} />
         <Route path="/privateMessage/:user" element={<PersonalMessage />} />
         <Route path="/adInfo/:ad" element={<AdInfo />} />
-
+        <Route path="/forum/:thread" element={<ForumThread />} />
       </Routes>
       </main>
     </div>

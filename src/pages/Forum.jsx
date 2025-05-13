@@ -21,7 +21,7 @@ function Forum() {
   const navigate = useNavigate();
   const toast = useToast();
   // User type flags for conditional rendering
-  const isLoggedIn = userType && userType !== "guest";
+  const isLoggedIn = userType && userType !== "guest"; 
   
   const [topics, setTopics] = useState([]);
   const [copyTopics, setCopyTopics] = useState([]);
@@ -34,91 +34,25 @@ function Forum() {
     content: "",
     category: "general"
   });
+  const [lastIndex,setLastIndex] = useState(Object.keys(topics).length);
 
-  // We'll define the dummy topics inside useEffect to avoid dependency issues
+  useEffect(()=>{
+    console.log(lastIndex)
+  },[lastIndex])
 
   useEffect(() => {
-    // In a real application, fetch forum topics from backend
     const fetchTopics = async () => {
-      // Sample data for development - replace with actual API call
-      const dummyTopics = [
-        {
-          id: "1",
-          title: "Best areas to live in Lisbon",
-          content: "I'm moving to Lisbon next month and would like recommendations on the best areas to live that are close to universities.",
-          author: "João Silva",
-          authorId: "user123",
-          authorType: "tenant",
-          category: "advice",
-          datePosted: "2023-11-15T08:30:00",
-          likes: 24,
-          replies: 8,
-          tags: ["Lisbon", "University", "Accommodation"]
-        },
-        {
-          id: "2",
-          title: "Rental prices in Porto",
-          content: "Has anyone noticed the increasing rental prices in Porto? Is it still affordable for students?",
-          author: "Maria Santos",
-          authorId: "user456",
-          authorType: "landlord",
-          category: "discussion",
-          datePosted: "2023-11-10T15:45:00",
-          likes: 31,
-          replies: 12,
-          tags: ["Porto", "Rental Prices", "Students"]
-        },
-        {
-          id: "3",
-          title: "Tenant rights in Portugal",
-          content: "I would like to know more about tenant rights in Portugal. What are the regulations regarding security deposits?",
-          author: "Ana Pereira",
-          authorId: "user789",
-          authorType: "tenant",
-          category: "legal",
-          datePosted: "2023-11-08T12:20:00",
-          likes: 17,
-          replies: 6,
-          tags: ["Legal", "Rights", "Security Deposit"]
-        },
-        {
-          id: "4",
-          title: "Problems with noisy neighbors",
-          content: "How to deal with noisy neighbors in an apartment building? I've tried talking to them but it didn't help.",
-          author: "Pedro Costa",
-          authorId: "user101",
-          authorType: "tenant",
-          category: "complaint",
-          datePosted: "2023-11-05T17:10:00",
-          likes: 9,
-          replies: 15,
-          tags: ["Neighbors", "Noise", "Apartment Living"]
-        },
-        {
-          id: "5",
-          title: "Renovation permits for landlords",
-          content: "What permits do I need to renovate my rental property? The process seems complicated.",
-          author: "Carlos Mendes",
-          authorId: "user202",
-          authorType: "landlord",
-          category: "legal",
-          datePosted: "2023-11-02T09:15:00",
-          likes: 12,
-          replies: 7,
-          tags: ["Renovation", "Permits", "Landlord"]
-        }
-      ];
+
 
       try {
         // Replace with actual API call
-        // const res = await fetch(`http://${API_HOST}:${API_PORT}/forum_topics`);
-        // const data = await res.json();
-        
-        // Using dummy data for development
-        const data = dummyTopics;
-        
-        setTopics(data);
-        setCopyTopics(data);
+        const res = await fetch("http://localhost:5000/threads/");
+        const data = await res.json();
+                
+        const topicsArray = Object.values(data)
+
+        setTopics(topicsArray);
+        setCopyTopics(topicsArray);
         
         // Fetch liked posts from local storage or API
         const likedFromStorage = JSON.parse(localStorage.getItem('likedPosts') || '[]');
@@ -126,14 +60,17 @@ function Forum() {
         
       } catch (error) {
         console.error("Failed to fetch forum topics:", error);
-        // Using dummy data as fallback
-        setTopics(dummyTopics);
-        setCopyTopics(dummyTopics);
       }
     };
 
     fetchTopics();
   }, []); // No external dependencies needed
+
+  useEffect(()=>{
+    console.log(topics)
+    setLastIndex(Object.keys(topics).length)
+
+  },[topics])
   
   const handleSearch = (e) => {
     const searchText = e.target.value.toLowerCase();
@@ -239,6 +176,7 @@ function Forum() {
       header: "Topic View",
       message: "Viewing topic details would be implemented in a real app"
     });
+    navigate("/forum/forum"+topicId)
   };
 
   const handleInputChange = (e) => {
@@ -269,17 +207,17 @@ function Forum() {
     
     // Create a new topic
     const createdTopic = {
-      id: Date.now().toString(),
+      id: (lastIndex+1).toString(),
       title: newTopic.title,
       content: newTopic.content,
-      author: localStorage.getItem("userName") || userType,
-      authorId: localStorage.getItem("userEmail"),
+      author: userType==='landlord'?"Sr. Danilo":"Matteo Rossi",
+      authorId: userType==='landlord'?"supreme_landlord@gmail.com":"thestudent@gmail.com",
       authorType: userType,
       category: newTopic.category,
       datePosted: new Date().toISOString(),
       likes: 0,
-      replies: 0,
-      tags: newTopic.title.split(" ").filter(word => word.length > 4).slice(0, 3)
+      replies: 1,
+      tags: [userType==='landlord'?"Landlord":"Student"]
     };
     
     // Update topics state

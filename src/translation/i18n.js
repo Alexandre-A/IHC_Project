@@ -205,6 +205,9 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     years:"Years old",
                     reviews: "Other people's reviews:",
                 },
+                forumThread:{
+                    type: "Type a message"
+                },
 
             }
         },
@@ -407,6 +410,9 @@ i18n.use(I18nextBrowserLanguageDetector).use(initReactI18next).init({
                     errorMap:"Rua não encontrada – mostrando localização aproximada",
                     years:"Anos",
                     reviews: "Reviews de outras pessoas:",
+                },
+                forumThread:{
+                    type: "Escreva uma messagem"
                 },
             }
         }

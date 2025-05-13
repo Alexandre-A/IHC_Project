@@ -92,6 +92,8 @@ useEffect(() => {
 useEffect(() => {
   messageRef.current = messageData; // Update messageRef whenever messageData changes
   messageRefClone.current = reciprocateData;
+  console.log("Image Path:", messageData.image_path);
+  console.log("Image Path:", messageData);
 }, [messageData]);
 
 // Send data when the page is about to be unloaded or navigated away from
@@ -212,11 +214,14 @@ const handleAddMessage = async () => {
 
         
         <div className="border-2 bg-white flex flex-row  pl-4 pr-4 pb-2 pt-2">
-        <img
-    src={messageData.image_path}
-    alt={messageData.name}
-    className="ml-2 border-black rounded-full h-24 w-24 object-cover border-3"
-  />
+        {messageData.image_path ? (
+          <img
+            src={"../../backend/"+messageData.image_path}
+            alt={messageData.name}
+            className="ml-2 border-black rounded-full h-24 w-24 object-cover border-3"
+          />
+        ) : null}
+
             <p className='flex ml-10 text-2xl font-bold  items-center  '>{messageData.name}</p>
         </div>
 
