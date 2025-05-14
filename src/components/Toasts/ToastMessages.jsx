@@ -1,4 +1,5 @@
 import { FiXCircle, FiCheckCircle, FiInfo, FiAlertTriangle } from 'react-icons/fi';
+import { colors } from "../../utils/colors";
 
 /**
  * Shows a toast with different styles and icons based on type.
@@ -13,31 +14,37 @@ import { FiXCircle, FiCheckCircle, FiInfo, FiAlertTriangle } from 'react-icons/f
 export const showToast = (toast, { type = 'info', header, message, timeout = 5000 }) => {
   const config = {
     success: {
-      bg: 'bg-green-300',
-      text: 'text-green-800',
-      icon: <FiCheckCircle size={40} />,
+      backgroundColor: colors.success,
+      textColor: '#FFFFFF',
+      icon: <FiCheckCircle size={40} color="#FFFFFF" />,
     },
     error: {
-      bg: 'bg-red-300',
-      text: 'text-red-800',
-      icon: <FiXCircle size={40} />,
+      backgroundColor: colors.warning,
+      textColor: '#FFFFFF',
+      icon: <FiXCircle size={40} color="#FFFFFF" />,
     },
     info: {
-      bg: 'bg-blue-300',
-      text: 'text-blue-800',
-      icon: <FiInfo size={40} />,
+      backgroundColor: colors.secondary,
+      textColor: '#FFFFFF',
+      icon: <FiInfo size={40} color="#FFFFFF" />,
     },
     warning: {
-      bg: 'bg-yellow-300',
-      text: 'text-yellow-800',
-      icon: <FiAlertTriangle size={40} />,
+      backgroundColor: colors.accent,
+      textColor: '#FFFFFF',
+      icon: <FiAlertTriangle size={40} color="#FFFFFF" />,
     },
   };
 
-  const { bg, text, icon } = config[type] || config.info;
+  const { backgroundColor, textColor, icon } = config[type] || config.info;
 
   const toastContent = (
-    <div className={`flex gap-2 ${bg} ${text} p-4 rounded-lg shadow-lg`}>
+    <div 
+      className="flex gap-2 p-4 rounded-lg shadow-lg"
+      style={{ 
+        backgroundColor: backgroundColor,
+        color: textColor 
+      }}
+    >
       {icon}
       <div>
         <h3 className="font-bold">{header}</h3>

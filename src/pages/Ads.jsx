@@ -11,6 +11,7 @@ import { FaTrashAlt,FaShareAlt,FaHeart,FaSortAmountUpAlt,FaSortAmountDown,FaRegH
 import { FiEdit, FiCheckCircle, FiInfo, FiAlertTriangle } from 'react-icons/fi'
 import { LuMessageCircleMore } from "react-icons/lu";
 import Modal from "../components/Modal";
+import { colors } from "../utils/colors";
 
 const ip = "127.0.0.1";
 const port = 5000;
@@ -310,35 +311,51 @@ function Ads() {
         </Modal>
         <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
           <button
-            onClick={() => setShowFilters(!showFilters)}
-            className="mb-4 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 cursor-pointer transition"
-          >
+                onClick={() => setShowFilters(!showFilters)}
+                className="mb-4 px-4 py-2 text-white rounded cursor-pointer transition"
+                style={{ backgroundColor: colors.primary, border: `1px solid ${colors.secondary}` }}
+                onMouseOver={(e) => e.target.style.backgroundColor = colors.secondary}
+                onMouseOut={(e) => e.target.style.backgroundColor = colors.primary}
+              >
             {showFilters ? adsPage.hideFilter : adsPage.showFilter}
           </button>
 
           {/* Dropdown Filter Panel */}
           {showFilters && (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 bg-white p-4 rounded  shadow-md border-1 mb-2 transition-all duration-300">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-4 rounded shadow-md border-1 mb-2 transition-all duration-300"
+                 style={{ backgroundColor: colors.light, border: `1px solid ${colors.secondary}` }}>
               <div className="col-span-2 md:col-span-4 flex justify-center mt-2">
                 <p><b>{adsPage.disclaimer}</b></p>
               </div>
-              <select className="border p-2 rounded" value={filters.gender} onChange={(e) => setFilters({ ...filters, gender: e.target.value })}>
+              <select className="border p-2 rounded" 
+                      style={{ borderColor: colors.secondary }} 
+                      value={filters.gender} 
+                      onChange={(e) => setFilters({ ...filters, gender: e.target.value })}>
                 <option value="Indifferent">{adsPage.gender}</option>
                 <option value="Male">{adsPage.male}</option>
                 <option value="Female">{adsPage.female}</option>
               </select>
 
-              <select className="border p-2 rounded" value={filters.marital_status} onChange={(e) => setFilters({ ...filters, marital_status: e.target.value })}>
+              <select className="border p-2 rounded" 
+                      style={{ borderColor: colors.secondary }} 
+                      value={filters.marital_status} 
+                      onChange={(e) => setFilters({ ...filters, marital_status: e.target.value })}>
                 <option value="Yes">{adsPage.couplesYes}</option>
                 <option value="No">{adsPage.couplesNo}</option>
               </select>
 
-              <select className="border p-2 rounded" value={filters.bath_share} onChange={(e) => setFilters({ ...filters, bath_share: e.target.value })}>
+              <select className="border p-2 rounded" 
+                      style={{ borderColor: colors.secondary }} 
+                      value={filters.bath_share} 
+                      onChange={(e) => setFilters({ ...filters, bath_share: e.target.value })}>
                 <option value="Shared">{adsPage.shared}</option>
                 <option value="Private">{adsPage.private}</option>
               </select>
               
-              <select className="border p-2 rounded" value={filters.expense_included} onChange={(e) => setFilters({ ...filters, expense_included: e.target.value })}>
+              <select className="border p-2 rounded" 
+                      style={{ borderColor: colors.secondary }} 
+                      value={filters.expense_included} 
+                      onChange={(e) => setFilters({ ...filters, expense_included: e.target.value })}>
                 <option value="Yes">{adsPage.expensesYes}</option>
                 <option value="No">{adsPage.expensesNo}</option>
               </select>
@@ -348,6 +365,7 @@ function Ads() {
                 type="number"
                 placeholder={adsPage.priceMin}
                 className="border p-2 rounded"
+                style={{ borderColor: colors.secondary }}
                 value={filters.minprice}
                 onChange={(e) => setFilters({ ...filters, minprice: e.target.value })}
               />
@@ -357,6 +375,7 @@ function Ads() {
                 type="number"
                 placeholder={adsPage.priceMax}
                 className="border p-2 rounded"
+                style={{ borderColor: colors.secondary }}
                 value={filters.maxprice}
                 onChange={(e) => setFilters({ ...filters, maxprice: e.target.value })}
               />
@@ -366,6 +385,7 @@ function Ads() {
               type="text"
               placeholder={adsPage.ageMin}
               className="border p-2 rounded"
+              style={{ borderColor: colors.secondary }}
               value={filters.min_age}
               onChange={(e) => setFilters({ ...filters, min_age: e.target.value })}
               />
@@ -374,6 +394,7 @@ function Ads() {
               type="text"
               placeholder={adsPage.ageMax}
               className="border p-2 rounded"
+              style={{ borderColor: colors.secondary }}
               value={filters.max_age}
               onChange={(e) => setFilters({ ...filters, max_age: e.target.value })}
               />
@@ -382,6 +403,7 @@ function Ads() {
                 type="text"
                 placeholder={adsPage.selectDistrict}
                 className="border p-2 rounded"
+                style={{ borderColor: colors.secondary }}
                 value={filters.district}
                 onChange={(e) => setFilters({ ...filters, district: e.target.value })}
               />
@@ -390,6 +412,7 @@ function Ads() {
                 type="text"
                 placeholder={adsPage.selectCity}
                 className="border p-2 rounded"
+                style={{ borderColor: colors.secondary }}
                 value={filters.city}
                 onChange={(e) => setFilters({ ...filters, city: e.target.value })}
               />
@@ -398,6 +421,7 @@ function Ads() {
                 type="text"
                 placeholder={adsPage.street}
                 className="border p-2 rounded"
+                style={{ borderColor: colors.secondary }}
                 value={filters.street}
                 onChange={(e) => setFilters({ ...filters, street: e.target.value })}
               />
@@ -407,20 +431,27 @@ function Ads() {
                 type="text"
                 placeholder={adsPage.available}
                 className="border p-2 rounded"
+                style={{ borderColor: colors.secondary }}
                 value={filters.available_date}
                 onChange={(e) => setFilters({ ...filters, available_date: e.target.value })}
               />
 
               <div className="col-span-2 md:col-span-4 flex justify-between mt-2">
                 <button
-                  className="px-4 py-2 bg-blue-500 text-white cursor-pointer rounded hover:bg-blue-600"
+                  className="px-4 py-2 text-white cursor-pointer rounded"
+                  style={{ backgroundColor: colors.accent }}
+                  onMouseOver={(e) => e.target.style.backgroundColor = colors.secondary}
+                  onMouseOut={(e) => e.target.style.backgroundColor = colors.accent}
                   onClick={handleFilterApply}
                 >
                   {adsPage.applyFilter}
                 </button>
 
                 <button
-                  className="px-4 py-2 bg-gray-300 hover:bg-gray-400 cursor-pointer rounded"
+                  className="px-4 py-2 cursor-pointer rounded text-white"
+                  style={{ backgroundColor: colors.primary }}
+                  onMouseOver={(e) => e.target.style.backgroundColor = colors.secondary}
+                  onMouseOut={(e) => e.target.style.backgroundColor = colors.primary}
                   onClick={() => {
                     setFilters({
                       minprice: "",
@@ -449,36 +480,54 @@ function Ads() {
     <div className="w-full max-w-4xl rounded-lg flex space-y-2 md:space-y-0 md:flex-row flex-col justify-items-center items-center
    md:justify-between px-1">
       <div className="flex">
-        <input type='text' name="search" placeholder={adsPage.search} autoComplete='on' onChange={handleChange} className='border-1 rounded bg-white'></input>
-        <button className={`px-4 py-1 rounded right-4 bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500`}
-                onClick={() => handleClick("search")}><FaMagnifyingGlass /></button>
+        <input type='text' name="search" placeholder={adsPage.search} autoComplete='on' onChange={handleChange} 
+               className='border-1 rounded' style={{ backgroundColor: colors.light, borderColor: colors.secondary }}></input>
+          <button className={`px-4 py-1 rounded right-4 cursor-pointer text-white`}
+                  style={{ backgroundColor: colors.secondary, border: `1px solid ${colors.primary}` }}
+                  onClick={() => handleClick("search")}><FaMagnifyingGlass /></button>
       </div>
       <div className="flex items-center">
               <p className='mr-1 text-sm sm:text-md'>{adsPage.orderedBy}</p>
               <button
-                className={`px-3 py-1 border-t-2 border-l-2 border-b-2 rounded-l bg-gray-200 hover:bg-gray-300 cursor-pointer text-sm 
-                  ${localStorage.getItem("sorted")==="price"?"bg-gray-300":"bg-gray-200"}`}
+                className={`px-3 py-1 border-t-2 border-l-2 border-b-2 rounded-l cursor-pointer text-sm`}
+                style={{ 
+                  backgroundColor: localStorage.getItem("sorted")==="price" ? colors.secondary : colors.light,
+                  borderColor: colors.secondary,
+                  color: localStorage.getItem("sorted")==="price" ? colors.light : colors.dark
+                }}
                 onClick={() => handleClick("price")}
               >
                 {adsPage.price}
               </button>
               <button
-                className={`px-3 py-1 border-t-2 border-b-2 bg-gray-200 hover:bg-gray-300 cursor-pointer text-sm 
-                  ${localStorage.getItem("sorted")==="Location"?"bg-gray-300":"bg-gray-200"}`}
+                className={`px-3 py-1 border-t-2 border-b-2 cursor-pointer text-sm`}
+                style={{ 
+                  backgroundColor: localStorage.getItem("sorted")==="Location" ? colors.secondary : colors.light,
+                  borderColor: colors.secondary,
+                  color: localStorage.getItem("sorted")==="Location" ? colors.light : colors.dark
+                }}
                 onClick={() => handleClick("Location")}
               >
                 {adsPage.location}
               </button>
               <button
-                className={`px-3 py-1 border-t-2 border-b-2 border-r-2 rounded-r bg-gray-200 hover:bg-gray-300 cursor-pointer text-sm 
-                  ${localStorage.getItem("sorted")==="LastEdited"?"bg-gray-300":"bg-gray-200"}`}
+                className={`px-3 py-1 border-t-2 border-b-2 border-r-2 rounded-r cursor-pointer text-sm`}
+                style={{ 
+                  backgroundColor: localStorage.getItem("sorted")==="LastEdited" ? colors.secondary : colors.light,
+                  borderColor: colors.secondary,
+                  color: localStorage.getItem("sorted")==="LastEdited" ? colors.light : colors.dark
+                }}
                 onClick={() => handleClick("LastEdited")}
               >
                 {adsPage.lastEdited}
               </button>
               <button
-                className={`px-2 ml-2 py-1 border-2 rounded bg-gray-200 hover:bg-gray-300 cursor-pointer
-                  ${localStorage.getItem("sorted")?"bg-gray-300":"bg-gray-200"}`}
+                className={`px-2 ml-2 py-1 border-2 rounded cursor-pointer`}
+                style={{ 
+                  backgroundColor: localStorage.getItem("sorted") ? colors.secondary : colors.light,
+                  borderColor: colors.secondary,
+                  color: localStorage.getItem("sorted") ? colors.light : colors.dark
+                }}
                 onClick={() => handleClick("order")}
               >
               {order === 'descending' ? <FaSortAmountDown /> : <FaSortAmountUpAlt />}               
@@ -486,12 +535,14 @@ function Ads() {
               
             </div>
     </div>
-        <div className="w-full max-w-4xl bg-white shadow-md rounded-t-lg pl-4 pr-4 pb-4 pt-2">
+        <div className="w-full max-w-4xl shadow-md rounded-t-lg pl-4 pr-4 pb-4 pt-2" style={{backgroundColor: colors.light}}>
           <p><b>{adsPage.enabledTitle}</b></p>
-          <div className="w-full max-w-4xl border-1 p-2 bg-gray-100 shadow-md rounded-lg h-[540px] md:h-[410px] overflow-y-auto">        
+          <div className="w-full max-w-4xl border-1 p-2 shadow-md rounded-lg h-[540px] md:h-[410px] overflow-y-auto" 
+               style={{backgroundColor: colors.light, borderColor: colors.secondary}}>        
   
           {copyRoomData.map((ad,index)=>(
-            <div key={index} className="flex flex-col md:flex-row w-full max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden md:h-48 mb-3 border-gray-400 border-1">
+            <div key={index} className="flex flex-col md:flex-row w-full max-w-4xl mx-auto shadow-md rounded-lg overflow-hidden md:h-48 mb-3 border-1" 
+                 style={{backgroundColor: colors.white, borderColor: colors.secondary}}>
                             <img
                               src={ad.image_url}
                               alt="Room"
@@ -528,25 +579,34 @@ function Ads() {
                               {/* Action Icons */}
                               <div className="flex gap-3 justify-end mt-2">
                                 <button
-                                  className="p-2 border rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer flex items-center gap-2"
+                                  className="p-2 border rounded transition-colors duration-200 cursor-pointer flex items-center gap-2"
+                                  style={{ borderColor: colors.secondary }}
                                   onClick={() => handleInfo(ad.image_path.split("/")[1].split(".")[0])}
+                                  onMouseOver={(e) => e.target.style.backgroundColor = colors.light}
+                                  onMouseOut={(e) => e.target.style.backgroundColor = "transparent"}
                                 >
-                                  <FiInfo size={25} className="inline-flex align-middle" />
+                                  <FiInfo size={25} className="inline-flex align-middle" style={{color: colors.info}} />
                                   <span className="inline-flex align-middle">{adsPage.details}</span>
                                 </button>
                       
                                 <button
-                                  className="p-2 border rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer flex items-center gap-2"
+                                  className="p-2 border rounded transition-colors duration-200 cursor-pointer flex items-center gap-2"
+                                  style={{ borderColor: colors.secondary }}
                                   onClick={(e) => handleMessage(e)}
+                                  onMouseOver={(e) => e.target.style.backgroundColor = colors.light}
+                                  onMouseOut={(e) => e.target.style.backgroundColor = "transparent"}
                                 >
-                                  <LuMessageCircleMore size={25} className="inline-flex align-middle" />
+                                  <LuMessageCircleMore size={25} className="inline-flex align-middle" style={{color: colors.secondary}} />
                                   <span className="inline-flex align-middle">{adsPage.message}</span>
                                 </button>
                                 <button
-                                  className="p-2 border rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer flex items-center gap-2"
+                                  className="p-2 border rounded transition-colors duration-200 cursor-pointer flex items-center gap-2"
+                                  style={{ borderColor: colors.secondary }}
                                   onClick={() => handleFavourite()}
+                                  onMouseOver={(e) => e.target.style.backgroundColor = colors.light}
+                                  onMouseOut={(e) => e.target.style.backgroundColor = "transparent"}
                                 >
-                                  <FaHeart size={25} className="inline-flex align-middle" />
+                                  <FaHeart size={25} className="inline-flex align-middle" style={{color: colors.accent}} />
                                 </button>
                               </div>
   

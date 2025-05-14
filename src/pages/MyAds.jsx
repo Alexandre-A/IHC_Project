@@ -11,6 +11,7 @@ import { FiEdit, FiCheckCircle, FiInfo, FiAlertTriangle } from 'react-icons/fi'
 import { PiEyeFill } from "react-icons/pi";
 import { GiSightDisabled } from "react-icons/gi";
 import { useTranslation } from "react-i18next";
+import { colors } from "../utils/colors";
 
 const ip = "127.0.0.1";
 const port = 5000;
@@ -269,12 +270,13 @@ function MyAds() {
 
 
   return (<>
-      <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{ backgroundColor: colors.light }}>
       <button
     onClick={handleLogin}
-    className="w-1/2  flex items-center justify-center gap-2 px-4 py-2
-               bg-gray-500 hover:bg-gray-600 text-white rounded 
-               transition-colors duration-200 cursor-pointer text-base sm:text-lg md:text-xl mb-5 shadow-md border-2 border-black"
+    className="w-1/2 flex items-center justify-center gap-2 px-4 py-2
+               text-white rounded transition-colors duration-200 
+               cursor-pointer text-base sm:text-lg md:text-xl mb-5 shadow-md"
+    style={{ backgroundColor: colors.primary, border: `2px solid ${colors.secondary}` }}
   >
     <span className="text-2xl sm:text-3xl md:text-4xl leading-none font-semibold">+</span>
     <span className="text-xl sm:text-2xl md:text-3xl leading-none font-semibold">{myads.newAd}</span>
@@ -282,36 +284,54 @@ function MyAds() {
   <div className="w-full max-w-4xl rounded-lg flex space-y-2 md:space-y-0 md:flex-row flex-col justify-items-center items-center
  md:justify-between px-1">
     <div className="flex">
-      <input type='text' name="search" placeholder={myads.search} autoComplete='on' onChange={handleChange} className='border-1 rounded bg-white'></input>
-      <button className={`px-4 py-1 rounded right-4 bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500`}
+      <input type='text' name="search" placeholder={myads.search} autoComplete='on' onChange={handleChange} 
+             className='border-1 rounded' style={{ backgroundColor: colors.white, borderColor: colors.secondary }}></input>
+      <button className="px-4 py-1 rounded right-4 cursor-pointer text-white"
+              style={{ backgroundColor: colors.secondary, border: `1px solid ${colors.primary}` }}
               onClick={() => handleClick("search")}><FaMagnifyingGlass /></button>
     </div>
     <div className="flex items-center">
             <p className='mr-1 text-sm sm:text-md'>{myads.orderedBy}</p>
             <button
-              className={`px-3 py-1 border-t-2 border-l-2 border-b-2 rounded-l bg-gray-200 hover:bg-gray-300 cursor-pointer text-sm 
-                ${localStorage.getItem("sorted")==="price"?"bg-gray-300":"bg-gray-200"}`}
+              className={`px-3 py-1 border-t-2 border-l-2 border-b-2 rounded-l cursor-pointer text-sm`}
+              style={{ 
+                backgroundColor: localStorage.getItem("sorted")==="price" ? colors.secondary : colors.light,
+                borderColor: colors.secondary,
+                color: localStorage.getItem("sorted")==="price" ? colors.white : colors.dark
+              }}
               onClick={() => handleClick("price")}
             >
               {myads.price}
             </button>
             <button
-              className={`px-3 py-1 border-t-2 border-b-2 bg-gray-200 hover:bg-gray-300 cursor-pointer text-sm 
-                ${localStorage.getItem("sorted")==="Location"?"bg-gray-300":"bg-gray-200"}`}
+              className={`px-3 py-1 border-t-2 border-b-2 cursor-pointer text-sm`}
+              style={{ 
+                backgroundColor: localStorage.getItem("sorted")==="Location" ? colors.secondary : colors.light,
+                borderColor: colors.secondary,
+                color: localStorage.getItem("sorted")==="Location" ? colors.white : colors.dark
+              }}
               onClick={() => handleClick("Location")}
             >
               {myads.location}
             </button>
             <button
-              className={`px-3 py-1 border-t-2 border-b-2 border-r-2 rounded-r bg-gray-200 hover:bg-gray-300 cursor-pointer text-sm 
-                ${localStorage.getItem("sorted")==="LastEdited"?"bg-gray-300":"bg-gray-200"}`}
+              className={`px-3 py-1 border-t-2 border-b-2 border-r-2 rounded-r cursor-pointer text-sm`}
+              style={{ 
+                backgroundColor: localStorage.getItem("sorted")==="LastEdited" ? colors.secondary : colors.light,
+                borderColor: colors.secondary,
+                color: localStorage.getItem("sorted")==="LastEdited" ? colors.white : colors.dark
+              }}
               onClick={() => handleClick("LastEdited")}
             >
               {myads.lastEdited}
             </button>
             <button
-              className={`px-2 ml-2 py-1 border-2 rounded bg-gray-200 hover:bg-gray-300 cursor-pointer
-                ${localStorage.getItem("sorted")?"bg-gray-300":"bg-gray-200"}`}
+              className={`px-2 ml-2 py-1 border-2 rounded cursor-pointer`}
+              style={{ 
+                backgroundColor: localStorage.getItem("sorted") ? colors.secondary : colors.light,
+                borderColor: colors.secondary,
+                color: localStorage.getItem("sorted") ? colors.white : colors.dark
+              }}
               onClick={() => handleClick("order")}
             >
             {order === 'descending' ? <FaSortAmountDown /> : <FaSortAmountUpAlt />}               
@@ -319,12 +339,14 @@ function MyAds() {
             
           </div>
   </div>
-      <div className="w-full max-w-4xl bg-white shadow-md rounded-t-lg pl-4 pr-4 pb-4 pt-2">
+      <div className="w-full max-w-4xl shadow-md rounded-t-lg pl-4 pr-4 pb-4 pt-2" style={{ backgroundColor: colors.light }}>
         <p><b>{myads.enabledTitle}</b></p>
-        <div className="w-full max-w-4xl border-1 p-2 bg-gray-100 shadow-md rounded-lg h-[540px] md:h-[410px] overflow-y-auto">        
+        <div className="w-full max-w-4xl border-1 p-2 shadow-md rounded-lg h-[540px] md:h-[410px] overflow-y-auto"
+             style={{ backgroundColor: colors.light, borderColor: colors.secondary }}>        
 
         {copyRoomData.map((ad,index)=>(
-          <div key={index} className="flex flex-col md:flex-row w-full max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden md:h-48 mb-3 border-gray-400 border-1">
+          <div key={index} className="flex flex-col md:flex-row w-full max-w-4xl mx-auto shadow-md rounded-lg overflow-hidden md:h-48 mb-3 border-1"
+               style={{ backgroundColor: colors.white, borderColor: colors.secondary }}>
                           <img
                             src={ad.image_url}
                             alt="Room"
@@ -361,27 +383,36 @@ function MyAds() {
                             {/* Action Icons */}
                             <div className="flex gap-3 justify-end mt-2">
                               <button
-                                className="p-2 border rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer flex items-center gap-2"
+                                className="p-2 border rounded transition-colors duration-200 cursor-pointer flex items-center gap-2"
+                                style={{ borderColor: colors.secondary }}
                                 onClick={() => handleDisable(ad.image_path.split("/")[1].split(".")[0])}
+                                onMouseOver={(e) => e.target.style.backgroundColor = colors.light}
+                                onMouseOut={(e) => e.target.style.backgroundColor = "transparent"}
                               >
-                                <GiSightDisabled size={25} className="inline-flex align-middle" />
+                                <GiSightDisabled size={25} className="inline-flex align-middle" style={{ color: colors.warning }} />
                                 <span className="inline-flex align-middle">{myads.disable}</span>
                               </button>
                     
-                              <button
-                                className="p-2 border rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer flex items-center gap-2"
-                                onClick={() => handleEdit(ad.image_path.split("/")[1].split(".")[0])}
-                              >
-                                <FiEdit size={25} className="inline-flex align-middle" />
-                                <span className="inline-flex align-middle">{myads.edit}</span>
-                              </button>
-                              <button
-                                className="p-2 border rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer flex items-center gap-2"
-                                onClick={() => handleRemove(ad.image_path.split("/")[1].split(".")[0])}
-                              >
-                                <FaTrashAlt size={25} className="inline-flex align-middle" />
-                                <span className="inline-flex align-middle">{myads.delete}</span>
-                              </button>
+                            <button
+                              className="p-2 border rounded transition-colors duration-200 cursor-pointer flex items-center gap-2"
+                              style={{ borderColor: colors.secondary }}
+                              onClick={() => handleEdit(ad.image_path.split("/")[1].split(".")[0])}
+                              onMouseOver={(e) => e.target.style.backgroundColor = colors.light}
+                              onMouseOut={(e) => e.target.style.backgroundColor = "transparent"}
+                            >
+                              <FiEdit size={25} className="inline-flex align-middle" style={{ color: colors.secondary }} />
+                              <span className="inline-flex align-middle">{myads.edit}</span>
+                            </button>
+                            <button
+                              className="p-2 border rounded transition-colors duration-200 cursor-pointer flex items-center gap-2"
+                              style={{ borderColor: colors.secondary }}
+                              onClick={() => handleRemove(ad.image_path.split("/")[1].split(".")[0])}
+                              onMouseOver={(e) => e.target.style.backgroundColor = colors.light}
+                              onMouseOut={(e) => e.target.style.backgroundColor = "transparent"}
+                            >
+                              <FaTrashAlt size={25} className="inline-flex align-middle" style={{ color: colors.warning }} />
+                              <span className="inline-flex align-middle">{myads.delete}</span>
+                            </button>
                             </div>
 
                           </div>
@@ -389,12 +420,14 @@ function MyAds() {
         ))}
         </div>
       </div>
-      <div className="w-full max-w-4xl bg-white shadow-md rounded-b-lg pl-4 pr-4 pb-4">
+      <div className="w-full max-w-4xl shadow-md rounded-b-lg pl-4 pr-4 pb-4" style={{ backgroundColor: colors.light }}>
         <p><b>{myads.disabledTitle}</b></p>
-        <div className="w-full max-w-4xl border-1 p-2 bg-gray-100 shadow-md rounded-lg h-[540px] md:h-[230px] overflow-y-auto">        
+        <div className="w-full max-w-4xl border-1 p-2 shadow-md rounded-lg h-[540px] md:h-[230px] overflow-y-auto"
+             style={{ backgroundColor: colors.light, borderColor: colors.secondary }}>        
 
         {disabledRoomData.map((ad,index)=>(
-          <div key={index} className="flex flex-col md:flex-row w-full max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden md:h-48 mb-3 border-gray-700 border-1 opacity-65">
+          <div key={index} className="flex flex-col md:flex-row w-full max-w-4xl mx-auto shadow-md rounded-lg overflow-hidden md:h-48 mb-3 border-1 opacity-65"
+               style={{ backgroundColor: colors.white, borderColor: colors.secondary }}>
                           <img
                             src={ad.image_url}
                             alt="Room"
@@ -431,10 +464,13 @@ function MyAds() {
                             {/* Action Icons */}
                             <div className="flex gap-3 justify-end mt-2">
                               <button
-                                className="p-2 border rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer flex items-center gap-2"
+                                className="p-2 border rounded transition-colors duration-200 cursor-pointer flex items-center gap-2"
+                                style={{ borderColor: colors.secondary }}
                                 onClick={() => handleEnable(ad.image_path.split("/")[1].split(".")[0])}
+                                onMouseOver={(e) => e.target.style.backgroundColor = colors.light}
+                                onMouseOut={(e) => e.target.style.backgroundColor = "transparent"}
                               >
-                                <PiEyeFill size={25} className="inline-flex align-middle" />
+                                <PiEyeFill size={25} className="inline-flex align-middle" style={{ color: colors.success }} />
                                 <span className="inline-flex align-middle">{myads.enable}</span>
                               </button> 
                             </div>

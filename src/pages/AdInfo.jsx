@@ -16,6 +16,7 @@ import Modal from '../components/Modal';
 import { showToast } from "../components/Toasts/ToastMessages";
 import { useToast } from "../components/Toasts/ToastService";
 import ReviewCard from '../components/ReviewCard';
+import { colors } from "../utils/colors";
 
 const defaultIcon = L.icon({
   iconUrl,
@@ -199,23 +200,29 @@ function AdInfo() {
                   </div>
                 </div>
               </Modal>
-     <div className="min-h-screen bg-gradient-to-br from-gray-100 to-white flex items-start justify-center py-10 px-4">
-      <div className="w-full max-w-4xl rounded-xl shadow-lg bg-white p-6 space-y-6">
+     <div className="min-h-screen flex items-start justify-center py-10 px-4" style={{ backgroundColor: colors.light }}>
+      <div className="w-full max-w-4xl rounded-xl shadow-lg p-6 space-y-6" style={{ backgroundColor: colors.white }}>
         <div className='flex flex-row justify-between'>
         <ReturnButton previousPage={"/ads"} />
           <div className="flex gap-3 justify-end shadow-md rounded-t-lg py-2 pl-4 pr-4">
             <button
-              className="p-2 border rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer flex items-center gap-2"
+              className="p-2 border rounded transition-colors duration-200 cursor-pointer flex items-center gap-2"
+              style={{ borderColor: colors.secondary }}
               onClick={() => handleMessage()}
+              onMouseOver={(e) => e.target.style.backgroundColor = colors.light}
+              onMouseOut={(e) => e.target.style.backgroundColor = "transparent"}
             >
-              <LuMessageCircleMore size={25} className="inline-flex align-middle" />
+              <LuMessageCircleMore size={25} className="inline-flex align-middle" style={{ color: colors.secondary }} />
               <span className="inline-flex align-middle"></span>
             </button>
             <button
-              className="p-2 border rounded hover:bg-gray-200 transition-colors duration-200 cursor-pointer flex items-center gap-2"
+              className="p-2 border rounded transition-colors duration-200 cursor-pointer flex items-center gap-2"
+              style={{ borderColor: colors.secondary }}
               onClick={() => handleFavourite()}
+              onMouseOver={(e) => e.target.style.backgroundColor = colors.light}
+              onMouseOut={(e) => e.target.style.backgroundColor = "transparent"}
             >
-              <FaHeart size={25} className="inline-flex align-middle" />
+              <FaHeart size={25} className="inline-flex align-middle" style={{ color: colors.accent }} />
             </button>
           </div>
         </div>
@@ -226,7 +233,7 @@ function AdInfo() {
 
         {/* Image + Description */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="w-full aspect-video border rounded-xl bg-gray-50 overflow-hidden flex items-center justify-center">
+          <div className="w-full aspect-video border rounded-xl overflow-hidden flex items-center justify-center" style={{ backgroundColor: colors.light, borderColor: colors.secondary }}>
             {formData.image ? (
               <img
                 src={
@@ -280,7 +287,7 @@ function AdInfo() {
             </Detail>
             <Detail label={adFormPt1.street} value={formData.street || "No street provided"} />
 
-            <div className="rounded-lg overflow-hidden shadow border">
+            <div className="rounded-lg overflow-hidden shadow border" style={{ borderColor: colors.secondary }}>
               {coordinates ? (
                 <MapContainer center={coordinates} zoom={zoomLevel} className="w-full h-64">
                   <TileLayer
@@ -312,25 +319,31 @@ function AdInfo() {
               formData.tags.map((tag, index) => (
                 <span
                   key={index}
-                  className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium"
+                  className="px-3 py-1 text-xs rounded-full border"
+                  style={{ backgroundColor: colors.light, borderColor: colors.secondary }}
                 >
                   {tag}
                 </span>
               ))
             ) : (
-              <p className="text-gray-500 text-sm">No tags added</p>
+              <p className="text-sm" style={{ color: colors.dark }}>No tags added</p>
             )}
           </div>
         </div>
-        <div className="border-2 rounded bg-white flex flex-col justify-center pl-4 pr-4 pb-4 pt-1">
+        <div className="border-2 rounded flex flex-col justify-center pl-4 pr-4 pb-4 pt-1" style={{ backgroundColor: colors.white, borderColor: colors.secondary }}>
           <div className='flex flex-row justify-between'>
             <p className=' pl-2'><b>{adInfo.reviews}</b></p>
-            <button className="px-4 text-sm rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500"
-            onClick={()=>handleFavourite()}>
+            <button
+              className="px-4 text-sm rounded border-2 cursor-pointer transition-colors duration-200"
+              style={{ backgroundColor: colors.light, borderColor: colors.secondary, color: colors.dark }}
+              onClick={()=>handleFavourite()}
+              onMouseOver={(e) => e.target.style.backgroundColor = colors.secondary}
+              onMouseOut={(e) => e.target.style.backgroundColor = colors.light}
+            >
               + Review
             </button>
           </div>
-          <div className="w-full max-w-4xl p-2 rounded-lg h-[180px] flex flex-col md:flex-row overflow-y-auto md:overflow-x-auto md:overflow-y-hidden">   
+          <div className="w-full max-w-4xl p-2 rounded-lg h-[180px] flex flex-col md:flex-row overflow-y-auto md:overflow-x-auto md:overflow-y-hidden" style={{ backgroundColor: colors.light }}>   
           {displayedReviews.map((ad, index) => (
             <ReviewCard
               key={index}

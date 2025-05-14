@@ -7,13 +7,11 @@ import { FaBuilding, FaMapMarkedAlt, FaComments } from 'react-icons/fa';
 import { useParams,useNavigate } from 'react-router-dom';
 import ReturnButton from '../components/ReturnButton';
 import { PiPaperPlaneTiltBold } from "react-icons/pi";
+import { colors } from "../utils/colors";
 
 
   
 function ForumThread() {
-  const Bright_orange= "rgb(28, 10, 0)";
-  const Dark_cyan="rgb(63, 35, 5)";
-  const Very_dark_cyan= "rgb(96, 54, 1)";
   const {t} = useTranslation();
   const forumThread = t("forumThread");
   const { thread } = useParams();
@@ -201,7 +199,7 @@ const formatDate = (dateString) => {
             </div>
 
     
-            <div className="border-b-2 border-r-2 border-l-2 bg-white flex flex-col gap-2 pl-4 pr-4 pb-3 pt-3">
+            <div className="border-b-2 border-r-2 border-l-2 flex flex-col gap-2 pl-4 pr-4 pb-3 pt-3" style={{ backgroundColor: colors.white, borderColor: colors.secondary }}>
             <div className="flex flex-row justify-center gap-2">
               <input
                 type='text'
@@ -210,12 +208,23 @@ const formatDate = (dateString) => {
                 placeholder={forumThread.type}
                 autoComplete='on'
                 onChange={(e)=>handleChange(e)}
-                className='border rounded bg-white w-4/6'
+                className='border rounded w-4/6'
+                style={{ borderColor: colors.secondary }}
               />
-              <input type="file" name='image' className='border rounded w-2/6 bg-gray-200 hover:bg-gray-300 cursor-pointer' accept="image/*" onChange={(e)=>{handleChange(e)}} />
+              <input 
+                type="file" 
+                name='image' 
+                className='border rounded w-2/6 cursor-pointer' 
+                style={{ backgroundColor: colors.light, borderColor: colors.secondary }} 
+                accept="image/*" 
+                onChange={(e)=>{handleChange(e)}} 
+              />
               <button
-                className={`px-4 py-1 rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500`}
+                className={`px-4 py-1 rounded border-2 cursor-pointer transition-colors duration-200`}
+                style={{ backgroundColor: colors.secondary, borderColor: colors.primary, color: colors.white }}
                 onClick={()=>handleAddMessage()}
+                onMouseOver={(e) => e.target.style.backgroundColor = colors.primary}
+                onMouseOut={(e) => e.target.style.backgroundColor = colors.secondary}
               >
                 <PiPaperPlaneTiltBold />
               </button>

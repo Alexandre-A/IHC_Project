@@ -7,6 +7,7 @@ import LoginModal from "./LoginModal";
 import { showToast } from '../components/Toasts/ToastMessages';
 import { useToast } from '../components/Toasts/ToastService';
 import Modal from '../components/Modal';
+import { colors } from "../utils/colors";
 
 
 function NavbarInicial({ homepage, complete}) {
@@ -18,7 +19,6 @@ function NavbarInicial({ homepage, complete}) {
   const toast = useToast();
   const location = useLocation();
   const [modal, setModal] = useState(null); // null, 'first', 'third'
-  const userType = localStorage.getItem("userType")
 
 
 
@@ -88,14 +88,15 @@ function NavbarInicial({ homepage, complete}) {
                 tabChosen={tabChosen} 
                 setTabChosen={setTabChosen}
             />
-    <nav className="bg-gray-800 text-white p-4 flex justify-between items-center" style={{backgroundColor: 'rgb(28, 10, 0)'}}>
-      {/* Left: Home icon */}
-      <div className="flex items-center space-x-4 text-sm sm:text-base ">
-        <button
-          onClick={handleHomeClick}
-          className="hover:text-gray-300 cursor-pointer"
-          title="Home"
-        >
+            <nav className="text-white p-4 flex justify-between items-center" style={{backgroundColor: '#2C3E50'}}> 
+              {/* Left: Home icon */}
+              <div className="flex items-center space-x-4 text-sm sm:text-base">
+                <button
+                  onClick={handleHomeClick}
+                  className="cursor-pointer hover:text-[#F39C12]" 
+                  style={{color: 'white'}}
+                  title="Home"
+                >
           <FaHome className="w-6 h-6" />
         </button>
 
@@ -123,7 +124,7 @@ function NavbarInicial({ homepage, complete}) {
                 setModal("")
                 handleLocalStorage("messages")}}
               href={links.forum}
-              className={`hover:text-gray-300 ${currentPath === links.forum  ||location.pathname.startsWith("/forum/")? "text-yellow-500" : ""}`}
+              className={`hover:text-[#F39C12] ${currentPath === links.forum || location.pathname.startsWith("/forum/") ? "text-[#F39C12]" : ""}`}
             >
               {navbar.forum}
             </a>
@@ -137,14 +138,14 @@ function NavbarInicial({ homepage, complete}) {
                 setModal("")
                 handleLocalStorage("messages")}}
               href={localStorage.getItem("userType")?links.messages:""}
-              className={`hover:text-gray-300 ${currentPath === links.messages ||location.pathname.startsWith("/privateMessage/") ? "text-yellow-500" : ""}`}
+              className={`hover:text-[#F39C12] ${currentPath === links.messages || location.pathname.startsWith("/privateMessage/") ? "text-[#F39C12]" : ""}`}
             >
               {navbar.messages}
             </a>
             <a
               onClick={()=> handleLocalStorage("ads")}
               href={links.ads}
-              className={`hover:text-gray-300 ${currentPath === links.ads ||location.pathname.startsWith("/adInfo/") ? "text-yellow-500" : ""}`}
+              className={`hover:text-[#F39C12] ${currentPath === links.ads || location.pathname.startsWith("/adInfo/") ? "text-[#F39C12]" : ""}`}
             >
               {navbar.ads}
             </a>
@@ -152,7 +153,7 @@ function NavbarInicial({ homepage, complete}) {
               <a
                 onClick={()=> handleLocalStorage("myads")}
                 href={links.myads}
-                className={`hover:text-gray-300 ${currentPath === links.myads || currentPath === links.form ? "text-yellow-500" : ""}`}
+                className={`hover:text-[#F39C12] ${currentPath === links.myads || currentPath === links.form ? "text-[#F39C12]" : ""}`}
               >
                 {navbar.myads}
               </a>
@@ -166,21 +167,21 @@ function NavbarInicial({ homepage, complete}) {
         <LanguageSelector></LanguageSelector>
         
 
-        <button className="relative flex justify-center items-center  border focus:outline-none shadow
-        text-white rounded-full focus:ring ring-white group cursor-pointer">
+        <button className="relative flex justify-center items-center border focus:outline-none shadow
+        text-white rounded-full focus:ring ring-white group cursor-pointer" style={{borderColor: colors.accent}}>
           <FaUser className="w-6 h-6 p-1" title={navbar.profile} />
           <div className="absolute hidden group-focus:block top-full right-0 min-w-full w-max bg-white shadow-md mt-1 rounded text-black">
             <ul className="text-left border rounded">
               {!localStorage.getItem("userType")?
               <>
-              <li className="px-4 py-1 hover:bg-gray-100 border-b"
-              onClick={() => { setTabChosen("SignIn"); setIsLoginOpen(true); }}>{navbar.login}</li>
-              <li className="px-4 py-1 hover:bg-gray-100 border-b"
-              onClick={() => { setTabChosen("SignUp"); setIsLoginOpen(true); }}>{navbar.registo}</li>
+              <button className="px-4 py-1 hover:bg-gray-100 border-b hover:text-[#F39C12]"
+              onClick={() => { setTabChosen("SignIn"); setIsLoginOpen(true); }}>{navbar.login}</button>
+              <button className="px-4 py-1 hover:bg-gray-100 border-b hover:text-[#F39C12]"
+              onClick={() => { setTabChosen("SignUp"); setIsLoginOpen(true); }}>{navbar.registo}</button>
               </>:<>
-              <li className="px-4 py-1 hover:bg-gray-100 border-b"
+              <li className="px-4 py-1 hover:bg-gray-100 hover:text-[#F39C12] border-b"
               onClick={()=>navigate(links.profile)}>{navbar.profile}</li>
-              <li className="px-4 py-1 hover:bg-gray-100 border-b"
+              <li className="px-4 py-1 hover:bg-gray-100 hover:text-[#F39C12] border-b"
               onClick={handleLogout}>{navbar.logOut}</li>
               </>
               }

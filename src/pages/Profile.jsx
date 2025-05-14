@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import ReviewCard from '../components/ReviewCard';
 import { HiOutlineBadgeCheck } from "react-icons/hi";
 import Modal from "../components/Modal";
+import { colors } from "../utils/colors";
 
 
 
@@ -254,16 +255,19 @@ function Profile() {
           </div>
         </div>
 
-        <div className="border-b-2 border-r-2 border-l-2 bg-white flex flex-col justify-center pl-4 pr-4 pb-4 pt-1">
+        <div className="border-t-2 border-r-2 border-l-2 rounded-t-lg flex flex-col justify-center pl-4 pr-4 pb-4 pt-2" style={{ backgroundColor: colors.white, borderColor: colors.secondary }}>
           <div className='flex flex-row justify-between'>
             <p className=' pl-2'><b>{profile.reviews}</b></p>
             {pageData.canMessage?
-            <button className="px-4 text-sm rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500"
-            onClick={openTagModal}>
+            <button className="px-4 text-sm rounded border-2 cursor-pointer hover:text-white transition-colors duration-200"
+            style={{ backgroundColor: colors.light, borderColor: colors.secondary, color: colors.dark }}
+            onClick={openTagModal}
+            onMouseOver={(e) => e.target.style.backgroundColor = colors.secondary}
+            onMouseOut={(e) => e.target.style.backgroundColor = colors.light}>
               + Review
             </button>:<></>}
           </div>
-          <div className="w-full max-w-4xl p-2 rounded-lg h-[180px] flex flex-col md:flex-row overflow-y-auto md:overflow-x-auto md:overflow-y-hidden">   
+          <div className="w-full max-w-4xl p-2 rounded-lg h-[180px] flex flex-col md:flex-row overflow-y-auto md:overflow-x-auto md:overflow-y-hidden" style={{ backgroundColor: colors.light }}>   
             {pageData.review.map((ad,index)=>(
               <ReviewCard key={index} name={ad.name} email={ad.email} rating={ad.rating} comment={ad.comment}></ReviewCard>
             ))}         
@@ -271,7 +275,7 @@ function Profile() {
         </div>
       </div>
       {isTagModalOpen && (
-                  <div className="fixed inset-0 visible bg-black/30 flex items-center transition-colors justify-center z-50">                  <div className="bg-white rounded-lg p-6 w-full max-w-md">
+                  <div className="fixed inset-0 visible bg-black/30 flex items-center transition-colors justify-center z-50">                  <div className="rounded-lg p-6 w-full max-w-md" style={{ backgroundColor: colors.white }}>
                     <h2 className="text-lg font-medium mb-4">Review</h2>
                     <div className="flex space-x-2 mb-4 flex-col">
                       <input
@@ -294,7 +298,10 @@ function Profile() {
                     </div>
                     <button
                       onClick={closeTagModal}
-                      className="w-full p-2 bg-gray-500 cursor-pointer text-white rounded hover:bg-gray-600"
+                      className="w-full p-2 cursor-pointer text-white rounded transition-colors duration-200"
+                      style={{ backgroundColor: colors.secondary }}
+                      onMouseOver={(e) => e.target.style.backgroundColor = colors.primary}
+                      onMouseOut={(e) => e.target.style.backgroundColor = colors.secondary}
                     >
                       Done
                     </button>

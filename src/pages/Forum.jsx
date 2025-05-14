@@ -8,6 +8,7 @@ import { FiMessageCircle } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 import { showToast } from "../components/Toasts/ToastMessages";
 import { useToast } from "../components/Toasts/ToastService";
+import { colors } from "../utils/colors";
 import '../index.css';
 import '../App.css';
 
@@ -266,52 +267,73 @@ function Forum() {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-100 flex flex-col items-center pt-4">
+      <div className="min-h-screen flex flex-col items-center pt-4" style={{backgroundColor: colors.light}}>
         {/* Search and Filters Header */}
         <div className="w-full max-w-4xl p-4 flex flex-col md:flex-row">
           <div className="relative flex-grow mb-2 md:mb-0">
             <input
               type="text"
               placeholder={t("forum.search") || "Search topics..."}
-              className="w-full p-2 pl-10 border border-gray-300 rounded-md"
+              className="w-full p-2 pl-10 border rounded-md"
+              style={{borderColor: colors.secondary}}
               value={search}
               onChange={handleSearch}
             />
-            <FaMagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <FaMagnifyingGlass className="absolute left-3 top-1/2 transform -translate-y-1/2" style={{color: colors.secondary}} />
           </div>
           
           <div className="flex items-center ml-0 md:ml-4 mt-2 md:mt-0">
             <button
-              className={`px-3 py-1 border-2 border-r-0 rounded-l bg-gray-200 hover:bg-gray-300 cursor-pointer text-sm 
-                ${localStorage.getItem("sorted")==="Activity"?"bg-gray-300":"bg-gray-200"}`}
+              className={`px-3 py-1 border-2 border-r-0 rounded-l cursor-pointer text-sm`}
+              style={{
+                backgroundColor: localStorage.getItem("sorted")==="Activity" ? colors.secondary : colors.light,
+                borderColor: colors.secondary,
+                color: localStorage.getItem("sorted")==="Activity" ? colors.white : colors.dark
+              }}
               onClick={() => handleClick("Activity")}
             >
               {t("forum.activity") || "Activity"}
             </button>
             <button
-              className={`px-3 py-1 border-t-2 border-b-2 bg-gray-200 hover:bg-gray-300 cursor-pointer text-sm 
-                ${localStorage.getItem("sorted")==="Category"?"bg-gray-300":"bg-gray-200"}`}
+              className={`px-3 py-1 border-t-2 border-b-2 cursor-pointer text-sm`}
+              style={{
+                backgroundColor: localStorage.getItem("sorted")==="Category" ? colors.secondary : colors.light,
+                borderColor: colors.secondary,
+                color: localStorage.getItem("sorted")==="Category" ? colors.white : colors.dark
+              }}
               onClick={() => handleClick("Category")}
             >
               {t("forum.category") || "Category"}
             </button>
             <button
-              className={`px-3 py-1 border-t-2 border-b-2 border-r-0 bg-gray-200 hover:bg-gray-300 cursor-pointer text-sm 
-                ${localStorage.getItem("sorted")==="Date"?"bg-gray-300":"bg-gray-200"}`}
+              className={`px-3 py-1 border-t-2 border-b-2 border-r-0 cursor-pointer text-sm`}
+              style={{
+                backgroundColor: localStorage.getItem("sorted")==="Date" ? colors.secondary : colors.light,
+                borderColor: colors.secondary,
+                color: localStorage.getItem("sorted")==="Date" ? colors.white : colors.dark
+              }}
               onClick={() => handleClick("Date")}
             >
               {t("forum.date") || "Date"}
             </button>
             <button
-              className={`px-3 py-1 border-t-2 border-b-2 border-r-2 rounded-r bg-gray-200 hover:bg-gray-300 cursor-pointer text-sm 
-                ${localStorage.getItem("sorted")==="Popularity"?"bg-gray-300":"bg-gray-200"}`}
+              className={`px-3 py-1 border-t-2 border-b-2 border-r-2 rounded-r cursor-pointer text-sm`}
+              style={{
+                backgroundColor: localStorage.getItem("sorted")==="Popularity" ? colors.secondary : colors.light,
+                borderColor: colors.secondary,
+                color: localStorage.getItem("sorted")==="Popularity" ? colors.white : colors.dark
+              }}
               onClick={() => handleClick("Popularity")}
             >
               {t("forum.popularity") || "Popularity"}
             </button>
             <button
-              className={`px-2 ml-2 py-1 border-2 rounded bg-gray-200 hover:bg-gray-300 cursor-pointer
-                ${localStorage.getItem("sorted")?"bg-gray-300":"bg-gray-200"}`}
+              className={`px-2 ml-2 py-1 border-2 rounded cursor-pointer`}
+              style={{
+                backgroundColor: localStorage.getItem("sorted") ? colors.secondary : colors.light,
+                borderColor: colors.secondary,
+                color: localStorage.getItem("sorted") ? colors.white : colors.dark
+              }}
               onClick={() => handleClick("order")}
             >
               {order === 'descending' ? <FaSortAmountDown /> : <FaSortAmountUpAlt />}               
@@ -325,7 +347,12 @@ function Forum() {
             <button
               key={category.id}
               onClick={() => handleCategoryFilter(category.id)}
-              className="px-4 py-2 mr-2 whitespace-nowrap rounded-full bg-white border border-gray-300 hover:bg-gray-100 transition"
+              className="px-4 py-2 mr-2 whitespace-nowrap rounded-full border hover:opacity-80 transition"
+              style={{
+                backgroundColor: colors.white, 
+                borderColor: colors.secondary,
+                color: colors.dark
+              }}
             >
               {category.label}
             </button>
@@ -336,7 +363,8 @@ function Forum() {
         <div className="w-full max-w-4xl px-4 mb-4">
           <button
             onClick={() => isLoggedIn ? setShowNewTopicForm(!showNewTopicForm) : navigate('/login')}
-            className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition flex items-center gap-2"
+            className="px-4 py-2 text-white rounded hover:opacity-90 transition flex items-center gap-2"
+            style={{ backgroundColor: colors.primary }}
           >
             <FiMessageCircle className="text-lg" />
             {showNewTopicForm ? (t("forum.cancelTopic") || "Cancel") : (t("forum.newTopic") || "New Topic")}
@@ -346,7 +374,7 @@ function Forum() {
         {/* New Topic Form */}
         {showNewTopicForm && (
           <div className="w-full max-w-4xl px-4 mb-4">
-            <form onSubmit={handleSubmitNewTopic} className="bg-white rounded-lg shadow-md p-6">
+            <form onSubmit={handleSubmitNewTopic} className="rounded-lg shadow-md p-6" style={{backgroundColor: colors.light}}>
               <h2 className="text-xl font-semibold mb-4">{t("forum.createNewTopic") || "Create New Topic"}</h2>
               <div className="mb-4">
                 <label className="block mb-2 text-sm font-medium">{t("forum.topicTitle") || "Title"}</label>
@@ -355,7 +383,8 @@ function Forum() {
                   name="title"
                   value={newTopic.title}
                   onChange={handleInputChange}
-                  className="w-full p-2 border border-gray-300 rounded-md"
+                  className="w-full p-2 border rounded-md"
+                  style={{borderColor: colors.secondary}}
                   placeholder={t("forum.enterTitle") || "Enter topic title..."}
                   required
                 />
@@ -366,7 +395,8 @@ function Forum() {
                   name="category"
                   value={newTopic.category}
                   onChange={handleInputChange}
-                  className="w-full p-2 border border-gray-300 rounded-md"
+                  className="w-full p-2 border rounded-md"
+                  style={{borderColor: colors.secondary}}
                   required
                 >
                   {categories.filter(c => c.id !== "all").map(category => (
@@ -380,7 +410,8 @@ function Forum() {
                   name="content"
                   value={newTopic.content}
                   onChange={handleInputChange}
-                  className="w-full p-2 border border-gray-300 rounded-md h-32"
+                  className="w-full p-2 border rounded-md h-32"
+                  style={{borderColor: colors.secondary}}
                   placeholder={t("forum.enterContent") || "Enter topic content..."}
                   required
                 ></textarea>
@@ -389,14 +420,20 @@ function Forum() {
                 <button
                   type="button"
                   onClick={() => setShowNewTopicForm(false)}
-                  className="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100"
+                  className="px-4 py-2 border rounded hover:opacity-80"
+                  style={{
+                    borderColor: colors.secondary,
+                    backgroundColor: colors.light,
+                    color: colors.dark
+                  }}
                 >
                   {t("forum.cancel") || "Cancel"}
                 </button>
                 <button
                   type="submit"
                   //ALTERAR AQUI
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                  className="px-4 py-2 text-white rounded hover:opacity-90"
+                  style={{ backgroundColor: colors.primary }}
                 >
                   {t("forum.createTopic") || "Create Topic"}
                 </button>
@@ -406,16 +443,17 @@ function Forum() {
         )}
         
         {/* Topics List */}
-        <div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-4 mb-8">
+        <div className="w-full max-w-4xl shadow-md rounded-lg p-4 mb-8" style={{ backgroundColor: colors.light }}>
           <h2 className="text-xl font-semibold mb-4">{t("forum.discussions") || "Discussions"}</h2>
           {copyTopics.length > 0 ? (
             <div className="space-y-4">
               {copyTopics.map((topic,id) => (
-                <div key={topic.id} className="border rounded-lg overflow-hidden">
-                  <div className="p-4 bg-white">
+                <div key={topic.id} className="border rounded-lg overflow-hidden" style={{ borderColor: colors.secondary }}>
+                  <div className="p-4" style={{ backgroundColor: colors.white }}>
                     <div className="flex justify-between items-start">
                       <h3 
-                        className="text-lg font-medium text-blue-700 hover:text-blue-900 cursor-pointer"
+                        className="text-lg font-medium cursor-pointer hover:opacity-80"
+                        style={{ color: colors.primary }}
                         onClick={() => handleViewTopic(topic.id)}
                       >
                         {topic.title}
@@ -427,45 +465,49 @@ function Forum() {
                     
                     <div className="mt-2 flex flex-wrap gap-2">
                       {topic.tags.map((tag, i) => (
-                        <span key={i} className="bg-gray-100 px-3 py-1 text-xs rounded-full border">
+                        <span key={i} className="px-3 py-1 text-xs rounded-full border" style={{ backgroundColor: colors.light, borderColor: colors.secondary }}>
                           {tag}
                         </span>
                       ))}
-                      <span className={`px-3 py-1 text-xs rounded-full ${
-                        topic.category === 'general' ? 'bg-gray-100 border-gray-300' :
-                        topic.category === 'advice' ? 'bg-blue-100 border-blue-300' :
-                        topic.category === 'discussion' ? 'bg-green-100 border-green-300' :
-                        topic.category === 'legal' ? 'bg-yellow-100 border-yellow-300' :
-                        topic.category === 'complaint' ? 'bg-red-100 border-red-300' :
-                        'bg-purple-100 border-purple-300'
-                      } border`}>
+                      <span className="px-3 py-1 text-xs rounded-full border" 
+                      style={{
+                        backgroundColor: topic.category === 'general' ? colors.light : 
+                                         topic.category === 'advice' ? colors.secondary + '20' :
+                                         topic.category === 'discussion' ? colors.success + '20' :
+                                         topic.category === 'legal' ? colors.accent + '20' :
+                                         topic.category === 'complaint' ? colors.warning + '20' :
+                                         colors.info + '20',
+                        borderColor: colors.secondary
+                      }}>
                         {t(`forum.${topic.category}`) || topic.category}
                       </span>
                     </div>
                     
                     <div className="mt-3 flex items-center justify-between">
                       <div className="flex items-center">
-                        <span className="text-sm text-gray-600">
+                        <span className="text-sm" style={{ color: colors.dark }}>
                           {t("forum.by") || "By"} <span className="font-medium">{topic.author}</span> 
-                          {topic.authorType === "landlord" && <span className="ml-1 text-blue-600">({t("forum.landlord") || "Landlord"})</span>}
-                          {topic.authorType === "tenant" && <span className="ml-1 text-green-600">({t("forum.tenant") || "Tenant"})</span>}
+                          {topic.authorType === "landlord" && <span className="ml-1" style={{ color: colors.primary }}>({t("forum.landlord") || "Landlord"})</span>}
+                          {topic.authorType === "tenant" && <span className="ml-1" style={{ color: colors.success }}>({t("forum.tenant") || "Tenant"})</span>}
                         </span>
                       </div>
                       
                       <div className="flex items-center space-x-4">
                         <button
-                          className="flex items-center space-x-1 text-gray-500 hover:text-gray-700"
+                          className="flex items-center space-x-1 hover:opacity-80"
+                          style={{ color: colors.dark }}
                           onClick={() => handleLike(topic.id)}
                         >
                           {likedPosts.includes(topic.id) ? 
-                            <FaThumbsUp className="text-blue-500" /> : 
+                            <FaThumbsUp style={{ color: colors.primary }} /> : 
                             <FaRegThumbsUp />
                           }
                           <span>{topic.likes}</span>
                         </button>
                         
                         <button
-                          className="flex items-center space-x-1 text-gray-500 hover:text-gray-700"
+                          className="flex items-center space-x-1 hover:opacity-80"
+                          style={{ color: colors.dark }}
                           onClick={() => handleViewTopic(topic.id)}
                         >
                           <FaCommentDots />
@@ -479,18 +521,20 @@ function Forum() {
             </div>
           ) : (
             <div className="text-center py-8">
-              <p className="text-gray-500">{t("forum.noTopics") || "No topics found"}</p>
+              <p style={{ color: colors.dark }}>{t("forum.noTopics") || "No topics found"}</p>
               {isLoggedIn ? (
                 <button
                   onClick={() => setShowNewTopicForm(true)}
-                  className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                  className="mt-4 px-4 py-2 text-white rounded hover:opacity-90 transition"
+                  style={{ backgroundColor: colors.primary }}
                 >
                   {t("forum.startDiscussion") || "Start a discussion"}
                 </button>
               ) : (
                 <button
                   onClick={() => navigate('/login')}
-                  className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                  className="mt-4 px-4 py-2 text-white rounded hover:opacity-90 transition"
+                  style={{ backgroundColor: colors.primary }}
                 >
                   {t("forum.loginToStart") || "Login to start a discussion"}
                 </button>

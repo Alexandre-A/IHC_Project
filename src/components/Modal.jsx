@@ -1,3 +1,5 @@
+import { colors } from "../utils/colors";
+
 export default function Modal({ open, onClose, children }) {
   return (
     /*
@@ -9,8 +11,11 @@ export default function Modal({ open, onClose, children }) {
       onClick={onClose}
       className={`
         fixed inset-0 flex justify-center items-center transition-colors
-        ${open ? "visible bg-black/20" : "invisible"}
+        ${open ? "visible" : "invisible"}
       `}
+      style={{
+        backgroundColor: open ? "rgba(44, 62, 80, 0.3)" : "transparent"
+      }}
     >
       
       {/* modal */}
@@ -25,9 +30,13 @@ export default function Modal({ open, onClose, children }) {
       <div
         onClick={(e) => e.stopPropagation()}
         className={`
-          bg-white rounded-xl shadow p-6 transition-all
+          rounded-xl shadow p-6 transition-all
           ${open ? "scale-100 opacity-100" : "scale-125 opacity-0"}
         `}
+        style={{
+          backgroundColor: colors.light,
+          border: `1px solid ${colors.secondary}`
+        }}
       >
         {children}
       </div>
