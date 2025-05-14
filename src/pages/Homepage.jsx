@@ -125,7 +125,7 @@ function Card({ icon, heading, paragraph, bgColor, hoverColor, inverted, onClick
   return (
     <section
       style={{background: bgColor}}
-      className="relative py-15 px-10 cursor-pointer overflow-hidden group transition-all duration-300 transform hover:scale-105"
+      className="relative z-0 py-15 px-10 cursor-pointer overflow-hidden group transform transition-transform duration-500 ease-[cubic-bezier(0.25,0.1,0.25,1)] hover:scale-105 hover:z-50"
       onClick={onClick}
     >
       <div

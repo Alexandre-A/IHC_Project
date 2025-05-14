@@ -168,15 +168,6 @@ function Forum() {
   };
 
   const handleViewTopic = (topicId) => {
-    // In a real app, navigate to topic detail page
-    // navigate(`/forum/topic/${topicId}`);
-    console.log("Viewing topic:", topicId);
-    
-    showToast(toast, {
-      type: "info",
-      header: "Topic View",
-      message: "Viewing topic details would be implemented in a real app"
-    });
     navigate("/forum/forum"+topicId)
   };
 

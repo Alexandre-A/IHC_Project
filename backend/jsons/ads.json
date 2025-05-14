@@ -33,10 +33,10 @@
         "email": "supreme_landlord@gmail.com",
         "description": "Quarto acolhedor com cama de casal em Paredes, Porto. Apartamento com casa de banho partilhada e todas as despesas inclu\u00eddas. Ideal para casais ou estudantes, dispon\u00edvel imediatamente. Localiza\u00e7\u00e3o conveniente com acesso a transportes p\u00fablicos e pr\u00f3ximo de servi\u00e7os essenciais.",
         "date": "2025-04-24T14:21:18.339Z",
-        "image_path": "images/1070e6d76a7cdfd96c6cdc6b195b5c4720918c6c83e729b77159d14641a3e1f7.jpg",
-        "name": "Quarto com cama de casal em aveiro",
+        "image_path": "images/1070e6d76a7cdfd96c6cdc6b195b5c4720918c6c83e729b77159d14641a3e1f7.png",
+        "name": "Quarto com cama de casal no Porto",
         "price": "550",
-        "available_date": "agora",
+        "available_date": "28/05/2025",
         "gender": "Indifferent",
         "quantity": "1",
         "district": "Porto",
@@ -55,8 +55,8 @@
             "\u200e Porto"
         ],
         "isNew": [
-            "true",
-            ""
+            "false",
+            "1070e6d76a7cdfd96c6cdc6b195b5c4720918c6c83e729b77159d14641a3e1f7"
         ]
     },
     "f7187667af862b314dcd17d92d1b8df0e974363bdccd20cb59af94e97410817c": {

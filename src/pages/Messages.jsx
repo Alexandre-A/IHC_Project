@@ -321,7 +321,7 @@ function Messages() {
                               </div>
                               <div className="w-2/6">
                                 <p className="text-xl font-semibold text-gray-800 flex items-center w-full justify-start md:justify-end">
-                                  <span className="overflow-hidden text-ellipsis whitespace-nowrap">{ad.date}</span>
+                                  <span className="overflow-hidden text-ellipsis whitespace-nowrap">{formatDate(ad.date)}</span>
                                 </p>
 
                               </div>
