@@ -1,84 +1,169 @@
 {
-  "landlord2": {
-    "unique_id": "landlord2",
-    "date": "2025-04-24T14:20:14.600Z",
-    "image_path": "images/3405cad130b49a9127b4b84d1ed0ed62560d9b79f739825cfb0f3fe215adedc8.png",
-    "name": "Sr. Danilo",
-    "is_banned": "true",
-    "last_message": "okay, let me know if anything is needed",
-    "messages": [
-      ["hi there", "sender"],
-      ["hello", "receiver"],
-      ["everything alright with the flat?", "sender"],
-      ["yes, thank you", "receiver"],
-      ["okay, let me know if anything is needed", "sender"]
-    ],
-    "topic_of_interest": ""
-  },
-  "landlord3": {
-    "unique_id": "landlord3",
-    "date": "2025-04-24T14:20:14.600Z",
-    "image_path": "images/3405cad130b49a9127b4b84d1ed0ed62560d9b79f739825cfb0f3fe215adedc8.png",
-    "name": "Sr. Danilo",
-    "is_banned": "true",
-    "last_message": "thanks a lot",
-    "messages": [
-      ["good morning", "sender"],
-      ["morning!", "receiver"],
-      ["can someone check the boiler today?", "receiver"],
-      ["sure, I'll send someone by 4pm", "sender"],
-      ["thanks a lot", "receiver"]
-    ],
-    "topic_of_interest": ""
-  },
-  "tenant3": {
-    "unique_id": "tenant3",
-    "date": "2025-04-24T14:20:14.600Z",
-    "image_path": "images/senhorio.png",
-    "name": "Sr. Danilo",
-    "is_banned": "true",
-    "last_message": "perfect, thank you!",
-    "messages": [
-      ["hello", "sender"],
-      ["hi, how can I help?", "receiver"],
-      ["there\u2019s a leak in the kitchen sink", "sender"],
-      ["I\u2019ll arrange for someone to fix it tomorrow", "receiver"],
-      ["perfect, thank you!", "sender"]
-    ],
-    "topic_of_interest": ""
-  },
-  "landlord": {
-    "unique_id": "landlord",
-    "date": "2025-04-24T14:20:14.600Z",
-    "image_path": "images/senhorio.png",
-    "name": "Sr. Danilo",
-    "is_banned": "false",
-    "last_message": "fofo",
-    "messages": [
-      ["blabla", "sender"],
-      ["blabla2", "sender"],
-      ["teste", "receiver"],
-      ["wow", "sender"],
-      ["yay", "receiver"],
-      ["hello there mr tenant", "receiver"]
-    ],
-    "topic_of_interest": ""
-  },
-  "tenant": {
-    "unique_id": "tenant",
-    "date": "2025-04-24T14:20:14.600Z",
-    "image_path": "images/estudante.png",
-    "name": "Matteo Rossi",
-    "is_banned": "false",
-    "last_message": "Hello there mr tenant",
-    "messages": [
-      ["blabla", "receiver"],
-      ["blabla2", "receiver"],
-      ["teste", "sender"],
-      ["wow", "receiver"],
-      ["yay", "sender"],
-      ["hello there mr tenant", "sender"]
-    ],
-    "topic_of_interest": ""
-  }
+    "landlord2": {
+        "unique_id": "landlord2",
+        "date": "2025-04-24T14:20:14.600Z",
+        "image_path": "images/3405cad130b49a9127b4b84d1ed0ed62560d9b79f739825cfb0f3fe215adedc8.png",
+        "name": "Sr. Danilo",
+        "is_banned": "true",
+        "last_message": "okay, let me know if anything is needed",
+        "messages": [
+            [
+                "hi there",
+                "sender"
+            ],
+            [
+                "hello",
+                "receiver"
+            ],
+            [
+                "everything alright with the flat?",
+                "sender"
+            ],
+            [
+                "yes, thank you",
+                "receiver"
+            ],
+            [
+                "okay, let me know if anything is needed",
+                "sender"
+            ]
+        ],
+        "topic_of_interest": ""
+    },
+    "landlord3": {
+        "unique_id": "landlord3",
+        "date": "2025-04-24T14:20:14.600Z",
+        "image_path": "images/3405cad130b49a9127b4b84d1ed0ed62560d9b79f739825cfb0f3fe215adedc8.png",
+        "name": "Sr. Danilo",
+        "is_banned": "true",
+        "last_message": "thanks a lot",
+        "messages": [
+            [
+                "good morning",
+                "sender"
+            ],
+            [
+                "morning!",
+                "receiver"
+            ],
+            [
+                "can someone check the boiler today?",
+                "receiver"
+            ],
+            [
+                "sure, I'll send someone by 4pm",
+                "sender"
+            ],
+            [
+                "thanks a lot",
+                "receiver"
+            ]
+        ],
+        "topic_of_interest": ""
+    },
+    "tenant3": {
+        "unique_id": "tenant3",
+        "date": "2025-04-24T14:20:14.600Z",
+        "image_path": "images/senhorio.png",
+        "name": "Sr. Danilo",
+        "is_banned": "true",
+        "last_message": "da",
+        "messages": [
+            [
+                "hello",
+                "sender"
+            ],
+            [
+                "hi, how can I help?",
+                "receiver"
+            ],
+            [
+                "there\u2019s a leak in the kitchen sink",
+                "sender"
+            ],
+            [
+                "I\u2019ll arrange for someone to fix it tomorrow",
+                "receiver"
+            ],
+            [
+                "perfect, thank you!",
+                "sender"
+            ],
+            [
+                "da",
+                "sender"
+            ]
+        ],
+        "topic_of_interest": ""
+    },
+    "landlord": {
+        "unique_id": "landlord",
+        "date": "2025-04-24T14:20:14.600Z",
+        "image_path": "images/senhorio.png",
+        "name": "Sr. Danilo",
+        "is_banned": "false",
+        "last_message": "fofo",
+        "messages": [
+            [
+                "blabla",
+                "sender"
+            ],
+            [
+                "blabla2",
+                "sender"
+            ],
+            [
+                "teste",
+                "receiver"
+            ],
+            [
+                "wow",
+                "sender"
+            ],
+            [
+                "yay",
+                "receiver"
+            ],
+            [
+                "hello there mr tenant",
+                "receiver"
+            ]
+        ],
+        "topic_of_interest": ""
+    },
+    "tenant": {
+        "unique_id": "tenant",
+        "date": "2025-04-24T14:20:14.600Z",
+        "image_path": "images/estudante.png",
+        "name": "Matteo Rossi",
+        "is_banned": "false",
+        "last_message": "Hello there mr tenant",
+        "messages": [
+            [
+                "blabla",
+                "receiver"
+            ],
+            [
+                "blabla2",
+                "receiver"
+            ],
+            [
+                "teste",
+                "sender"
+            ],
+            [
+                "wow",
+                "receiver"
+            ],
+            [
+                "yay",
+                "sender"
+            ],
+            [
+                "hello there mr tenant",
+                "sender"
+            ]
+        ],
+        "topic_of_interest": ""
+    }
 }
