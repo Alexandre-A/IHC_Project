@@ -176,7 +176,7 @@ function Forum() {
     setNewTopic(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmitNewTopic = (e) => {
+  const handleSubmitNewTopic = async (e) =>{
     e.preventDefault();
     
     if (!isLoggedIn) {
@@ -209,7 +209,16 @@ function Forum() {
       datePosted: new Date().toISOString(),
       likes: 0,
       replies: 1,
-      tags: [userType==='landlord'?"Landlord":"Student"]
+      tags: [userType==='landlord'?"Landlord":"Student"],
+      messages: [
+        [
+          userType==='landlord'?"images/senhorio.png":"images/estudante.png",
+          userType==='landlord'?"Sr. Danilo":"Matteo Rossi",
+          newTopic.content,
+          "",
+          new Date().toISOString()
+        ]
+      ]
     };
     
     // Update topics state
@@ -224,6 +233,33 @@ function Forum() {
       category: "general"
     });
     setShowNewTopicForm(false);
+
+    const formData = new FormData();
+  formData.append("id", createdTopic.id);
+  formData.append("title", createdTopic.title);
+  formData.append("content", createdTopic.content);
+  formData.append("author", createdTopic.author);
+  formData.append("authorId", createdTopic.authorId);
+  formData.append("authorType", createdTopic.authorType);
+  formData.append("category", createdTopic.category);
+  formData.append("datePosted", createdTopic.datePosted);
+  formData.append("likes", createdTopic.likes);
+  formData.append("replies", createdTopic.replies);
+  formData.append("tags", JSON.stringify(createdTopic.tags));
+  formData.append("messages", JSON.stringify(createdTopic.messages));
+
+  try {
+    const response = await fetch("http://localhost:5000/sendThreadMessage", {
+      method: "POST",
+      body: formData, // no need to set Content-Type manually
+    });
+
+    if (!response.ok) {
+      console.error("Failed to send thread message");
+    }
+  } catch (error) {
+    console.error("Fetch error:", error);
+  }
     
     // Show success message
     showToast(toast, {
@@ -231,9 +267,6 @@ function Forum() {
       header: t("forum.success"),
       message: t("forum.topicCreated")
     });
-    
-    // In a real app, also send the new topic to server
-    // postNewTopicToServer(createdTopic);
   };
 
   // Forum categories for filtering

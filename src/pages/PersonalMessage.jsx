@@ -103,6 +103,7 @@ useEffect(() => {
     navigator.sendBeacon("http://localhost:5000/sendMessage", blob);
 
     if((user==='landlord'&&userType==='tenant')||(user==='tenant'&&userType==='landlord')){
+      localStorage.setItem("ifConditionTriggered", "true");
         const blob2 = new Blob([JSON.stringify(messageRefClone.current)], { type: "application/json" });
         navigator.sendBeacon("http://localhost:5000/sendMessage", blob2);}
   };
@@ -116,33 +117,43 @@ useEffect(() => {
 }, []); // Empty dependency array to ensure this effect runs only once when the component mounts
 
 
+useEffect(() => {
+  if (localStorage.getItem("ifConditionTriggered")) {
+    console.log("✅ IF statement ran on last unload.");
+    localStorage.removeItem("ifConditionTriggered");
+  }
+}, []);
+
 const handleChange = (e) => {
   const { name, value } = e.target;
   if (name === "search") setCurrentMessage(value);
 };
 
 const handleAddMessage = async () => {
-  if (currentMessage.trim()) {
-    const newMessage = currentMessage.trim();
-    setMessageData((prev) => ({
-      ...prev,
-      last_message: newMessage,
-      messages: [...prev.messages, [newMessage, "sender"]],
-    }));
-    setCurrentMessage(""); // Reset input field after sending message
-    setChanges(true);
-  }
+  const trimmedMessage = currentMessage.trim();
+  if (!trimmedMessage) return;
 
-  if((user==='landlord'&&userType==='tenant')||(user==='tenant'&&userType==='landlord')){
-    console.log("a")
-    const newMessage = currentMessage.trim();
+  // ✅ Always update messageData (sender's own messages)
+  setMessageData((prev) => ({
+    ...prev,
+    last_message: trimmedMessage,
+    messages: [...prev.messages, [trimmedMessage, "sender"]],
+  }));
+
+  // ✅ Always update reciprocateData (receiver's perspective)
+  if ((user === 'landlord' && userType === 'tenant') || (user === 'tenant' && userType === 'landlord')) {
     setReciprocateData((prev) => ({
       ...prev,
-      last_message: newMessage,
-      messages: [...prev.messages, [newMessage, "receiver"]],
+      last_message: trimmedMessage,
+      messages: [...prev.messages, [trimmedMessage, "receiver"]],
     }));
   }
+
+  setCurrentMessage(""); // ✅ Clear after both updates
+  setChanges(true);
 };
+
+
 
   /* Notes to remember:
   sendBeacon() is a special browser API that allows you to send small amounts of data to a server 
@@ -162,25 +173,39 @@ const handleAddMessage = async () => {
       const navigate = useNavigate();
     
       const handleClick = () => {
-        if (changes){
+        console.log("HANDLE CLICK FIRED");
+        console.log("changes:", changes);
+        console.log("messageData:", messageData);
+        console.log("reciprocateData:", reciprocateData);
+      
+        if (changes) {
+          // Manual sync
+          messageRef.current = messageData;
+          messageRefClone.current = reciprocateData;
+      
+          console.log("SENDING messageRef:", messageRef.current);
+          console.log("SENDING messageRefClone:", messageRefClone.current);
+      
           const blob = new Blob([JSON.stringify(messageRef.current)], {
             type: "application/json",
           });
           navigator.sendBeacon("http://localhost:5000/sendMessage", blob);
       
-          if (
+          const shouldSendClone =
             (user === "landlord" && userType === "tenant") ||
-            (user === "tenant" && userType === "landlord")
-          ) {
+            (user === "tenant" && userType === "landlord");
+      
+          if (shouldSendClone) {
             const blob2 = new Blob([JSON.stringify(messageRefClone.current)], {
               type: "application/json",
             });
             navigator.sendBeacon("http://localhost:5000/sendMessage", blob2);
           }
+        } else {
+          console.log("Skipping send due to changes === false");
         }
-    
-        navigate(previousPage);
-      };
+      
+        navigate(previousPage);}
     
       return (
         <div onClick={handleClick}>

@@ -3,13 +3,14 @@ import '../index.css'
 import '../App.css'
 import estudanteImg from '../assets/estudante.png';
 import landlordImg from '../assets/senhorio.png';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import ReviewCard from '../components/ReviewCard';
 import { HiOutlineBadgeCheck } from "react-icons/hi";
 import Modal from "../components/Modal";
 import { colors } from "../utils/colors";
-
+import { showToast } from "../components/Toasts/ToastMessages";
+import { useToast } from "../components/Toasts/ToastService";
 
 
 
@@ -17,6 +18,7 @@ function Profile() {
   const { userType } = useParams();
   const {t} = useTranslation();
   const profile = t("profile");
+  const adsPage = t("adsPage");
   const [roomData,setRoomData] = useState([]);
   const type = localStorage.getItem("userType");
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
@@ -26,9 +28,19 @@ function Profile() {
   const [validationMessage, setValidationMessage] = useState("");
   const [email, setEmail] = useState(type==='landlord'?"supreme_landlord@gmail.com":"thestudent@gmail.com");
   const [name, setName] = useState(type==='landlord'?"Sr Danilo":"Matteo Rossi");
+  const [modal, setModal] = useState(null); // null, 'first', 'third'
+
+  const toast = useToast();
+  const adInfo = t("adInfo");
+  const navigate = useNavigate()
+
+
 
   // Open and close tag modal
   const openTagModal = () => setIsTagModalOpen(true);
+  const handleLeave=()=>{
+    setIsTagModalOpen(false)
+  }
   const closeTagModal = () => {
     const numericRating = Number(rating);
     console.log(rating)
@@ -169,6 +181,14 @@ function Profile() {
       console.log(roomData)
     },[roomData])
 
+    const handleEdit= ()=>{
+      showToast(toast, {
+        type: "warning",
+        header: adInfo.warning,
+        message: adInfo.warningMessage
+      });
+    }
+
   return (
     
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
@@ -182,6 +202,16 @@ function Profile() {
               </div>
             </div>
                   </Modal>
+      <Modal open={modal == "Active"} onClose={() => setModal(null)}>
+              <div className="text-center w-56">
+                <div className="mx-auto my-4 w-48">
+                  <h3 className="text-lg font-black text-gray-800">
+                    {adsPage.modalTitle2}
+                  </h3>
+                  <p className="text-sm text-gray-500 my-1">{adsPage.cannot}</p>
+                </div>
+              </div>
+            </Modal>
       <div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-4">
         <div className="border-t-2 border-r-2 border-l-2 bg-white rounded-t flex flex-col space-y-2 sm:space-y-0 sm:flex-row sm:justify-between pl-4 pr-4 pb-2 pt-2">
           <div className=" flex flex-row justify-between"> 
@@ -208,12 +238,21 @@ function Profile() {
           </div>
           <div className='flex flex-row justify-center items-baseline '>
             {pageData.canMessage?
-            <button className="px-4 rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500">
+            <button className="px-4 rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500"
+            onClick={()=>{
+              if (type === "landlord" &&userType==='landlord') {
+                setModal("Active");
+              } else if (userType==='landlord') navigate("/privateMessage/landlord");
+              if(type === "tenant" &&userType==='tenant'){
+                setModal("Active");
+              } else if (userType==='tenant') navigate("/privateMessage/tenant");
+            }}>
               + {profile.message}
             </button>:<></>
             }
             {pageData.canEdit?
-            <button className="px-4 rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500">
+            <button className="px-4 rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500"
+            onClick={()=>handleEdit()}>
               + {profile.edit}
             </button>:<></>
             }
@@ -275,39 +314,54 @@ function Profile() {
         </div>
       </div>
       {isTagModalOpen && (
-                  <div className="fixed inset-0 visible bg-black/30 flex items-center transition-colors justify-center z-50">                  <div className="rounded-lg p-6 w-full max-w-md" style={{ backgroundColor: colors.white }}>
-                    <h2 className="text-lg font-medium mb-4">Review</h2>
-                    <div className="flex space-x-2 mb-4 flex-col">
-                      <input
-                        type="text"
-                        value={rating}
-                        onChange={(e) => setRating(e.target.value)}
-                        placeholder={`${profile.enterRating}`}
-                        className={`w-full p-2 border rounded mb-2 ${(isNaN(Number(rating)) || Number(rating) < 0 || Number(rating) > 5||rating==='')?"border-red-600":"border-green-600"}`}
-                      />
+        <div
+          className="fixed inset-0 visible bg-black/30 flex items-center transition-colors justify-center z-50"
+          onClick={() => {
+            console.log("Backdrop clicked");
+            handleLeave();
+          }} // close when clicking the backdrop
+        >
+          <div
+            className="rounded-lg p-6 w-full max-w-md"
+            style={{ backgroundColor: colors.white }}
+            onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside the modal
+          >
+            <h2 className="text-lg font-medium mb-4">Review</h2>
+            <div className="flex space-x-2 mb-4 flex-col">
+              <input
+                type="text"
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
+                placeholder={`${profile.enterRating}`}
+                className={`w-full p-2 border rounded mb-2 ${
+                  isNaN(Number(rating)) || Number(rating) < 0 || Number(rating) > 5 || rating === ''
+                    ? 'border-red-600'
+                    : 'border-green-600'
+                }`}
+              />
 
-                      <textarea
-                      className="w-full p-2 border rounded"
-                      placeholder={`${profile.enterComment}`}
-                      type="text"
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}>
+              <textarea
+                className="w-full p-2 border rounded"
+                placeholder={`${profile.enterComment}`}
+                type="text"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+              />
+            </div>
 
-                      </textarea>
-                      
-                    </div>
-                    <button
-                      onClick={closeTagModal}
-                      className="w-full p-2 cursor-pointer text-white rounded transition-colors duration-200"
-                      style={{ backgroundColor: colors.secondary }}
-                      onMouseOver={(e) => e.target.style.backgroundColor = colors.primary}
-                      onMouseOut={(e) => e.target.style.backgroundColor = colors.secondary}
-                    >
-                      Done
-                    </button>
-                  </div>
-                </div>
-              )}
+            <button
+              onClick={closeTagModal}
+              className="w-full p-2 cursor-pointer text-white rounded transition-colors duration-200"
+              style={{ backgroundColor: colors.secondary }}
+              onMouseOver={(e) => (e.target.style.backgroundColor = colors.primary)}
+              onMouseOut={(e) => (e.target.style.backgroundColor = colors.secondary)}
+            >
+              Done
+            </button>
+          </div>
+        </div>
+      )}
+
     </div>
   )
 }

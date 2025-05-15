@@ -1,161 +1,212 @@
 {
-  "forum1": {
-    "id": "1",
-    "title": "Best areas to live in Lisbon",
-    "content": "I'm moving to Lisbon next month and would like recommendations on the best areas to live that are close to universities.",
-    "author": "Jo\u00e3o Silva",
-    "authorId": "user123",
-    "authorType": "tenant",
-    "category": "advice",
-    "datePosted": "2024-10-15T08:30:00",
-    "likes": 24,
-    "replies": 8,
-    "tags": ["Lisbon", "University", "Accommodation"],
-    "messages": [
-      [
-        "images/carlos.jpg",
-        "Jo\u00e3o Silva",
-        "I'm moving to Lisbon next month and would like recommendations on the best areas to live that are close to universities.",
-        "No Image",
-        "2023-11-15T08:30:00"
-      ],
-      [
-        "images/maria.jpg",
-        "L\u00facia Almeida",
-        "Try Alvalade or Campo Pequeno. These areas are close to major universities and have good public transportation. They're also quite safe and have many student-friendly cafes.",
-        "No Image",
-        "2024-10-15T08:30:00"
-      ],
-      [
-        "images/carlos.jpg",
-        "Jo\u00e3o Silva",
-        "Thank you for the suggestions! Do you know what the average rent is in those areas for a one-bedroom apartment?",
-        "No Image",
-        "2023-11-15T08:30:00"
-      ]
-    ]
-  },
-  "forum2": {
-    "id": "2",
-    "title": "Rental prices in Porto",
-    "content": "Has anyone noticed the increasing rental prices in Porto? Is it still affordable for students?",
-    "author": "Maria Santos",
-    "authorId": "user456",
-    "authorType": "landlord",
-    "category": "discussion",
-    "datePosted": "2023-11-10T15:55:00",
-    "likes": 31,
-    "replies": 12,
-    "tags": ["Porto", "Rental Prices", "Students"],
-    "messages": [
-      [
-        "images/maria.jpg",
-        "Maria Santos",
-        "Has anyone noticed the increasing rental prices in Porto? Is it still affordable for students?",
-        "No Image",
-        "2023-11-10T15:45:00"
-      ],
-      [
-        "images/carlos.jpg",
-        "Tiago Silva",
-        "Yes! It's becoming harder to find affordable places near the center. Prices have gone up about 25% in the last year alone. Most students are now looking at areas like Paranhos or sharing with multiple roommates.",
-        "No Image",
-        "2023-11-10T15:55:00"
-      ]
-    ]
-  },
-  "forum3": {
-    "id": "3",
-    "title": "Tenant rights in Portugal",
-    "content": "I would like to know more about tenant rights in Portugal. What are the regulations regarding security deposits?",
-    "author": "Ana Pereira",
-    "authorId": "user789",
-    "authorType": "tenant",
-    "category": "legal",
-    "datePosted": "2025-01-08T12:20:00",
-    "likes": 17,
-    "replies": 6,
-    "tags": ["Legal", "Rights", "Security Deposit"],
-    "messages": [
-      [
-        "images/maria.jpg",
-        "Ana Pereira",
-        "I would like to know more about tenant rights in Portugal. What are the regulations regarding security deposits?",
-        "No image",
-        "2023-11-08T12:20:00"
-      ],
-      [
-        "images/carlos.jpg",
-        "Jo\u00e3o Rocha",
-        "Typically, landlords can request up to two months' rent as a deposit. By law, this deposit must be returned within 30 days of the end of your lease, provided there are no damages beyond normal wear and tear.",
-        "No Image",
-        "2025-01-08T12:20:00"
-      ]
-    ]
-  },
-  "forum4": {
-    "id": "4",
-    "title": "Problems with noisy neighbors",
-    "content": "How to deal with noisy neighbors in an apartment building? I've tried talking to them but it didn't help.",
-    "author": "Pedro Costa",
-    "authorId": "user101",
-    "authorType": "tenant",
-    "category": "complaint",
-    "datePosted": "2024-12-05T17:10:00",
-    "likes": 9,
-    "replies": 15,
-    "tags": ["Neighbors", "Noise", "Apartment Living"],
-    "messages": [
-      [
-        "images/carlos.jpg",
-        "Pedro Costa",
-        "How to deal with noisy neighbors in an apartment building? I've tried talking to them but it didn't help. They keep playing loud music until 3 AM on weekdays.",
-        "No Image",
-        "2023-11-05T17:10:00"
-      ],
-      [
-        "images/maria.jpg",
-        "Rita Marques",
-        "Try contacting the building management or writing a formal complaint. If that doesn't work, you can file a noise complaint with the local police. Document incidents with recordings and timestamps to support your case.",
-        "No Image",
-        "2024-12-05T17:10:00"
-      ]
-    ]
-  },
-  "forum5": {
-    "id": "5",
-    "title": "Renovation permits for landlords",
-    "content": "What permits do I need to renovate my rental property? The process seems complicated.",
-    "author": "Carlos Mendes",
-    "authorId": "user202",
-    "authorType": "landlord",
-    "category": "legal",
-    "datePosted": "2025-05-13T23:42:29.901Z",
-    "likes": 12,
-    "replies": 10,
-    "tags": ["Renovation", "Permits", "Landlord"],
-    "messages": [
-      [
-        "images/carlos.jpg",
-        "Carlos Mendes",
-        "What permits do I need to renovate my rental property? The process seems complicated. I'm planning to update the kitchen and bathroom.",
-        "images/Rental-Property.png",
-        "2023-11-02T09:15:00"
-      ],
-      [
-        "images/senhorio.png",
-        "Sr. Danilo",
-        "I can help you with that. I have experience in renovations. For kitchen and bathroom updates, you'll need a 'comunicação prévia' from your local Câmara Municipal. Make sure to hire licensed contractors who can help with the paperwork.",
-        "",
-        "2025-05-13T23:39:10.032Z"
-      ],
-      [
-        "images/estudante.png",
-        "Matteo Rossi",
-        "My grandma is a landlord and she said that you need to apply for a renovation permit at the local municipality office. It's important to have all the necessary documents ready, including property deeds and detailed renovation plans.",
-        "",
-        "2025-05-13T23:42:29.901Z"
-      ]
-    ]
-  }
+    "forum1": {
+        "id": "1",
+        "title": "Best areas to live in Lisbon",
+        "content": "I'm moving to Lisbon next month and would like recommendations on the best areas to live that are close to universities.",
+        "author": "Jo\u00e3o Silva",
+        "authorId": "user123",
+        "authorType": "tenant",
+        "category": "advice",
+        "datePosted": "2024-10-15T08:30:00",
+        "likes": 24,
+        "replies": 3,
+        "tags": [
+            "Lisbon",
+            "University",
+            "Accommodation"
+        ],
+        "messages": [
+            [
+                "images/carlos.jpg",
+                "Jo\u00e3o Silva",
+                "I'm moving to Lisbon next month and would like recommendations on the best areas to live that are close to universities.",
+                "No Image",
+                "2023-11-15T08:30:00"
+            ],
+            [
+                "images/maria.jpg",
+                "L\u00facia Almeida",
+                "Try Alvalade or Campo Pequeno. These areas are close to major universities and have good public transportation. They're also quite safe and have many student-friendly cafes.",
+                "No Image",
+                "2024-10-15T08:30:00"
+            ],
+            [
+                "images/carlos.jpg",
+                "Jo\u00e3o Silva",
+                "Thank you for the suggestions! Do you know what the average rent is in those areas for a one-bedroom apartment?",
+                "No Image",
+                "2023-11-15T08:30:00"
+            ]
+        ]
+    },
+    "forum2": {
+        "id": "2",
+        "title": "Rental prices in Porto",
+        "content": "Has anyone noticed the increasing rental prices in Porto? Is it still affordable for students?",
+        "author": "Maria Santos",
+        "authorId": "user456",
+        "authorType": "landlord",
+        "category": "discussion",
+        "datePosted": "2023-11-10T15:55:00",
+        "likes": 31,
+        "replies": 2,
+        "tags": [
+            "Porto",
+            "Rental Prices",
+            "Students"
+        ],
+        "messages": [
+            [
+                "images/maria.jpg",
+                "Maria Santos",
+                "Has anyone noticed the increasing rental prices in Porto? Is it still affordable for students?",
+                "No Image",
+                "2023-11-10T15:45:00"
+            ],
+            [
+                "images/carlos.jpg",
+                "Tiago Silva",
+                "Yes! It's becoming harder to find affordable places near the center. Prices have gone up about 25% in the last year alone. Most students are now looking at areas like Paranhos or sharing with multiple roommates.",
+                "No Image",
+                "2023-11-10T15:55:00"
+            ]
+        ]
+    },
+    "forum3": {
+        "id": "3",
+        "title": "Tenant rights in Portugal",
+        "content": "I would like to know more about tenant rights in Portugal. What are the regulations regarding security deposits?",
+        "author": "Ana Pereira",
+        "authorId": "user789",
+        "authorType": "tenant",
+        "category": "legal",
+        "datePosted": "2025-01-08T12:20:00",
+        "likes": 17,
+        "replies": 2,
+        "tags": [
+            "Legal",
+            "Rights",
+            "Security Deposit"
+        ],
+        "messages": [
+            [
+                "images/maria.jpg",
+                "Ana Pereira",
+                "I would like to know more about tenant rights in Portugal. What are the regulations regarding security deposits?",
+                "No image",
+                "2023-11-08T12:20:00"
+            ],
+            [
+                "images/carlos.jpg",
+                "Jo\u00e3o Rocha",
+                "Typically, landlords can request up to two months' rent as a deposit. By law, this deposit must be returned within 30 days of the end of your lease, provided there are no damages beyond normal wear and tear.",
+                "No Image",
+                "2025-01-08T12:20:00"
+            ]
+        ]
+    },
+    "forum4": {
+        "id": "4",
+        "title": "Problems with noisy neighbors",
+        "content": "How to deal with noisy neighbors in an apartment building? I've tried talking to them but it didn't help.",
+        "author": "Pedro Costa",
+        "authorId": "user101",
+        "authorType": "tenant",
+        "category": "complaint",
+        "datePosted": "2024-12-05T17:10:00",
+        "likes": 9,
+        "replies": 2,
+        "tags": [
+            "Neighbors",
+            "Noise",
+            "Apartment Living"
+        ],
+        "messages": [
+            [
+                "images/carlos.jpg",
+                "Pedro Costa",
+                "How to deal with noisy neighbors in an apartment building? I've tried talking to them but it didn't help. They keep playing loud music until 3 AM on weekdays.",
+                "No Image",
+                "2023-11-05T17:10:00"
+            ],
+            [
+                "images/maria.jpg",
+                "Rita Marques",
+                "Try contacting the building management or writing a formal complaint. If that doesn't work, you can file a noise complaint with the local police. Document incidents with recordings and timestamps to support your case.",
+                "No Image",
+                "2024-12-05T17:10:00"
+            ]
+        ]
+    },
+    "forum5": {
+        "id": "5",
+        "title": "Renovation permits for landlords",
+        "content": "What permits do I need to renovate my rental property? The process seems complicated.",
+        "author": "Carlos Mendes",
+        "authorId": "user202",
+        "authorType": "landlord",
+        "category": "legal",
+        "datePosted": "2025-05-13T23:42:29.901Z",
+        "likes": 12,
+        "replies": 3,
+        "tags": [
+            "Renovation",
+            "Permits",
+            "Landlord"
+        ],
+        "messages": [
+            [
+                "images/carlos.jpg",
+                "Carlos Mendes",
+                "What permits do I need to renovate my rental property? The process seems complicated. I'm planning to update the kitchen and bathroom.",
+                "images/Rental-Property.png",
+                "2023-11-02T09:15:00"
+            ],
+            [
+                "images/senhorio.png",
+                "Sr. Danilo",
+                "I can help you with that. I have experience in renovations. For kitchen and bathroom updates, you'll need a 'comunica\u00e7\u00e3o pr\u00e9via' from your local C\u00e2mara Municipal. Make sure to hire licensed contractors who can help with the paperwork.",
+                "",
+                "2025-05-13T23:39:10.032Z"
+            ],
+            [
+                "images/estudante.png",
+                "Matteo Rossi",
+                "My grandma is a landlord and she said that you need to apply for a renovation permit at the local municipality office. It's important to have all the necessary documents ready, including property deeds and detailed renovation plans.",
+                "",
+                "2025-05-13T23:42:29.901Z"
+            ]
+        ]
+    },
+    "forum6": {
+        "id": "6",
+        "title": "teste",
+        "content": "teste",
+        "author": "Sr. Danilo",
+        "authorId": "supreme_landlord@gmail.com",
+        "authorType": "landlord",
+        "category": "general",
+        "datePosted": "2025-05-14T23:02:26.691Z",
+        "likes": 0,
+        "replies": 2,
+        "tags": [
+            "Landlord"
+        ],
+        "messages": [
+            [
+                "images/senhorio.png",
+                "Sr. Danilo",
+                "teste",
+                "",
+                "2025-05-14T22:51:14.008Z"
+            ],
+            [
+                "images/senhorio.png",
+                "Sr. Danilo",
+                "wow",
+                "",
+                "2025-05-14T23:02:26.691Z"
+            ]
+        ]
+    }
 }

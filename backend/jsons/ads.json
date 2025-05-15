@@ -88,5 +88,35 @@
             "true",
             ""
         ]
+    },
+    "a9ba4f833c5836909395fe546bbc001a9e54d82a5ba15f0e871c09301266d000": {
+        "email": "supreme_landlord@gmail.com",
+        "description": "Quarto grande num t2",
+        "date": "2025-05-15T08:39:47.747Z",
+        "image_path": "images/a9ba4f833c5836909395fe546bbc001a9e54d82a5ba15f0e871c09301266d000.png",
+        "name": "Quarto perto do deti",
+        "price": " 320",
+        "available_date": "01/04/2026",
+        "gender": "Male",
+        "quantity": "1",
+        "district": "Aveiro",
+        "city": "Aveiro",
+        "street": "Avenida Dr. Louren\u00e7o Peixinho",
+        "min_age": "18",
+        "max_age": "23",
+        "bath_share": "Private",
+        "expense_included": "Yes",
+        "marital_status": "No",
+        "tags": [
+            "Expenses: Yes",
+            "Gender: Male",
+            "\u200e Aveiro",
+            "Couples: No",
+            "Bathroom: Private"
+        ],
+        "isNew": [
+            "false",
+            "a9ba4f833c5836909395fe546bbc001a9e54d82a5ba15f0e871c09301266d000"
+        ]
     }
 }

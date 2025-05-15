@@ -102,7 +102,7 @@
         "image_path": "images/senhorio.png",
         "name": "Sr. Danilo",
         "is_banned": "false",
-        "last_message": "fofo",
+        "last_message": "inquilino",
         "messages": [
             [
                 "blabla",
@@ -137,7 +137,7 @@
         "image_path": "images/estudante.png",
         "name": "Matteo Rossi",
         "is_banned": "false",
-        "last_message": "Hello there mr tenant",
+        "last_message": "landlord",
         "messages": [
             [
                 "blabla",

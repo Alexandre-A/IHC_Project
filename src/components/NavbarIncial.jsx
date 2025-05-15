@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState,useRef} from "react";
 import { useNavigate,useLocation } from 'react-router-dom';
 import { FaUser, FaCog, FaHome } from "react-icons/fa";
 import LanguageSelector from "./language-selector";
@@ -19,8 +19,22 @@ function NavbarInicial({ homepage, complete}) {
   const toast = useToast();
   const location = useLocation();
   const [modal, setModal] = useState(null); // null, 'first', 'third'
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
-
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+  
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+  
 
   const links = {
     home: "/",
@@ -167,29 +181,68 @@ function NavbarInicial({ homepage, complete}) {
         <LanguageSelector></LanguageSelector>
         
 
-        <button className="relative flex justify-center items-center border focus:outline-none shadow
-        text-white rounded-full focus:ring ring-white group cursor-pointer" style={{borderColor: colors.accent}}>
-          <FaUser className="w-6 h-6 p-1" title={navbar.profile} />
-          <div className="absolute hidden group-focus:block top-full right-0 min-w-full w-max bg-white shadow-md mt-1 rounded text-black">
-            <ul className="text-left border rounded">
-              {!localStorage.getItem("userType")?
-              <>
-              <button className="px-4 py-1 hover:bg-gray-100 border-b hover:text-[#F39C12]"
-              onClick={() => { setTabChosen("SignIn"); setIsLoginOpen(true); }}>{navbar.login}</button>
-              <button className="px-4 py-1 hover:bg-gray-100 border-b hover:text-[#F39C12]"
-              onClick={() => { setTabChosen("SignUp"); setIsLoginOpen(true); }}>{navbar.registo}</button>
-              </>:<>
-              <li className="px-4 py-1 hover:bg-gray-100 hover:text-[#F39C12] border-b"
-              onClick={()=>navigate(links.profile)}>{navbar.profile}</li>
-              <li className="px-4 py-1 hover:bg-gray-100 hover:text-[#F39C12] border-b"
-              onClick={handleLogout}>{navbar.logOut}</li>
-              </>
-              }
+        <div className="relative" ref={dropdownRef}>
+          <button
+            onClick={() => setIsDropdownOpen((prev) => !prev)}
+            className="relative flex justify-center items-center border focus:outline-none shadow
+            text-white rounded-full cursor-pointer"
+            style={{ borderColor: colors.accent }}
+          >
+            <FaUser className="w-6 h-6 p-1" title={navbar.profile} />
+          </button>
 
-            </ul>
-
-          </div>
-        </button>
+          {isDropdownOpen && (
+            <div className="absolute top-full right-0 min-w-full w-max bg-white shadow-md mt-1 rounded text-black z-50 cursor-pointer">
+              <ul className="text-left border rounded">
+                {!localStorage.getItem("userType") ? (
+                  <>
+                    <button
+                      className="px-4 py-1 hover:bg-gray-100 border-b hover:text-[#F39C12]"
+                      onClick={() => {
+                        setTabChosen("SignIn");
+                        setIsLoginOpen(true);
+                        setIsDropdownOpen(false);
+                      }}
+                    >
+                      {navbar.login}
+                    </button>
+                    <button
+                      className="px-4 py-1 hover:bg-gray-100 border-b hover:text-[#F39C12]"
+                      onClick={() => {
+                        setTabChosen("SignUp");
+                        setIsLoginOpen(true);
+                        setIsDropdownOpen(false);
+                      }}
+                    >
+                      {navbar.registo}
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <li
+                      className="px-4 py-1 hover:bg-gray-100 hover:text-[#F39C12] border-b"
+                      onClick={() => {
+                        navigate(links.profile);
+                        setIsDropdownOpen(false);
+                      }}
+                    >
+                      {navbar.profile}
+                    </li>
+                    <li
+                      className="px-4 py-1 hover:bg-gray-100 hover:text-[#F39C12] border-b"
+                      onClick={() => {
+                        handleLogout();
+                        setIsDropdownOpen(false);
+                      }}
+                    >
+                      {navbar.logOut}
+                    </li>
+                  </>
+                )}
+              </ul>
+            </div>
+          )}
+        </div>
         {/*
         <a
           onClick={()=> handleLocalStorage("")} href={links.settings} className="hover:text-gray-300">

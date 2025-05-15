@@ -75,7 +75,7 @@ function Homepage() {
             <u>Easy Room</u>
           </h1>
           <p className="text-lg mt-2 opacity-80" style={{color: colors.dark}}>
-            Your trusted platform for housing solutions
+            {homepage.subtitle}
           </p>
         </section>
         <section className="rounded-md grid grid-cols-1 md:grid-cols-3 mt-10 text-white">

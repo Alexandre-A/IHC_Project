@@ -8,12 +8,16 @@ import { useParams,useNavigate } from 'react-router-dom';
 import ReturnButton from '../components/ReturnButton';
 import { PiPaperPlaneTiltBold } from "react-icons/pi";
 import { colors } from "../utils/colors";
-
+import { showToast } from "../components/Toasts/ToastMessages";
+import { useToast } from "../components/Toasts/ToastService";
 
   
 function ForumThread() {
   const {t} = useTranslation();
   const forumThread = t("forumThread");
+  const adInfo = t("adInfo");
+  const toast = useToast();
+
   const { thread } = useParams();
 
   const navigate = useNavigate();
@@ -136,7 +140,13 @@ useEffect(() => {
   }
 };
 
-  
+const handleImage =()=>{
+  showToast(toast, {
+        type: "warning",
+        header: adInfo.warning,
+        message: adInfo.warningMessage
+      });
+}
 
 const formatDate = (dateString) => {
   const date = new Date(dateString);
@@ -218,6 +228,10 @@ const formatDate = (dateString) => {
                 style={{ backgroundColor: colors.light, borderColor: colors.secondary }} 
                 accept="image/*" 
                 onChange={(e)=>{handleChange(e)}} 
+                onClick={(e) => {
+                  e.preventDefault();  // prevent file dialog
+                  handleImage();       // still trigger your custom logic
+                }}
               />
               <button
                 className={`px-4 py-1 rounded border-2 cursor-pointer transition-colors duration-200`}
