@@ -20,7 +20,7 @@ const LanguageSelector = () => {
   };
 
   return (
-    <div className="relative inline-block w-max">
+    <div className="relative inline-block justify-center w-max">
         <div className="absolute inset-y-0 left-0 items-center pl-3 pointer-events-none hidden sm:flex">
             <TbWorld className="text-lg" />
         </div>

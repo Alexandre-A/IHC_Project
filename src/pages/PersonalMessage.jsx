@@ -225,56 +225,70 @@ const handleAddMessage = async () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
-      <div className="w-full max-w-4xl  shadow-md rounded-lg p-4 flex flex-col items-start">
-        <ReturnWithSave
-          previousPage="/messages"
-          user={user}
-          userType={userType}
-          messageRef={messageRef}
-          messageRefClone={messageRefClone}
-        />        
-        {/* Main Content */}
-        <div className="w-full max-w-4xl bg-white shadow-md rounded-r-lg rounded-b-lg p-4">
-        
+  <div className="w-full max-w-4xl shadow-md rounded-lg p-6 bg-white space-y-6">
+    
+    {/* Return with Save */}
+    <ReturnWithSave
+      previousPage="/messages"
+      user={user}
+      userType={userType}
+      messageRef={messageRef}
+      messageRefClone={messageRefClone}
+    />
 
-        
-        <div className="border-2 bg-white flex flex-row  pl-4 pr-4 pb-2 pt-2">
-        {messageData.image_path ? (
-          <img
-            src={"../../backend/"+messageData.image_path}
-            alt={messageData.name}
-            className="ml-2 border-black rounded-full h-24 w-24 object-cover border-3"
-          />
-        ) : null}
-
-            <p className='flex ml-10 text-2xl font-bold  items-center  '>{messageData.name}</p>
-        </div>
-
-        <div className="border-b-2 border-r-2 border-l-2 bg-white flex flex-col justify-center pl-4 pr-4 pb-4 pt-4">
-        {messageData.messages.map((message,id)=>(
-                message[1]==='receiver'?(
-                
-                <div key={id} className='flex justify-start'>
-                    <p className='border-3 pl-1 pr-1 rounded border-black text-white bg-gray-600 w-2/6 mb-1 text-wrap wrap-break-word'>{message[0]}</p>
-                </div>):
-                (<div key={id} className='flex justify-end'>
-                    <p className='border-3 pl-1 pr-1 rounded border-black w-2/6 mb-1 text-white bg-blue-600 text-wrap wrap-break-word'>{message[0]}</p>
-                </div>)
-            ))}
-          
-        </div>
-
-        <div className="border-b-2 border-r-2 border-l-2 bg-white flex flex-row justify-center pl-4 pr-4 pb-3 pt-3">
-            <input type='text'value={currentMessage} name="search" placeholder={privateMessage.type} autoComplete='on' onChange={handleChange} className='border-1 rounded bg-white w-4/6'
-            onKeyDown={(e)=>{
-                if (e.key==="Enter") handleAddMessage();
-            }}></input>
-                  <button className={`px-4 py-1 rounded right-4 bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500 `}
-                          onClick={handleAddMessage}><PiPaperPlaneTiltBold /></button>
-        </div>
-      </div>
+    {/* Header */}
+    <div className="flex items-center bg-gray-300 rounded-lg p-4 border">
+      {messageData.image_path && (
+        <img
+          src={`../../backend/${messageData.image_path}`}
+          alt={messageData.name}
+          className="h-24 w-24 rounded-full object-cover border-2 border-black"
+        />
+      )}
+      <p className="ml-6 text-2xl font-bold">{messageData.name}</p>
     </div>
+
+    {/* Messages */}
+    <div className="border rounded-lg bg-white p-4 space-y-2 max-h-[60vh] overflow-y-auto">
+      {messageData.messages.map((message, id) => (
+        <div
+          key={id}
+          className={`flex ${message[1] === 'receiver' ? 'justify-start' : 'justify-end'}`}
+        >
+          <p
+            className={`p-2 rounded-lg text-white text-sm max-w-[66%] break-words ${
+              message[1] === 'receiver' ? 'bg-gray-600' : 'bg-blue-600'
+            }`}
+          >
+            {message[0]}
+          </p>
+        </div>
+      ))}
     </div>
+
+    {/* Message Input */}
+    <div className="flex items-center gap-4">
+      <input
+        type="text"
+        value={currentMessage}
+        name="message"
+        placeholder={privateMessage.type}
+        autoComplete="on"
+        onChange={handleChange}
+        onKeyDown={(e) => e.key === 'Enter' && handleAddMessage()}
+        className="flex-1 border rounded px-4 py-2"
+      />
+      <button
+        className="flex items-center px-4 py-2 rounded border-2 border-gray-800 bg-gray-300 hover:bg-gray-500 hover:text-white transition"
+        onClick={handleAddMessage}
+      >
+        <PiPaperPlaneTiltBold />
+      </button>
+    </div>
+
+  </div>
+</div>
+
   )
 }
 

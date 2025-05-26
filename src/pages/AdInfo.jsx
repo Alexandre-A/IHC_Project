@@ -17,6 +17,8 @@ import { showToast } from "../components/Toasts/ToastMessages";
 import { useToast } from "../components/Toasts/ToastService";
 import ReviewCard from '../components/ReviewCard';
 import { colors } from "../utils/colors";
+import { PiPaperPlaneTiltBold } from "react-icons/pi";
+
 
 const defaultIcon = L.icon({
   iconUrl,
@@ -249,20 +251,41 @@ function AdInfo() {
             )}
           </div>
           <div className="space-y-3">
-            <p className="text-lg font-semibold text-gray-700 break-words whitespace-normal">
+            <p className="text-lg font-semibold border-1 p-1 rounded border-gray-700 shadow-md text-gray-700 break-words whitespace-normal">
               {formData.description || "No description provided"}
+            </p>
+            <p className="text-lg text-gray-600 break-words whitespace-normal">
+              <b>{adFormPt1.price}:</b>{" "}
+              {formData.price + "€" || "No price provided"}
             </p>
             <p className="text-sm text-gray-600 break-words whitespace-normal">
               <b>{adFormPt1.available}:</b>{" "}
               {formData.available_date || "No date provided"}
             </p>
-            <p className="text-sm text-gray-600 break-words whitespace-normal">
-              <b>{adFormPt1.price}:</b>{" "}
-              {formData.price + "€" || "No price provided"}
-            </p>
+            <div className='flex flex-row'>
             <a href="/profile/landlord" className=" text-blue-600 hover:underline block text-left overflow-hidden text-ellipsis whitespace-nowrap">
               Sr. Danilo
             </a>
+            <button
+              className="px-4 py-1 text-sm ml-4 rounded border-2 flex flex-row items-center gap-2 cursor-pointer transition-colors duration-200"
+              style={{
+                backgroundColor: colors.light,
+                borderColor: colors.secondary,
+                color: colors.dark
+              }}
+              onClick={() => navigate("/profile/landlord")}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.backgroundColor = colors.secondary;
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.backgroundColor = colors.light;
+              }}
+            >
+              <span>🔎 Profile</span>
+            </button>
+
+
+            </div>
           </div>
         </div>
 

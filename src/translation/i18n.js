@@ -104,6 +104,9 @@ i18n
             done: "Done",
             currentTags: "Current Tags:",
             enterTags: "Enter a tag",
+            basicInfo: "Basic Information",
+            locationInfo: "Location Details",
+            targetInfo: "Target Audience",
           },
           adFormPt3: {
             adPreview: "Ad Preview",
@@ -317,6 +320,9 @@ i18n
             done: "Concluído",
             currentTags: "Tags Atuais:",
             enterTags: "Insira a tag",
+            basicInfo: "Informação Geral",
+            locationInfo: "Detalhes da Localização",
+            targetInfo: "Público-alvo",
           },
           adFormPt3: {
             adPreview: "Preview do Anúncio",

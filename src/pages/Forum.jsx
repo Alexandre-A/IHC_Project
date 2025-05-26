@@ -371,7 +371,7 @@ function Forum() {
             <button
               key={category.id}
               onClick={() => handleCategoryFilter(category.id)}
-              className="px-4 py-2 mr-2 whitespace-nowrap rounded-full border hover:opacity-80 transition"
+              className="cursor-pointer px-4 py-2 mr-2 whitespace-nowrap rounded-full border hover:opacity-80 transition"
               style={{
                 backgroundColor: colors.white, 
                 borderColor: colors.secondary,

@@ -298,7 +298,7 @@ function Profile() {
           <div className='flex flex-row justify-between'>
             <p className=' pl-2'><b>{profile.reviews}</b></p>
             {pageData.canMessage?
-            <button className="px-4 text-sm rounded border-2 cursor-pointer hover:text-white transition-colors duration-200"
+            <button className="px-4 text-m mb-2 shadow-m rounded border-2 cursor-pointer hover:text-white transition-colors duration-200"
             style={{ backgroundColor: colors.light, borderColor: colors.secondary, color: colors.dark }}
             onClick={openTagModal}
             onMouseOver={(e) => e.target.style.backgroundColor = colors.secondary}

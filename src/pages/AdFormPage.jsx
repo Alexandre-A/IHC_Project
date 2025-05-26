@@ -232,6 +232,12 @@ const AdFormPage = () => {
     }
   };
 
+  const steps = [
+    { id: 'enter', label: adFormPt1.progress1 },
+    { id: 'confirm', label: adFormPt1.progress2 },
+    { id: 'submit', label: adFormPt1.progress3 },
+  ];
+
   useEffect(() => {
     const msg = localStorage.getItem("toastSuccess");
     if (msg) {
@@ -364,6 +370,40 @@ const AdFormPage = () => {
     localStorage.removeItem("edit");
   };
 
+  const validateSections = () => {
+    const errors = {
+      basicInfo: false,
+      locationInfo: false,
+      targetInfo: false,
+      accommodationDetails: false,
+    };
+  
+    // BASIC INFO
+    if (!formData.name || isNaN(Number(formData.price)) || !pattern.test(formData.available_date) || isNaN(Number(formData.quantity))) {
+      errors.basicInfo = true;
+    }
+  
+    // LOCATION INFO
+    if (!formData.district || !formData.city || !formData.street) {
+      errors.locationInfo = true;
+    }
+  
+    // TARGET INFO
+    if (isNaN(Number(formData.min_age)) || isNaN(Number(formData.max_age)) || !formData.gender || !formData.marital_status) {
+      errors.targetInfo = true;
+    }
+  
+    // ACCOMMODATION DETAILS
+    if (!formData.expense_included || !formData.bath_share) {
+      errors.accommodationDetails = true;
+    }
+  
+    return errors;
+  };
+  
+  const sectionErrors = validateSections();
+  
+
   // Open and close tag modal
   const openTagModal = () => setIsTagModalOpen(true);
   const closeTagModal = () => setIsTagModalOpen(false);
@@ -405,154 +445,262 @@ const AdFormPage = () => {
             style={{ backgroundColor: colors.white }}
           >
             {/* Tabs */}
-            <div className="flex mb-4">
-              <button
-                className={`px-4 py-2 rounded-l transition-colors duration-200`}
-                style={{
-                  backgroundColor:
-                    activeTab === "enter" ? colors.secondary : colors.light,
-                  color: activeTab === "enter" ? colors.white : colors.dark,
-                  borderColor: colors.secondary,
-                }}
-              >
-                {adFormPt1.progress1}
-              </button>
-              <button
-                className={`px-4 py-2 transition-colors duration-200`}
-                style={{
-                  backgroundColor:
-                    activeTab === "confirm" ? colors.secondary : colors.light,
-                  color: activeTab === "confirm" ? colors.white : colors.dark,
-                  borderColor: colors.secondary,
-                }}
-              >
-                {adFormPt1.progress2}
-              </button>
-              <button
-                className={`px-4 py-2 rounded-r transition-colors duration-200`}
-                style={{
-                  backgroundColor:
-                    activeTab === "submit" ? colors.secondary : colors.light,
-                  color: activeTab === "submit" ? colors.white : colors.dark,
-                  borderColor: colors.secondary,
-                }}
-              >
-                {adFormPt1.progress3}
-              </button>
+            <div className="flex items-center mb-2 justify-center w-full max-w-md mx-auto">
+      {steps.map((step, index) => (
+        <React.Fragment key={step.id}>
+          {/* Step Indicator */}
+          <div className="flex flex-col items-center">
+            <div
+              className={`w-10 h-10 flex items-center justify-center rounded-full transition-colors duration-200 text-sm font-semibold ${
+                activeTab === step.id
+                  ? 'bg-secondary text-white'
+                  : 'bg-light text-dark border border-secondary'
+              }`}
+              style={{
+                backgroundColor: activeTab === step.id ? colors.secondary : colors.light,
+                color: activeTab === step.id ? colors.white : colors.dark,
+                borderColor: colors.secondary,
+              }}
+            >
+              {index + 1}
             </div>
+            <span className="mt-2 text-xs font-medium text-dark">{step.label}</span>
+          </div>
+          {/* Connecting Line */}
+          {index < steps.length - 1 && (
+            <div
+              className={`flex-1 h-1 mx-2 transition-colors duration-200 ${
+                steps.findIndex(s => s.id === activeTab) > index
+                  ? 'bg-secondary'
+                  : 'bg-gray-300'
+              }`}
+              style={{
+                backgroundColor:
+                  steps.findIndex(s => s.id === activeTab) > index
+                    ? colors.secondary
+                    : colors.light,
+              }}
+            />
+          )}
+        </React.Fragment>
+      ))}
+    </div>
 
             {/* Tab Content */}
             {activeTab === "enter" && (
-              <form className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Left Column */}
-                <div>
-                  {/* Image Upload */}
-                  <div className="mb-4">
-                    <label
-                      className="block text-sm font-medium mb-1"
-                      style={{ color: colors.dark }}
-                    >
-                      {adFormPt1.form}
-                    </label>
-                    <label
-                      className={`w-full h-32 border-2 border-dashed border-gray-300 flex items-center justify-center relative ${
-                        showValidationModal
-                          ? "pointer-events-none opacity-60"
-                          : "cursor-pointer"
-                      }`}
-                    >
-                      {formData.image ? (
-                        <img
-                          src={
-                            typeof formData.image === "string"
-                              ? formData.image
-                              : URL.createObjectURL(formData.image)
-                          }
-                          alt="Preview"
-                          className="absolute inset-0 w-full h-full object-cover"
+            <div className="space-y-6">
+              {/* Image Upload Section */}
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <h2 className="text-lg font-semibold mb-4" style={{ color: colors.dark }}>
+                  {adFormPt1.form}
+                </h2>
+                <label
+                  className={`w-full h-32 border-2 border-dashed border-gray-300 flex items-center justify-center relative transition-all duration-200 ${
+                    showValidationModal ? "pointer-events-none opacity-60" : "cursor-pointer hover:border-gray-400"
+                  }`}
+                >
+                  {formData.image ? (
+                    <img
+                      src={
+                        typeof formData.image === "string"
+                          ? formData.image
+                          : URL.createObjectURL(formData.image)
+                      }
+                      alt="Preview"
+                      className="absolute inset-0 w-full h-full object-cover rounded"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center justify-center text-gray-400">
+                      <svg
+                        className="w-8 h-8"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
                         />
-                      ) : (
-                        <div className="flex flex-col items-center justify-center text-gray-400">
-                          <svg
-                            className="w-8 h-8"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth="2"
-                              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                            />
-                          </svg>
-                          <span className="text-sm">
-                            {adFormPt1.clickUpload}
-                          </span>
-                        </div>
-                      )}
+                      </svg>
+                      <span className="text-sm">{adFormPt1.clickUpload}</span>
+                    </div>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="absolute inset-0 opacity-0 cursor-pointer"
+                    onChange={handleImageChange}
+                  />
+                </label>
+              </div>
 
-                      <input
-                        type="file"
-                        accept="image/*"
-                        className="absolute inset-0 opacity-0 cursor-pointer"
-                        onChange={handleImageChange}
-                      />
+              {/* Basic Information Section */}
+              <details className="bg-white rounded-lg shadow-md overflow-hidden">
+                <summary className="p-6 cursor-pointer text-lg font-semibold select-none" style={{ color: colors.dark }}>
+                  {adFormPt1.basicInfo +"*"}
+                </summary>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1" style={{ color: colors.dark }}>
+                      {adFormPt1.name}
                     </label>
-                  </div>
-
-                  {/* Description */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">
-                      {adFormPt1.description}
-                    </label>
-                    <textarea
-                      name="description"
-                      value={formData.description}
+                    <input
+                      type="text"
+                      name="name"
+                      value={formData.name}
                       onChange={handleChange}
-                      className={`w-full p-2 border rounded ${formData.description.length > 0 ? "border-green-800 bg-green-100/30" : "border"}`}
-                      rows="4"
+                      className={`w-full p-2 border rounded transition-all duration-200 ${
+                        formData.name.length > 0
+                          ? "border-green-800 bg-green-100/30"
+                          : "border-gray-300"
+                      } focus:ring-2 focus:ring-green-500`}
                     />
                   </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1" style={{ color: colors.dark }}>
+                      {adFormPt1.price}
+                    </label>
+                    <input
+                      type="text"
+                      name="price"
+                      value={formData.price}
+                      onChange={handleChange}
+                      className={`w-full p-2 border rounded transition-all duration-200 ${
+                        formData.price.length > 0
+                          ? !isNaN(Number(formData.price)) && formData.price.trim() !== ""
+                            ? "border-green-800 bg-green-100/30"
+                            : "border-red-800 bg-red-100/30"
+                          : "border-gray-300"
+                      } focus:ring-2 focus:ring-green-500`}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1" style={{ color: colors.dark }}>
+                      {adFormPt1.available}
+                    </label>
+                    <input
+                      type="text"
+                      name="available_date"
+                      value={formData.available_date}
+                      onChange={handleChange}
+                      placeholder="MM/DD/YYYY"
+                      className={`w-full p-2 border rounded transition-all duration-200 ${
+                        formData.available_date.length > 0
+                          ? pattern.test(formData.available_date)
+                            ? "border-green-800 bg-green-100/30"
+                            : "border-red-800 bg-red-100/30"
+                          : "border-gray-300"
+                      } focus:ring-2 focus:ring-green-500`}
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1" style={{ color: colors.dark }}>
+                      {adFormPt1.quantity}
+                    </label>
+                    <input
+                      type="text"
+                      name="quantity"
+                      value={formData.quantity}
+                      onChange={handleChange}
+                      className={`w-full p-2 border rounded transition-all duration-200 ${
+                        formData.quantity.length > 0
+                          ? !isNaN(Number(formData.quantity)) && formData.quantity.trim() !== ""
+                            ? "border-green-800 bg-green-100/30"
+                            : "border-red-800 bg-red-100/30"
+                          : "border-gray-300"
+                      } focus:ring-2 focus:ring-green-500`}
+                    />
+                  </div>
+                </div>
+                <div className="mt-4">
+                  <label className="block text-sm font-medium mb-1" style={{ color: colors.dark }}>
+                    {adFormPt1.description}
+                  </label>
+                  <textarea
+                    name="description"
+                    value={formData.description}
+                    onChange={handleChange}
+                    className={`w-full p-2 border rounded transition-all duration-200 ${
+                      formData.description.length > 0
+                        ? "border-green-800 bg-green-100/30"
+                        : "border-gray-300"
+                    } focus:ring-2 focus:ring-green-500`}
+                    rows="4"
+                  />
+                </div>
+              </details>
 
-                  {/* Location */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">
+              {/* Location Details Section */}
+              <details className="bg-white rounded-lg shadow-md overflow-hidden">
+                <summary className="p-6 cursor-pointer text-lg font-semibold select-none" style={{ color: colors.dark }}>
+                  {adFormPt1.locationInfo + "*"}
+                </summary>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1" style={{ color: colors.dark }}>
                       {adFormPt1.location}
                     </label>
-                    <div className="flex space-x-2">
-                      <select
-                        name="district"
-                        value={formData.district}
-                        onChange={handleChange}
-                        className="w-1/2 p-2 border rounded"
-                      >
-                        <option value="">{adFormPt1.selectDistrict}</option>
-                        {Object.keys(districtCityMap).map((district) => (
-                          <option key={district} value={district}>
-                            {district}
-                          </option>
-                        ))}
-                      </select>
-                      <select
-                        name="city"
-                        value={formData.city}
-                        onChange={handleChange}
-                        className="w-1/2 p-2 border rounded"
-                      >
-                        <option value="">{adFormPt1.selectCity}</option>
-                        {districtCityMap[formData.district]?.map((city) => (
-                          <option key={city} value={city}>
-                            {city}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
+                    <select
+                      name="district"
+                      value={formData.district}
+                      onChange={handleChange}
+                      className="w-full p-2 border rounded transition-all duration-200 border-gray-300 focus:ring-2 focus:ring-green-500"
+                    >
+                      <option value="">{adFormPt1.selectDistrict}</option>
+                      {Object.keys(districtCityMap).map((district) => (
+                        <option key={district} value={district}>
+                          {district}
+                        </option>
+                      ))}
+                    </select>
                   </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1" style={{ color: colors.dark }}>
+                      {adFormPt1.selectCity}
+                    </label>
+                    <select
+                      name="city"
+                      value={formData.city}
+                      onChange={handleChange}
+                      className="w-full p-2 border rounded transition-all duration-200 border-gray-300 focus:ring-2 focus:ring-green-500"
+                    >
+                      <option value="">{adFormPt1.selectCity}</option>
+                      {districtCityMap[formData.district]?.map((city) => (
+                        <option key={city} value={city}>
+                          {city}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className="block text-sm font-medium mb-1" style={{ color: colors.dark }}>
+                      {adFormPt1.street}
+                    </label>
+                    <input
+                      type="text"
+                      name="street"
+                      value={formData.street}
+                      onChange={handleChange}
+                      className={`w-full p-2 border rounded transition-all duration-200 ${
+                        formData.street.length > 0
+                          ? "border-green-800 bg-green-100/30"
+                          : "border-gray-300"
+                      } focus:ring-2 focus:ring-green-500`}
+                    />
+                  </div>
+                </div>
+              </details>
 
-                  {/* Target Audience */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">
+              {/* Target Audience Section */}
+              <details className="bg-white rounded-lg shadow-md overflow-hidden">
+                <summary className="p-6 cursor-pointer text-lg font-semibold select-none" style={{ color: colors.dark }}>
+                  {adFormPt1.targetInfo +"*"}
+                </summary>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1" style={{ color: colors.dark }}>
                       {adFormPt1.lookingFor}
                     </label>
                     <div className="flex space-x-2">
@@ -562,14 +710,13 @@ const AdFormPage = () => {
                         value={formData.min_age}
                         onChange={handleChange}
                         placeholder={adFormPt1.age}
-                        className={`w-1/2 p-2 border rounded ${
+                        className={`w-1/2 p-2 border rounded transition-all duration-200 ${
                           formData.min_age.length > 0
-                            ? !isNaN(Number(formData.min_age)) &&
-                              formData.min_age.trim() !== ""
+                            ? !isNaN(Number(formData.min_age)) && formData.min_age.trim() !== ""
                               ? "border-green-800 bg-green-100/30"
                               : "border-red-800 bg-red-100/30"
-                            : "border"
-                        }`}
+                            : "border-gray-300"
+                        } focus:ring-2 focus:ring-green-500`}
                       />
                       <span className="self-center">to</span>
                       <input
@@ -578,32 +725,42 @@ const AdFormPage = () => {
                         value={formData.max_age}
                         onChange={handleChange}
                         placeholder={adFormPt1.age}
-                        className={`w-1/2 p-2 border rounded ${
+                        className={`w-1/2 p-2 border rounded transition-all duration-200 ${
                           formData.max_age.length > 0
-                            ? !isNaN(Number(formData.max_age)) &&
-                              formData.max_age.trim() !== ""
+                            ? !isNaN(Number(formData.max_age)) && formData.max_age.trim() !== ""
                               ? "border-green-800 bg-green-100/30"
                               : "border-red-800 bg-red-100/30"
-                            : "border"
-                        }`}
+                            : "border-gray-300"
+                        } focus:ring-2 focus:ring-green-500`}
                       />
                     </div>
                   </div>
-
-                  {/* Marital Status */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">
+                  <div>
+                    <label className="block text-sm font-medium mb-1" style={{ color: colors.dark }}>
+                      {adFormPt1.gender}
+                    </label>
+                    <select
+                      name="gender"
+                      value={formData.gender}
+                      onChange={handleChange}
+                      className="w-full p-2 border rounded transition-all duration-200 border-gray-300 focus:ring-2 focus:ring-green-500"
+                    >
+                      <option value="Indifferent">{adFormPt1.indifferent}</option>
+                      <option value="Male">{adFormPt1.male}</option>
+                      <option value="Female">{adFormPt1.female}</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1" style={{ color: colors.dark }}>
                       {adFormPt1.couples}
                     </label>
                     <div className="flex space-x-2">
                       <button
                         type="button"
-                        onClick={() =>
-                          handleButtonChanges("Yes", "marital_status")
-                        }
-                        className={`px-4 py-2 rounded cursor-pointer ${
+                        onClick={() => handleButtonChanges("Yes", "marital_status")}
+                        className={`px-4 py-2 rounded transition-all duration-200 ${
                           formData.marital_status === "Yes"
-                            ? "bg-blue-500 hover:bg-blue-600  text-white"
+                            ? "bg-blue-500 text-white hover:bg-blue-600"
                             : "bg-gray-200 hover:bg-gray-300"
                         }`}
                       >
@@ -611,12 +768,10 @@ const AdFormPage = () => {
                       </button>
                       <button
                         type="button"
-                        onClick={() =>
-                          handleButtonChanges("No", "marital_status")
-                        }
-                        className={`px-4 py-2 rounded cursor-pointer ${
+                        onClick={() => handleButtonChanges("No", "marital_status")}
+                        className={`px-4 py-2 rounded transition-all duration-200 ${
                           formData.marital_status === "No"
-                            ? "bg-blue-500 hover:bg-blue-600  text-white"
+                            ? "bg-blue-500 text-white hover:bg-blue-600"
                             : "bg-gray-200 hover:bg-gray-300"
                         }`}
                       >
@@ -625,124 +780,25 @@ const AdFormPage = () => {
                     </div>
                   </div>
                 </div>
+              </details>
 
-                {/* Right Column */}
-                <div>
-                  {/* Name */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">
-                      {adFormPt1.name}
-                    </label>
-                    <input
-                      type="text"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
-                      className={`w-full p-2 border ${formData.name.length > 0 ? "border-green-800 bg-green-100/30" : "border"} rounded`}
-                    />
-                  </div>
-
-                  {/* {adFormPt1.description} and Available Date */}
-                  <div className="mb-4 flex space-x-2">
-                    <div className="w-1/2">
-                      <label className="block text-sm font-medium mb-1">
-                        {adFormPt1.available}
-                      </label>
-                      <input
-                        type="text"
-                        name="available_date"
-                        value={formData.available_date}
-                        onChange={handleChange}
-                        placeholder="MM/DD/YYYY"
-                        className={`w-full p-2 border rounded ${formData.available_date.length > 0 ? (pattern.test(formData.available_date) ? "border-green-800 bg-green-100/30" : "border-red-800 bg-red-100/30") : "border"}`}
-                      />
-                    </div>
-                    <div className="w-1/2">
-                      <label className="block text-sm font-medium mb-1">
-                        {adFormPt1.price}
-                      </label>
-                      <input
-                        type="text"
-                        name="price"
-                        value={formData.price}
-                        onChange={handleChange}
-                        className="w-full p-2 border rounded mb-2"
-                        style={{ borderColor: colors.secondary }}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Gender and Room Number */}
-                  <div className="mb-4 flex space-x-2">
-                    <div className="w-1/2">
-                      <label className="block text-sm font-medium mb-1">
-                        {adFormPt1.gender}
-                      </label>
-                      <select
-                        name="gender"
-                        value={formData.gender}
-                        onChange={handleChange}
-                        className="w-full p-2 border rounded"
-                      >
-                        <option value="Indifferent">
-                          {adFormPt1.indifferent}
-                        </option>
-                        <option value="Male">{adFormPt1.male}</option>
-                        <option value="Female">{adFormPt1.female}</option>
-                      </select>
-                    </div>
-                    <div className="w-1/2">
-                      <label className="block text-sm font-medium mb-1">
-                        {adFormPt1.quantity}
-                      </label>
-                      <input
-                        type="text"
-                        name="quantity"
-                        value={formData.quantity}
-                        onChange={handleChange}
-                        className={`w-full p-2 border rounded ${
-                          formData.quantity.length > 0
-                            ? !isNaN(Number(formData.quantity)) &&
-                              formData.quantity.trim() !== ""
-                              ? "border-green-800 bg-green-100/30"
-                              : "border-red-800 bg-red-100/30"
-                            : "border"
-                        }`}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Street */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">
-                      {adFormPt1.street}
-                    </label>
-                    <input
-                      type="text"
-                      name="street"
-                      value={formData.street}
-                      onChange={handleChange}
-                      className={`w-full p-2 border ${formData.street.length > 0 ? "border-green-800 bg-green-100/30" : "border"} rounded `}
-                    />
-                  </div>
-
-                  {/* Pet Allowance (Expenses Included) */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">
-                      {adFormPt1.accommodationDetails}
-                    </label>
-                    <label className="block text-sm font-medium mb-1">
+              {/* Accommodation Details Section */}
+              <details className="bg-white rounded-lg shadow-md overflow-hidden">
+                <summary className="p-6 cursor-pointer text-lg font-semibold select-none" style={{ color: colors.dark }}>
+                  {adFormPt1.accommodationDetails +"*"}
+                </summary>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1" style={{ color: colors.dark }}>
                       {adFormPt1.expenses}
                     </label>
                     <div className="flex space-x-2">
                       <button
                         type="button"
-                        onClick={() =>
-                          handleButtonChanges("Yes", "expense_included")
-                        }
-                        className={`px-4 py-2 rounded cursor-pointer ${
+                        onClick={() => handleButtonChanges("Yes", "expense_included")}
+                        className={`px-4 py-2 rounded transition-all duration-200 ${
                           formData.expense_included === "Yes"
-                            ? "bg-blue-500 hover:bg-blue-600  text-white"
+                            ? "bg-blue-500 text-white hover:bg-blue-600"
                             : "bg-gray-200 hover:bg-gray-300"
                         }`}
                       >
@@ -750,12 +806,10 @@ const AdFormPage = () => {
                       </button>
                       <button
                         type="button"
-                        onClick={() =>
-                          handleButtonChanges("No", "expense_included")
-                        }
-                        className={`px-4 py-2 rounded cursor-pointer ${
+                        onClick={() => handleButtonChanges("No", "expense_included")}
+                        className={`px-4 py-2 rounded transition-all duration-200 ${
                           formData.expense_included === "No"
-                            ? "bg-blue-500 hover:bg-blue-600  text-white"
+                            ? "bg-blue-500 text-white hover:bg-blue-600"
                             : "bg-gray-200 hover:bg-gray-300"
                         }`}
                       >
@@ -763,138 +817,145 @@ const AdFormPage = () => {
                       </button>
                     </div>
                   </div>
-
-                  {/* bath Share (Bathroom) */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">
+                  <div>
+                    <label className="block text-sm font-medium mb-1" style={{ color: colors.dark }}>
                       {adFormPt1.bathroom}
                     </label>
                     <select
                       name="bath_share"
                       value={formData.bath_share}
                       onChange={handleChange}
-                      className="w-full p-2 border rounded"
+                      className="w-full p-2 border rounded transition-all duration-200 border-gray-300 focus:ring-2 focus:ring-green-500"
                     >
                       <option value="Shared">{adFormPt1.shared}</option>
                       <option value="Private">{adFormPt1.private}</option>
                     </select>
                   </div>
                 </div>
+              </details>
 
-                {/* Tags */}
-                <div className="col-span-1 md:col-span-2 mb-4">
-                  <label className="block text-sm font-medium mb-1">
-                    Tags:
-                  </label>
+              {/* Tags Section */}
+              <div className="bg-white p-6 rounded-lg shadow-md">
+                <h2 className="text-lg font-semibold mb-4" style={{ color: colors.dark }}>
+                  Tags
+                </h2>
+                <button
+                  type="button"
+                  onClick={openTagModal}
+                  className="w-full p-2 rounded transition-all duration-200 border"
+                  style={{
+                    backgroundColor: colors.white,
+                    color: colors.secondary,
+                    borderColor: colors.secondary,
+                  }}
+                  onMouseOver={(e) => (e.target.style.backgroundColor = colors.light)}
+                  onMouseOut={(e) => (e.target.style.backgroundColor = colors.white)}
+                >
+                  {adFormPt1.addTags}
+                </button>
+                <div className="mt-2 flex flex-wrap gap-2">
+                  {formData.tags.length > 0 ? (
+                    formData.tags.map((tag, index) => (
+                      <span
+                        key={index}
+                        className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm cursor-pointer hover:bg-gray-300 transition-all duration-200"
+                        onClick={() => handleRemoveTags(index)}
+                      >
+                        {tag} ✕
+                      </span>
+                    ))
+                  ) : (
+                    <p className="text-gray-500">No tags added</p>
+                  )}
+                </div>
+                <div className="mt-4 flex justify-between">
+                  {!adId ? (
+                    <button
+                      onClick={handleReset}
+                      className="px-4 py-2 rounded cursor-pointer bg-gray-300 border-2 border-gray-800 hover:bg-gray-500 hover:text-white transition-all duration-200"
+                    >
+                      <span className="text-lg">⟲</span> {adFormPt1.clearAll}
+                    </button>
+                  ) : (
+                    <div></div>
+                  )}
                   <button
-                    type="button"
-                    onClick={openTagModal}
-                    className="p-2 rounded w-full transition-colors duration-200"
+                    onClick={handleDataEntry}
+                    className="px-4 py-2 rounded border-2 cursor-pointer transition-colors duration-200"
                     style={{
-                      backgroundColor: colors.white,
-                      color: colors.secondary,
-                      borderColor: colors.secondary,
-                      border: "1px solid",
+                      backgroundColor: colors.light,
+                      borderColor: colors.success,
+                      color: colors.dark,
                     }}
                     onMouseOver={(e) =>
-                      (e.target.style.backgroundColor = colors.light)
+                      (e.target.style.backgroundColor = colors.success)
                     }
                     onMouseOut={(e) =>
-                      (e.target.style.backgroundColor = colors.white)
+                      (e.target.style.backgroundColor = colors.light)
                     }
                   >
-                    {adFormPt1.addTags}
+                    {adFormPt1.continue}
                   </button>
-                  <div className="mt-2">
-                    {formData.tags.length > 0 ? (
-                      formData.tags.map((tag, index) => (
-                        <span
-                          key={index}
-                          className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm mr-2 mb-2"
-                        >
-                          {tag}
-                        </span>
-                      ))
-                    ) : (
-                      <p className="text-gray-500">No tags added</p>
-                    )}
-                  </div>
-                  <div className="mt-2 flex justify-end">
-                    <div className="w-full flex justify-between px-1">
-                      {!adId ? (
-                        <button
-                          onClick={handleReset}
-                          className="px-4 py-2 rounded bg-gray-300 border-2 border-gray-800 cursor-pointer hover:text-white hover:bg-gray-500"
-                        >
-                          <span className="text-lg">⟲</span>{" "}
-                          {adFormPt1.clearAll}
-                        </button>
-                      ) : (
-                        <button className="px-4 py-2 rounded"></button>
-                      )}
+                </div>
+              </div>
 
+              {/* Tag Input Modal */}
+              {isTagModalOpen && (
+                <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50 transition-opacity duration-200">
+                  <div className="bg-white rounded-lg p-6 w-full max-w-md shadow-lg">
+                    <h2 className="text-lg font-semibold mb-4" style={{ color: colors.dark }}>
+                      {adFormPt1.addTags}
+                    </h2>
+                    <div className="flex space-x-2 mb-4">
+                      <input
+                        type="text"
+                        value={currentTag}
+                        onChange={(e) => setCurrentTag(e.target.value)}
+                        onKeyDown={(e)=>{
+                          if (e.key==="Enter") handleAddTag();
+                      }}
+                        placeholder={adFormPt1.enterTags}
+                        className="w-full p-2 border rounded transition-all duration-200 border-gray-300 focus:ring-2 focus:ring-green-500"
+                      />
                       <button
-                        onClick={handleDataEntry}
-                        className={`px-4 py-2 rounded right-4 bg-green-600 border-2 border-green-800 cursor-pointer hover:text-white `}
+                        type="button"
+                        onClick={()=>handleAddTag()}
+                        className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-all duration-200"
                       >
-                        {adFormPt1.continue}
+                        {adFormPt1.add}
                       </button>
                     </div>
-                  </div>
-                </div>
-
-                {/* Tag Input Modal */}
-                {isTagModalOpen && (
-                  <div className="fixed inset-0 visible bg-black/30 flex items-center transition-colors justify-center z-50">
-                    <div className="bg-white rounded-lg p-6 w-full max-w-md">
-                      <h2 className="text-lg font-medium mb-4">
-                        {adFormPt1.addTags}
-                      </h2>
-                      <div className="flex space-x-2 mb-4">
-                        <input
-                          type="text"
-                          value={currentTag}
-                          onChange={(e) => setCurrentTag(e.target.value)}
-                          placeholder={adFormPt1.enterTags}
-                          className="w-full p-2 border rounded"
-                        />
-                        <button
-                          type="button"
-                          onClick={handleAddTag}
-                          className="p-2 bg-blue-500 hover:bg-blue-600 cursor-pointer text-white rounded"
-                        >
-                          {adFormPt1.add}
-                        </button>
-                      </div>
-                      <div className="mb-4">
-                        <h3 className="text-sm font-medium mb-2">
-                          {adFormPt1.currentTags}
-                        </h3>
+                    <div className="mb-4">
+                      <h3 className="text-sm font-medium mb-2" style={{ color: colors.dark }}>
+                        {adFormPt1.currentTags}
+                      </h3>
+                      <div className="flex flex-wrap gap-2">
                         {formData.tags.length > 0 ? (
                           formData.tags.map((tag, index) => (
                             <span
                               key={index}
-                              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm mr-2 mb-2 cursor-pointer hover:bg-gray-300"
+                              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm cursor-pointer hover:bg-gray-300 transition-all duration-200"
                               onClick={() => handleRemoveTags(index)}
                             >
-                              {tag + " X"}
+                              {tag} ✕
                             </span>
                           ))
                         ) : (
                           <p className="text-gray-500">No tags added yet</p>
                         )}
                       </div>
-                      <button
-                        onClick={closeTagModal}
-                        className="w-full p-2 bg-gray-500 cursor-pointer text-white rounded hover:bg-gray-600"
-                      >
-                        {adFormPt1.done}
-                      </button>
                     </div>
+                    <button
+                      onClick={closeTagModal}
+                      className="w-full p-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition-all duration-200"
+                    >
+                      {adFormPt1.done}
+                    </button>
                   </div>
-                )}
-              </form>
-            )}
+                </div>
+              )}
+            </div>
+          )}
 
             {activeTab === "confirm" && (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1085,7 +1146,18 @@ const AdFormPage = () => {
                 <div className="mt-2 flex justify-start ">
                   <button
                     onClick={() => setActiveTab("enter")}
-                    className={`px-4 py-2 rounded right-4 bg-red-600 border-2 border-red-800 cursor-pointer hover:text-white `}
+                    className="px-4 py-2 rounded border-2 cursor-pointer transition-colors duration-200"
+                    style={{
+                      backgroundColor: colors.light,
+                      borderColor: colors.warning,
+                      color: colors.dark,
+                    }}
+                    onMouseOver={(e) =>
+                      (e.target.style.backgroundColor = colors.warning)
+                    }
+                    onMouseOut={(e) =>
+                      (e.target.style.backgroundColor = colors.light)
+                    }
                   >
                     {adFormPt3.goBack}
                   </button>
@@ -1093,7 +1165,18 @@ const AdFormPage = () => {
                 <div className="mt-2 flex justify-end ">
                   <button
                     onClick={() => setActiveTab("submit")}
-                    className={`px-4 py-2 rounded right-4 bg-green-600 border-2 border-green-800 cursor-pointer hover:text-white `}
+                    className="px-4 py-2 rounded border-2 cursor-pointer transition-colors duration-200"
+                    style={{
+                      backgroundColor: colors.light,
+                      borderColor: colors.success,
+                      color: colors.dark,
+                    }}
+                    onMouseOver={(e) =>
+                      (e.target.style.backgroundColor = colors.success)
+                    }
+                    onMouseOut={(e) =>
+                      (e.target.style.backgroundColor = colors.light)
+                    }
                   >
                     {adFormPt1.continue}
                   </button>
@@ -1121,8 +1204,7 @@ const AdFormPage = () => {
                         <h3 className="text-lg font-semibold">
                           {formData.name}
                         </h3>
-                        <p className="text-sm text-gray-600">
-                          {formData.description}
+                        <p className="text-sm text-gray-600 overflow-hidden text-ellipsis max-w-[330px] whitespace-nowrap">                          {formData.description}
                         </p>
                       </div>
                       <div className="text-left md:text-right">

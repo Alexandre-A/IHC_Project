@@ -8,6 +8,8 @@ import { showToast } from '../components/Toasts/ToastMessages';
 import { useToast } from '../components/Toasts/ToastService';
 import Modal from '../components/Modal';
 import { colors } from "../utils/colors";
+import userIcon from '../assets/senhorio.png';
+import userIcon2 from '../assets/estudante.png';
 
 
 function NavbarInicial({ homepage, complete}) {
@@ -105,18 +107,18 @@ function NavbarInicial({ homepage, complete}) {
             <nav className="text-white p-4 flex justify-between items-center" style={{backgroundColor: '#2C3E50'}}> 
               {/* Left: Home icon */}
               <div className="flex items-center space-x-4 text-sm sm:text-base">
-                <button
-                  onClick={handleHomeClick}
-                  className="cursor-pointer hover:text-[#F39C12]" 
-                  style={{color: 'white'}}
-                  title="Home"
-                >
-          <FaHome className="w-6 h-6" />
-        </button>
 
         {/* Nav Links */}
         {homepage ? (
           <>
+              <button
+                      onClick={handleHomeClick}
+                      className="cursor-pointer hover:text-[#F39C12]" 
+                      style={{color: 'white'}}
+                      title="Home"
+                    >
+              <FaHome className="w-6 h-6" />
+            </button>
             <button onClick={() => { setTabChosen("SignIn"); setIsLoginOpen(true); }}
               className="cursor-pointer hover:text-gray-300">
                     {navbar.login}
@@ -188,8 +190,25 @@ function NavbarInicial({ homepage, complete}) {
             text-white rounded-full cursor-pointer"
             style={{ borderColor: colors.accent }}
           >
-            <FaUser className="w-6 h-6 p-1" title={navbar.profile} />
+            {!localStorage.getItem("userType") ? (
+              <FaUser className="w-8 h-8 p-1" title={navbar.profile} />
+            ) : (
+              localStorage.getItem("userType")=='landlord' ? (
+                <img
+                  src={userIcon}
+                  alt="AUser Icon 1"
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              ) : (
+                <img
+                  src={userIcon2}
+                  alt="User Icon 2"
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              )
+            )}
           </button>
+
 
           {isDropdownOpen && (
             <div className="absolute top-full right-0 min-w-full w-max bg-white shadow-md mt-1 rounded text-black z-50 cursor-pointer">

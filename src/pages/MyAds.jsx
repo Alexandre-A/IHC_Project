@@ -62,6 +62,7 @@ function MyAds() {
   
 
   const handleLogin = () => {
+    localStorage.removeItem("edit")
     navigate("/form")
   };
 
@@ -272,15 +273,16 @@ function MyAds() {
   return (<>
       <div className="min-h-screen flex flex-col items-center justify-center p-4" style={{ backgroundColor: colors.light }}>
       <button
-    onClick={handleLogin}
-    className="w-1/2 flex items-center justify-center gap-2 px-4 py-2
-               text-white rounded transition-colors duration-200 
-               cursor-pointer text-base sm:text-lg md:text-xl mb-5 shadow-md"
-    style={{ backgroundColor: colors.primary, border: `2px solid ${colors.secondary}` }}
-  >
-    <span className="text-2xl sm:text-3xl md:text-4xl leading-none font-semibold">+</span>
-    <span className="text-xl sm:text-2xl md:text-3xl leading-none font-semibold">{myads.newAd}</span>
-  </button>
+  onClick={handleLogin}
+  className=" w-1/2 max-w-2xl flex items-center justify-center gap-2 px-4 py-2
+             text-white rounded transition-colors duration-200 
+             cursor-pointer text-base sm:text-lg md:text-xl mb-5 shadow-md"
+  style={{ backgroundColor: colors.primary, border: `2px solid ${colors.secondary}` }}
+>
+  <span className="text-2xl sm:text-3xl md:text-4xl leading-none font-semibold">+</span>
+  <span className="text-xl sm:text-2xl md:text-3xl leading-none font-semibold">{myads.newAd}</span>
+</button>
+
   <div className="w-full max-w-4xl rounded-lg flex space-y-2 md:space-y-0 md:flex-row flex-col justify-items-center items-center
  md:justify-between px-1">
     <div className="flex">
@@ -340,9 +342,9 @@ function MyAds() {
           </div>
   </div>
       <div className="w-full max-w-4xl shadow-md rounded-t-lg pl-4 pr-4 pb-4 pt-2" style={{ backgroundColor: colors.light }}>
-        <p><b>{myads.enabledTitle}</b></p>
-        <div className="w-full max-w-4xl border-1 p-2 shadow-md rounded-lg h-[540px] md:h-[410px] overflow-y-auto"
-             style={{ backgroundColor: colors.light, borderColor: colors.secondary }}>        
+        <p><b>{myads.enabledTitle + " ("+copyRoomData.length+")"}</b></p>
+        <div className="w-full max-w-4xl border-2 p-2 shadow-md rounded-lg h-[540px] md:h-[350px] overflow-y-auto"
+             style={{ backgroundColor: colors.light, borderColor: colors.primary }}>        
 
         {copyRoomData.map((ad,index)=>(
           <div key={index} className="flex flex-col md:flex-row w-full max-w-4xl mx-auto shadow-md rounded-lg overflow-hidden md:h-48 mb-3 border-1"
@@ -357,7 +359,7 @@ function MyAds() {
                             {/* Header Row */}
                             <div className="flex flex-col md:flex-row justify-between items-start gap-2">
                               <div className='w-4/6'>
-                                <h3 className="text-lg font-semibold overflow-hidden text-ellipsis whitespace-nowrap">{ad.name}</h3>
+                                <h3 className="text-lg font-semibold whitespace-nowrap">{ad.name}</h3>
                                 <p className="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap">{ad.description}</p>
                               </div>
                               <div className="w-2/6">
@@ -421,9 +423,9 @@ function MyAds() {
         </div>
       </div>
       <div className="w-full max-w-4xl shadow-md rounded-b-lg pl-4 pr-4 pb-4" style={{ backgroundColor: colors.light }}>
-        <p><b>{myads.disabledTitle}</b></p>
-        <div className="w-full max-w-4xl border-1 p-2 shadow-md rounded-lg h-[540px] md:h-[230px] overflow-y-auto"
-             style={{ backgroundColor: colors.light, borderColor: colors.secondary }}>        
+        <p><b>{myads.disabledTitle + " ("+disabledRoomData.length+")"}</b></p>
+        <div className="w-full max-w-4xl border-2 p-2 shadow-md rounded-lg h-[540px] md:h-[250px] overflow-y-auto"
+             style={{ backgroundColor: colors.light, borderColor: colors.primary }}>        
 
         {disabledRoomData.map((ad,index)=>(
           <div key={index} className="flex flex-col md:flex-row w-full max-w-4xl mx-auto shadow-md rounded-lg overflow-hidden md:h-48 mb-3 border-1 opacity-65"
@@ -438,7 +440,7 @@ function MyAds() {
                             {/* Header Row */}
                             <div className="flex flex-col md:flex-row justify-between items-start gap-2">
                               <div className='w-4/6'>
-                                <h3 className="text-lg font-semibold overflow-hidden text-ellipsis whitespace-nowrap">{ad.name}</h3>
+                                <h3 className="text-lg font-semibold whitespace-nowrap">{ad.name}</h3>
                                 <p className="text-sm text-gray-600 overflow-hidden text-ellipsis whitespace-nowrap">{ad.description}</p>
                               </div>
                               <div className="w-2/6">
