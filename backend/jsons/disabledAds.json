@@ -1,32 +1,32 @@
 {
-    "c76dfe9e2e9b39129bc5b6fe26fcb8ed898bb333e499b569a160c1926e27717c": {
+    "f7187667af862b314dcd17d92d1b8df0e974363bdccd20cb59af94e97410817c": {
         "email": "supreme_landlord@gmail.com",
-        "description": "Cozy apartment in a quiet neighborhood, close to public transportation and shopping centers. The apartment has been recently renovated and includes all modern amenities.",
-        "date": "2025-04-24T14:56:14.867Z",
-        "image_path": "images/c76dfe9e2e9b39129bc5b6fe26fcb8ed898bb333e499b569a160c1926e27717c.jpg",
-        "name": "Modern Studio Apartment",
-        "price": "450",
-        "available_date": "2023-12-01",
+        "description": "Quarto confort\u00e1vel em apartamento partilhado em Vagos. Localizado num bairro tranquilo com f\u00e1cil acesso ao centro da cidade. Inclui todas as despesas b\u00e1sicas (\u00e1gua, luz e internet), casa de banho partilhada e acesso a cozinha equipada. Ideal para estudantes ou jovens profissionais.",
+        "date": "2025-04-24T14:22:30.716Z",
+        "image_path": "images/f7187667af862b314dcd17d92d1b8df0e974363bdccd20cb59af94e97410817c.jpg",
+        "name": "Quarto individual em Vagos com despesas inclu\u00eddas",
+        "price": "350",
+        "available_date": "12/12/12",
         "gender": "Indifferent",
-        "quantity": "a",
-        "district": "Leiria",
-        "city": "Marinha Grande",
-        "street": "Rua Principal 123",
+        "quantity": "1",
+        "district": "Aveiro",
+        "city": "Vagos",
+        "street": "Rua Principal 123, 3840-254, Vagos",
         "min_age": "18",
-        "max_age": "65",
-        "bath_share": "Private",
+        "max_age": "19",
+        "bath_share": "Shared",
         "expense_included": "Yes",
         "marital_status": "Yes",
         "tags": [
             "Gender: Indifferent",
             "Couples: Yes",
+            "Bathroom: Shared",
             "Expenses: Yes",
-            "Bathroom: Private",
-            "\u200e Leiria"
+            "\u200e Aveiro"
         ],
         "isNew": [
-            "false",
-            "c76dfe9e2e9b39129bc5b6fe26fcb8ed898bb333e499b569a160c1926e27717c"
+            "true",
+            ""
         ]
     }
 }

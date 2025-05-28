@@ -1,4 +1,34 @@
 {
+    "1070e6d76a7cdfd96c6cdc6b195b5c4720918c6c83e729b77159d14641a3e1f7": {
+        "email": "supreme_landlord@gmail.com",
+        "description": "Quarto acolhedor com cama de casal em Paredes, Porto. Apartamento com casa de banho partilhada e todas as despesas inclu\u00eddas. Ideal para casais ou estudantes, dispon\u00edvel imediatamente. Localiza\u00e7\u00e3o conveniente com acesso a transportes p\u00fablicos e pr\u00f3ximo de servi\u00e7os essenciais.",
+        "date": "2025-04-24T14:21:18.339Z",
+        "image_path": "images/1070e6d76a7cdfd96c6cdc6b195b5c4720918c6c83e729b77159d14641a3e1f7.png",
+        "name": "Quarto com cama de casal no Porto",
+        "price": "550",
+        "available_date": "28/05/2025",
+        "gender": "Indifferent",
+        "quantity": "1",
+        "district": "Porto",
+        "city": "Paredes",
+        "street": "Rua Dr. Jos\u00e9 Magalh\u00e3es 224, 4580-231, Paredes",
+        "min_age": "18",
+        "max_age": "18",
+        "bath_share": "Shared",
+        "expense_included": "Yes",
+        "marital_status": "Yes",
+        "tags": [
+            "Gender: Indifferent",
+            "Couples: Yes",
+            "Bathroom: Shared",
+            "Expenses: Yes",
+            "\u200e Porto"
+        ],
+        "isNew": [
+            "false",
+            "1070e6d76a7cdfd96c6cdc6b195b5c4720918c6c83e729b77159d14641a3e1f7"
+        ]
+    },
     "3405cad130b49a9127b4b84d1ed0ed62560d9b79f739825cfb0f3fe215adedc8": {
         "email": "supreme_landlord@gmail.com",
         "description": "Quarto grande em apartamento compartilhado com 2 estudantes, 1 casa de banho, cozinha e sala. A casa tem internet e est\u00e1 localizada na Avenida Dr. Louren\u00e7o Peixinho, perto da esta\u00e7\u00e3o de comboios e do centro da cidade.",
@@ -27,36 +57,6 @@
         "isNew": [
             "false",
             "3405cad130b49a9127b4b84d1ed0ed62560d9b79f739825cfb0f3fe215adedc8"
-        ]
-    },
-    "f7187667af862b314dcd17d92d1b8df0e974363bdccd20cb59af94e97410817c": {
-        "email": "supreme_landlord@gmail.com",
-        "description": "Quarto confort\u00e1vel em apartamento partilhado em Vagos. Localizado num bairro tranquilo com f\u00e1cil acesso ao centro da cidade. Inclui todas as despesas b\u00e1sicas (\u00e1gua, luz e internet), casa de banho partilhada e acesso a cozinha equipada. Ideal para estudantes ou jovens profissionais.",
-        "date": "2025-04-24T14:22:30.716Z",
-        "image_path": "images/f7187667af862b314dcd17d92d1b8df0e974363bdccd20cb59af94e97410817c.jpg",
-        "name": "Quarto individual em Vagos com despesas inclu\u00eddas",
-        "price": "350",
-        "available_date": "12/12/12",
-        "gender": "Indifferent",
-        "quantity": "1",
-        "district": "Aveiro",
-        "city": "Vagos",
-        "street": "Rua Principal 123, 3840-254, Vagos",
-        "min_age": "18",
-        "max_age": "19",
-        "bath_share": "Shared",
-        "expense_included": "Yes",
-        "marital_status": "Yes",
-        "tags": [
-            "Gender: Indifferent",
-            "Couples: Yes",
-            "Bathroom: Shared",
-            "Expenses: Yes",
-            "\u200e Aveiro"
-        ],
-        "isNew": [
-            "true",
-            ""
         ]
     },
     "a9ba4f833c5836909395fe546bbc001a9e54d82a5ba15f0e871c09301266d000": {
@@ -89,21 +89,21 @@
             "a9ba4f833c5836909395fe546bbc001a9e54d82a5ba15f0e871c09301266d000"
         ]
     },
-    "1070e6d76a7cdfd96c6cdc6b195b5c4720918c6c83e729b77159d14641a3e1f7": {
+    "7594d919b3b63393a9c9da1ea381e4d6e46d3525c69aad9046d5ecc154bf527a": {
         "email": "supreme_landlord@gmail.com",
-        "description": "Quarto acolhedor com cama de casal em Paredes, Porto. Apartamento com casa de banho partilhada e todas as despesas inclu\u00eddas. Ideal para casais ou estudantes, dispon\u00edvel imediatamente. Localiza\u00e7\u00e3o conveniente com acesso a transportes p\u00fablicos e pr\u00f3ximo de servi\u00e7os essenciais.",
-        "date": "2025-04-24T14:21:18.339Z",
-        "image_path": "images/1070e6d76a7cdfd96c6cdc6b195b5c4720918c6c83e729b77159d14641a3e1f7.png",
-        "name": "Quarto com cama de casal no Porto",
-        "price": "550",
-        "available_date": "28/05/2025",
+        "description": "Quarto bem mobilado, num apartamento T2.",
+        "date": "2025-05-28T08:40:18.088Z",
+        "image_path": "images/7594d919b3b63393a9c9da1ea381e4d6e46d3525c69aad9046d5ecc154bf527a.png",
+        "name": "Quarto no centro de Aveiro",
+        "price": "300",
+        "available_date": "06/06/2025",
         "gender": "Indifferent",
         "quantity": "1",
-        "district": "Porto",
-        "city": "Paredes",
-        "street": "Rua Dr. Jos\u00e9 Magalh\u00e3es 224, 4580-231, Paredes",
+        "district": "Aveiro",
+        "city": "Aveiro",
+        "street": "AVENIDA DR LOUREN\u00c7O PEIXINHO N\u00ba 169, 3800-999, Aveiro",
         "min_age": "18",
-        "max_age": "18",
+        "max_age": "21",
         "bath_share": "Shared",
         "expense_included": "Yes",
         "marital_status": "Yes",
@@ -112,11 +112,11 @@
             "Couples: Yes",
             "Bathroom: Shared",
             "Expenses: Yes",
-            "\u200e Porto"
+            "\u200e Aveiro"
         ],
         "isNew": [
-            "false",
-            "1070e6d76a7cdfd96c6cdc6b195b5c4720918c6c83e729b77159d14641a3e1f7"
+            "true",
+            ""
         ]
     }
 }
