@@ -15,6 +15,8 @@ import userIcon2 from '../assets/estudante.png';
 function NavbarInicial({ homepage, complete}) {
   const {t} = useTranslation();
   const navbar = t("navbar");
+  const homepageT = t("homepage");
+
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [tabChosen, setTabChosen] = useState("SignIn");
   const navigate = useNavigate();
@@ -80,22 +82,43 @@ function NavbarInicial({ homepage, complete}) {
     <div className="sticky top-0 z-50 bg-white shadow-md ">
       <Modal open={modal == "first"} onClose={() => setModal(null)}>
               <div className="text-center w-56">
-                <div className="mx-auto my-4 w-48">
+                <div className="mx-auto my-4 w-48 flex flex-col">
                   <h3 className="text-lg font-black text-gray-800">{navbar.modalTitle}</h3>
                   <p className="text-sm text-black my-1">
                     {navbar.modalVariation2}
                   </p>
+                  <button
+                      className="px-4 pt-3 justify-center items-center text-blue-400 cursor-pointer border-b hover:text-[#F39C12]"
+                      onClick={() => {
+                        setTabChosen("SignIn");
+                        setIsLoginOpen(true);
+                        setIsDropdownOpen(false);
+                        setModal(null);
+                      }}
+                    >
+                      {"→ "+navbar.login + "/"+navbar.registo}
+                      </button>
                 </div>
               </div>
             </Modal>
       <Modal open={modal == "third"} onClose={() => setModal(null)}>
         <div className="text-center w-56">
-          <div className="mx-auto my-4 w-48">
-            <h3 className="text-lg font-black text-gray-800">{navbar.modalTitle}</h3>
+        <div className="mx-auto my-4 w-48 flex flex-col">
+        <h3 className="text-lg font-black text-gray-800">{navbar.modalTitle}</h3>
             <p className="text-sm text-black my-1">
-              {navbar.modalVariation3}
+              {homepageT.modalVariation1}
             </p>
-          </div>
+            <button
+                      className="px-4 pt-3 justify-center items-center text-blue-400 cursor-pointer hover:bg-gray-100 border-b hover:text-[#F39C12]"
+                      onClick={() => {
+                        setTabChosen("SignIn");
+                        setIsLoginOpen(true);
+                        setIsDropdownOpen(false);
+                        setModal(null);
+                      }}
+                    >
+                      {"→ "+navbar.login + "/"+navbar.registo}
+                      </button>          </div>
         </div>
       </Modal>
       <LoginModal 
@@ -133,7 +156,7 @@ function NavbarInicial({ homepage, complete}) {
             <a
               onClick={(e)=> {
                 if (!localStorage.getItem("userType")) {
-                  setModal('third');
+                  setModal('first');
                   e.preventDefault(); // prevent navigation
                   return;
                 }
@@ -165,15 +188,21 @@ function NavbarInicial({ homepage, complete}) {
             >
               {navbar.ads}
             </a>
-            {complete =='landlord' && (
-              <a
-                onClick={()=> handleLocalStorage("myads")}
-                href={links.myads}
-                className={`hover:text-[#F39C12] ${currentPath === links.myads || currentPath === links.form ? "text-[#F39C12]" : ""}`}
-              >
-                {navbar.myads}
-              </a>
-            )}
+            
+            <a
+              onClick={(e)=> {if (localStorage.getItem("userType")!='landlord') {
+                setModal('third');
+                e.preventDefault(); // prevent navigation
+                return;
+              }
+              setModal("")
+              handleLocalStorage("messages")}}
+              href={links.myads}
+              className={`hover:text-[#F39C12] ${currentPath === links.myads || currentPath === links.form ? "text-[#F39C12]" : ""}`}
+            >
+              {navbar.myads}
+            </a>
+            
           </>
         )}
       </div>

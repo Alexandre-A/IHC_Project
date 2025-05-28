@@ -20,23 +20,24 @@ const LanguageSelector = () => {
   };
 
   return (
-    <div className="relative inline-block justify-center w-max">
-        <div className="absolute inset-y-0 left-0 items-center pl-3 pointer-events-none hidden sm:flex">
-            <TbWorld className="text-lg" />
-        </div>
-        <select
-            name="languageChanger"
-            value={i18n.language}
-            onChange={changeLanguage}
-            className="appearance-none pr-3  border-2 rounded-full pl-3 sm:pl-8"
-        >
-            {languages.map((lng) => (
+    <div className="relative inline-block w-max">
+    <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
+        <TbWorld className="text-lg text-white" />
+    </div>
+    <select
+        name="languageChanger"
+        value={i18n.language}
+        onChange={changeLanguage}
+        className="appearance-none border-2 rounded-full pl-10 pr-4 py-1"
+    >
+        {languages.map((lng) => (
             <option key={lng.code} value={lng.code}>
                 {lng.code === "En" ? "🇬🇧 " : "🇵🇹 "}{lng.code}
             </option>
-            ))}
-        </select>
-    </div>
+        ))}
+    </select>
+</div>
+
   );
 };
 

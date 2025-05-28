@@ -957,234 +957,224 @@ const AdFormPage = () => {
             </div>
           )}
 
-            {activeTab === "confirm" && (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {/* Left Column */}
-                <div>
-                  {/* Image Display */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">
-                      Form
-                    </label>
-                    <div className="w-full h-32 border-2 border-dashed border-gray-300 flex items-center justify-center">
-                      {formData.image ? (
-                        <img
-                          src={
-                            typeof formData.image === "string"
-                              ? formData.image
-                              : URL.createObjectURL(formData.image)
-                          }
-                          alt="Preview"
-                          className="h-full object-cover"
-                        />
-                      ) : (
-                        <span className="text-gray-400">No image uploaded</span>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Description */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">
-                      {adFormPt1.description}
-                    </label>
-                    <p className="w-full p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
-                      {formData.description || "No description provided"}
-                    </p>
-                  </div>
-
-                  {/* Location */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">
-                      {adFormPt1.location}
-                    </label>
-                    <div className="flex space-x-2">
-                      <p className="w-1/2 p-2 border rounded bg-gray-100">
-                        {formData.district || "No district selected"}
-                      </p>
-                      <p className="w-1/2 p-2 border rounded bg-gray-100">
-                        {formData.city || "No municipality selected"}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Target Audience */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">
-                      {adFormPt1.lookingFor}
-                    </label>
-                    <div className="flex space-x-2">
-                      <p className="w-1/2 p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
-                        {formData.min_age || "No age specified"}
-                      </p>
-                      <span className="self-center">to</span>
-                      <p className="w-1/2 p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
-                        {formData.max_age || "No age specified"}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Marital Status */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">
-                      {adFormPt1.couples}
-                    </label>
-                    <p className="p-2 border rounded bg-gray-100">
-                      {formData.marital_status}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Right Column */}
-                <div>
-                  {/* Name */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">
-                      {adFormPt1.name}
-                    </label>
-                    <p className="w-full p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
-                      {formData.name || "No name provided"}
-                    </p>
-                  </div>
-
-                  {/* Prices and Available Date */}
-                  <div className="mb-4 flex space-x-2">
-                    <div className="w-1/2">
-                      <label className="block text-sm font-medium mb-1">
-                        {adFormPt1.available}
-                      </label>
-                      <p className="w-full p-2 border rounded bg-gray-100">
-                        {formData.available_date || "No date provided"}
-                      </p>
-                    </div>
-                    <div className="w-1/2">
-                      <label className="block text-sm font-medium mb-1">
-                        {adFormPt1.price}
-                      </label>
-                      <p className="w-full p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
-                        {formData.price || "No price provided"}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Gender and Room Number */}
-                  <div className="mb-4 flex space-x-2">
-                    <div className="w-1/2">
-                      <label className="block text-sm font-medium mb-1">
-                        {adFormPt1.gender}
-                      </label>
-                      <p className="w-full p-2 border rounded bg-gray-100">
-                        {formData.gender}
-                      </p>
-                    </div>
-                    <div className="w-1/2">
-                      <label className="block text-sm font-medium mb-1">
-                        {adFormPt1.quantity}
-                      </label>
-                      <p className="w-full p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
-                        {formData.quantity || "No room number provided"}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* Street */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">
-                      {adFormPt1.street}
-                    </label>
-                    <p className="w-full p-2 border rounded bg-gray-100 overflow-hidden text-ellipsis whitespace-nowrap">
-                      {formData.street || "No street provided"}
-                    </p>
-                  </div>
-
-                  {/* Pet Allowance */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">
-                      {adFormPt1.accommodationDetails}
-                    </label>
-                    <label className="block text-sm font-medium mb-1">
-                      {adFormPt1.expenses}
-                    </label>
-                    <p className="p-2 border rounded bg-gray-100">
-                      {formData.expense_included}
-                    </p>
-                  </div>
-
-                  {/* bath Share */}
-                  <div className="mb-4">
-                    <label className="block text-sm font-medium mb-1">
-                      {adFormPt1.bathroom}
-                    </label>
-                    <p className="w-full p-2 border rounded bg-gray-100">
-                      {formData.bath_share}
-                    </p>
-                  </div>
-                </div>
-
-                {/* Tags */}
-                <div className="col-span-1 md:col-span-2 mb-4">
-                  <label className="block text-sm font-medium mb-1">
-                    Tags:
-                  </label>
-                  <div className="mt-2">
-                    {formData.tags.length > 0 ? (
-                      formData.tags.map((tag, index) => (
-                        <span
-                          key={index}
-                          className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm mr-2 mb-2"
-                        >
-                          {tag}
-                        </span>
-                      ))
-                    ) : (
-                      <p className="p-2 border rounded bg-gray-100">
-                        No tags added
-                      </p>
-                    )}
-                  </div>
-                </div>
-                <div className="mt-2 flex justify-start ">
-                  <button
-                    onClick={() => setActiveTab("enter")}
-                    className="px-4 py-2 rounded border-2 cursor-pointer transition-colors duration-200"
-                    style={{
-                      backgroundColor: colors.light,
-                      borderColor: colors.warning,
-                      color: colors.dark,
-                    }}
-                    onMouseOver={(e) =>
-                      (e.target.style.backgroundColor = colors.warning)
-                    }
-                    onMouseOut={(e) =>
-                      (e.target.style.backgroundColor = colors.light)
-                    }
-                  >
-                    {adFormPt3.goBack}
-                  </button>
-                </div>
-                <div className="mt-2 flex justify-end ">
-                  <button
-                    onClick={() => setActiveTab("submit")}
-                    className="px-4 py-2 rounded border-2 cursor-pointer transition-colors duration-200"
-                    style={{
-                      backgroundColor: colors.light,
-                      borderColor: colors.success,
-                      color: colors.dark,
-                    }}
-                    onMouseOver={(e) =>
-                      (e.target.style.backgroundColor = colors.success)
-                    }
-                    onMouseOut={(e) =>
-                      (e.target.style.backgroundColor = colors.light)
-                    }
-                  >
-                    {adFormPt1.continue}
-                  </button>
-                </div>
-              </div>
+{activeTab === "confirm" && (
+  <>
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-4 bg-white shadow rounded-lg">
+      {/* Left Column */}
+      <div className="space-y-4">
+        {/* Image */}
+        <div className="rounded border border-gray-200 bg-gray-50 p-4">
+          <h3 className="text-sm font-semibold text-gray-700 mb-2">Form</h3>
+          <div className="w-full h-40 border-2 border-dashed border-gray-300 flex items-center justify-center bg-white rounded">
+            {formData.image ? (
+              <img
+                src={
+                  typeof formData.image === "string"
+                    ? formData.image
+                    : URL.createObjectURL(formData.image)
+                }
+                alt="Preview"
+                className="h-full object-cover rounded"
+              />
+            ) : (
+              <span className="text-gray-400">No image uploaded</span>
             )}
+          </div>
+        </div>
+
+        {/* Description */}
+        <div className="rounded border border-gray-200 bg-gray-50 p-4">
+          <h3 className="text-sm font-semibold text-gray-700 mb-1">
+            {adFormPt1.description}
+          </h3>
+          <p className="text-sm text-gray-800">
+            {formData.description || "No description provided"}
+          </p>
+        </div>
+
+        {/* Location */}
+        <div className="rounded border border-gray-200 bg-gray-50 p-4">
+          <h3 className="text-sm font-semibold text-gray-700 mb-1">
+            {adFormPt1.location}
+          </h3>
+          <div className="flex gap-2">
+            <p className="w-1/2 text-sm bg-white border border-gray-300 p-2 rounded">
+              {formData.district || "No district selected"}
+            </p>
+            <p className="w-1/2 text-sm bg-white border border-gray-300 p-2 rounded">
+              {formData.city || "No municipality selected"}
+            </p>
+          </div>
+        </div>
+
+        {/* Target Audience */}
+        <div className="rounded border border-gray-200 bg-gray-50 p-4">
+          <h3 className="text-sm font-semibold text-gray-700 mb-1">
+            {adFormPt1.lookingFor}
+          </h3>
+          <div className="flex items-center gap-2">
+            <span className="text-sm bg-white border p-2 rounded w-1/2 text-center">
+              {formData.min_age || "N/A"}
+            </span>
+            <span className="text-sm text-gray-500">to</span>
+            <span className="text-sm bg-white border p-2 rounded w-1/2 text-center">
+              {formData.max_age || "N/A"}
+            </span>
+          </div>
+        </div>
+
+        {/* Marital Status */}
+        <div className="rounded border border-gray-200 bg-gray-50 p-4">
+          <h3 className="text-sm font-semibold text-gray-700 mb-1">
+            {adFormPt1.couples}
+          </h3>
+          <p className="text-sm bg-white border p-2 rounded">
+            {formData.marital_status || "Not specified"}
+          </p>
+        </div>
+      </div>
+
+      {/* Right Column */}
+      <div className="space-y-4">
+        {/* Name */}
+        <div className="rounded border border-gray-200 bg-gray-50 p-4">
+          <h3 className="text-sm font-semibold text-gray-700 mb-1">
+            {adFormPt1.name}
+          </h3>
+          <p className="text-sm bg-white border p-2 rounded">
+            {formData.name || "No name provided"}
+          </p>
+        </div>
+
+        {/* Available Date & Price */}
+        <div className="rounded border border-gray-200 bg-gray-50 p-4">
+          <div className="flex gap-4">
+            <div className="w-1/2">
+              <h3 className="text-sm font-semibold text-gray-700 mb-1">
+                {adFormPt1.available}
+              </h3>
+              <p className="text-sm bg-white border p-2 rounded">
+                {formData.available_date || "No date provided"}
+              </p>
+            </div>
+            <div className="w-1/2">
+              <h3 className="text-sm font-semibold text-gray-700 mb-1">
+                {adFormPt1.price}
+              </h3>
+              <p className="text-sm bg-white border p-2 rounded">
+                {formData.price || "No price provided"}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Gender & Room Number */}
+        <div className="rounded border border-gray-200 bg-gray-50 p-4">
+          <div className="flex gap-4">
+            <div className="w-1/2">
+              <h3 className="text-sm font-semibold text-gray-700 mb-1">
+                {adFormPt1.gender}
+              </h3>
+              <p className="text-sm bg-white border p-2 rounded">
+                {formData.gender || "Not specified"}
+              </p>
+            </div>
+            <div className="w-1/2">
+              <h3 className="text-sm font-semibold text-gray-700 mb-1">
+                {adFormPt1.quantity}
+              </h3>
+              <p className="text-sm bg-white border p-2 rounded">
+                {formData.quantity || "No room number provided"}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* Street */}
+        <div className="rounded border border-gray-200 bg-gray-50 p-4">
+          <h3 className="text-sm font-semibold text-gray-700 mb-1">
+            {adFormPt1.street}
+          </h3>
+          <p className="text-sm bg-white border p-2 rounded">
+            {formData.street || "No street provided"}
+          </p>
+        </div>
+
+        {/* Expenses Included */}
+        <div className="rounded border border-gray-200 bg-gray-50 p-4">
+          <h3 className="text-sm font-semibold text-gray-700 mb-1">
+            {adFormPt1.expenses}
+          </h3>
+          <p className="text-sm bg-white border p-2 rounded">
+            {formData.expense_included || "Not specified"}
+          </p>
+        </div>
+
+        {/* Bathroom Sharing */}
+        <div className="rounded border border-gray-200 bg-gray-50 p-4">
+          <h3 className="text-sm font-semibold text-gray-700 mb-1">
+            {adFormPt1.bathroom}
+          </h3>
+          <p className="text-sm bg-white border p-2 rounded">
+            {formData.bath_share || "Not specified"}
+          </p>
+        </div>
+      </div>
+    </div>
+
+    {/* Tags */}
+    <div className="mt-4 p-4 bg-white rounded shadow border border-gray-200">
+      <h3 className="text-sm font-semibold text-gray-700 mb-2">Tags</h3>
+      {formData.tags?.length > 0 ? (
+        <div className="flex flex-wrap gap-2">
+          {formData.tags.map((tag, index) => (
+            <span
+              key={index}
+              className="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm text-gray-700"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      ) : (
+        <p className="text-sm text-gray-500">No tags added</p>
+      )}
+    </div>
+
+    {/* Navigation Buttons */}
+    <div className="mt-6 flex justify-between">
+      <button
+        onClick={() => setActiveTab("enter")}
+        className="px-4 py-2 cursor-pointer rounded border-2 text-sm font-medium transition-colors duration-200"
+        style={{
+          backgroundColor: colors.light,
+          borderColor: colors.warning,
+          color: colors.dark,
+        }}
+        onMouseOver={(e) => (e.target.style.backgroundColor = colors.warning)}
+        onMouseOut={(e) => (e.target.style.backgroundColor = colors.light)}
+      >
+        {adFormPt3.goBack}
+      </button>
+      <button
+        onClick={() => setActiveTab("submit")}
+        className="px-4 cursor-pointer py-2 rounded border-2 text-sm font-medium transition-colors duration-200"
+        style={{
+          backgroundColor: colors.light,
+          borderColor: colors.success,
+          color: colors.dark,
+        }}
+        onMouseOver={(e) => (e.target.style.backgroundColor = colors.success)}
+        onMouseOut={(e) => (e.target.style.backgroundColor = colors.light)}
+      >
+        {adFormPt1.continue}
+      </button>
+    </div>
+  </>
+)}
+
             {activeTab === "submit" && (
-              <div className="flex flex-col items-center space-y-4 bg-gray-200/80 border-2 border-black-20 p-2 rounded">
+              <div className="flex flex-col items-center space-y-4 border-2 border-black-20 p-2 rounded" style={{backgroundColor: colors.light}}>
                 <h2 className="text-xl font-semibold">{adFormPt3.adPreview}</h2>
                 <div className="flex flex-col md:flex-row w-full max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden md:h-48">
                   <img

@@ -271,10 +271,10 @@ const handleAddMessage = async () => {
       <input
         type="text"
         value={currentMessage}
-        name="message"
+        name="search"
         placeholder={privateMessage.type}
         autoComplete="on"
-        onChange={handleChange}
+        onChange={(e)=>handleChange(e)}
         onKeyDown={(e) => e.key === 'Enter' && handleAddMessage()}
         className="flex-1 border rounded px-4 py-2"
       />

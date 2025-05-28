@@ -64,33 +64,33 @@
     "tenant3": {
         "unique_id": "tenant3",
         "date": "2025-04-24T14:20:14.600Z",
-        "image_path": "images/senhorio.png",
+        "image_path": "images/rapaz.jpeg",
         "name": "Sr. Danilo",
         "is_banned": "true",
-        "last_message": "da",
+        "last_message": "a",
         "messages": [
             [
                 "hello",
-                "sender"
+                "receiver"
             ],
             [
                 "hi, how can I help?",
-                "receiver"
+                "sender"
             ],
             [
                 "there\u2019s a leak in the kitchen sink",
-                "sender"
-            ],
-            [
-                "I\u2019ll arrange for someone to fix it tomorrow",
                 "receiver"
             ],
             [
-                "perfect, thank you!",
+                "I\u2019ll arrange for someone to fix it tomorrow",
                 "sender"
             ],
             [
-                "da",
+                "perfect, thank you!",
+                "receiver"
+            ],
+            [
+                "wow",
                 "sender"
             ]
         ],
@@ -102,31 +102,31 @@
         "image_path": "images/senhorio.png",
         "name": "Sr. Danilo",
         "is_banned": "false",
-        "last_message": "inquilino",
+        "last_message": "there\u2019s a leak in the kitchen sink",
         "messages": [
             [
-                "blabla",
+                "hello",
+                "receiver"
+            ],
+            [
+                "hi, how can I help?",
                 "sender"
             ],
             [
-                "blabla2",
+                "there\u2019s a leak in the kitchen sink",
+                "receiver"
+            ],
+            [
+                "I\u2019ll arrange for someone to fix it tomorrow",
                 "sender"
             ],
             [
-                "teste",
+                "perfect, thank you!",
                 "receiver"
             ],
             [
                 "wow",
                 "sender"
-            ],
-            [
-                "yay",
-                "receiver"
-            ],
-            [
-                "hello there mr tenant",
-                "receiver"
             ]
         ],
         "topic_of_interest": ""
@@ -137,30 +137,30 @@
         "image_path": "images/estudante.png",
         "name": "Matteo Rossi",
         "is_banned": "false",
-        "last_message": "landlord",
+        "last_message": "there\u2019s a leak in the kitchen sink",
         "messages": [
             [
-                "blabla",
+                "hello",
                 "receiver"
             ],
             [
-                "blabla2",
-                "receiver"
-            ],
-            [
-                "teste",
+                "hi, how can I help?",
                 "sender"
+            ],
+            [
+                "there\u2019s a leak in the kitchen sink",
+                "receiver"
+            ],
+            [
+                "I\u2019ll arrange for someone to fix it tomorrow",
+                "sender"
+            ],
+            [
+                "perfect, thank you!",
+                "receiver"
             ],
             [
                 "wow",
-                "receiver"
-            ],
-            [
-                "yay",
-                "sender"
-            ],
-            [
-                "hello there mr tenant",
                 "sender"
             ]
         ],

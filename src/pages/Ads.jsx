@@ -7,6 +7,8 @@ import { useNavigate } from "react-router-dom";
 import { showToast } from "../components/Toasts/ToastMessages";
 import { useToast } from "../components/Toasts/ToastService";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import LoginModal from "../components/LoginModal";
+
 import {
   FaTrashAlt,
   FaShareAlt,
@@ -25,6 +27,9 @@ const ip = "127.0.0.1";
 const port = 5000;
 
 function Ads() {
+
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
+  const [tabChosen, setTabChosen] = useState("SignIn");
   const toast = useToast();
   const navigate = useNavigate();
   const [roomData, setRoomData] = useState([]);
@@ -38,6 +43,8 @@ function Ads() {
   );
   const { t } = useTranslation();
   const adsPage = t("adsPage");
+  const navbar = t("navbar"); // Required for modal text
+
   const [errors, setErrors] = useState({});
   const [modal, setModal] = useState(null); // null, 'first', 'third'
 
@@ -329,6 +336,13 @@ function Ads() {
 
   return (
     <>
+    {/* Shared login modal */}
+    <LoginModal
+        isOpen={isLoginOpen}
+        onClose={() => setIsLoginOpen(false)}
+        tabChosen={tabChosen}
+        setTabChosen={setTabChosen}
+      />
       <Modal open={modal == "Active"} onClose={() => setModal(null)}>
         <div className="text-center w-56">
           <div className="mx-auto my-4 w-48">
@@ -339,16 +353,24 @@ function Ads() {
           </div>
         </div>
       </Modal>
-      <Modal open={modal == "first"} onClose={() => setModal(null)}>
-        <div className="text-center w-56">
-          <div className="mx-auto my-4 w-48">
-            <h3 className="text-lg font-black text-gray-800">
-              {adsPage.modalTitle}
-            </h3>
-            <p className="text-sm text-black my-1">{adsPage.modalVariation2}</p>
-          </div>
-        </div>
-      </Modal>
+      <Modal open={modal === "first"} onClose={() => setModal(null)}>
+              <div className="text-center w-56">
+                <div className="mx-auto my-4 w-48 flex flex-col">
+                  <h3 className="text-lg font-black text-gray-800">{navbar.modalTitle}</h3>
+                  <p className="text-sm text-black my-1">{navbar.modalVariation2}</p>
+                  <button
+                    className="px-4 pt-3 justify-center items-center text-blue-400 cursor-pointer border-b hover:text-[#F39C12]"
+                    onClick={() => {
+                      setTabChosen("SignIn");
+                      setIsLoginOpen(true);
+                      setModal(null);
+                    }}
+                  >
+                    {"→ " + navbar.login + "/" + navbar.registo}
+                  </button>
+                </div>
+              </div>
+            </Modal>
       <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex flex-col items-center justify-center p-4">
         <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6 mb-6">
           <h1 className="text-2xl font-bold text-center mb-6 text-blue-800">
